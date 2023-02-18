@@ -1,0 +1,96 @@
+.main_background {
+    
+    padding: 120px 25px;
+    height: auto;
+    text-align: center;
+    
+
+    .main_top{
+        width: 1940px;
+        padding: 40px 0px;
+        height: auto;
+        box-sizing: border-box;
+        &_block{
+            &_title{
+                font-size: 60px;
+            }
+        }
+    }
+
+    .main_bottom{
+        width: 1940px;
+        padding: 20px 0px;
+        height: auto;
+        box-sizing: border-box;
+        &_top_area{
+            height: 100px;
+            // width: 1940px;
+            width: 65%;
+            margin: 0 auto;
+            &_block{
+                width: 60%;
+                margin: 0 auto;
+                &_btn{
+                    border: 1px solid #B2EBF4;
+                    background-color: #D9E5FF;
+                    width: 130px;
+                    padding: 13px 10px;
+                    border-radius: 10px;
+                    float: right;
+                    font-weight: 800;
+                }
+            }
+        }
+
+        &_area{
+            margin: 0 auto;
+            display: flex;
+            width: 40%;
+            &_project{
+                width: 190px;
+                border: 1px solid #FF007F;
+                border-radius: 15px;
+                height: 150px;
+                margin: 0 auto;
+                padding: 10px 25px;
+                
+                &_title_block{
+                    display: flex;
+                    justify-content: space-between;
+                    &_text{
+                        font-size: 15px;
+                        font-weight: bold;
+
+                    }
+
+                    &_loc{
+                        background-color: #FFB2D9;
+                        border-radius: 30px;
+                        width: 35px;
+                        font-size: 10px;
+                        height: 25px;
+                        padding-top: 7px;
+                        color: #FFF;
+                        position: relative;
+                        top: 7px;
+                    }
+                }
+            
+                &_content_block{
+                    &_date{
+                        color: #D5D5D5;
+                        font-size: 15px;
+                        font-weight: bolder;
+                    }
+                    &_detail_loc{
+                        font-size: 15px;
+                        font-weight: bolder;
+                    }
+                }
+            }
+
+        }
+    }
+
+}
+
