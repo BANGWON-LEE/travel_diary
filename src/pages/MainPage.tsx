@@ -14,7 +14,7 @@ const MainPage :  React.FC  = ()  => {
             <ModalRegisterProject modalStatus={modalStatus} setModalStatus={setModalStatus} />
             <div className="main_top">
                 <div className="main_top_block">
-                    <h1 className="maisn_top_block_title">Travel Plans</h1>
+                    <h1 className="main_top_block_title">Travel Plans</h1>
                 </div>
             </div>
             <div className="main_bottom">
