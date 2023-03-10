@@ -1,3 +1,5 @@
+// storemao 참고해서 코드 짜기20230310
+
 import { useState, useEffect } from "react";
 
 
@@ -37,7 +39,7 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
         const mapScript = document.createElement("script");
     
         mapScript.async = true;
-        mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=722876bb31cadcc3a9874a090b0c17cc&libraries=services&autoload=false`;
+        mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.PUBLIC_KAKAO_API}&libraries=services&autoload=false`;
     
         document.head.appendChild(mapScript);
         
@@ -86,8 +88,7 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
     useEffect(() => {
   
 
-     // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
-    //  let infowindow = indow.kakao?.maps?.InfoWindow({zIndex:1});
+
      
 
     if(searchStatus === false){
@@ -100,6 +101,9 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
    //  let map = window.kakao?.maps.Map(mapContainer, mapOption); 
     let services = window.kakao?.maps?.services; 
     let ps = window.kakao?.maps?.services.Places(); 
+    // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+    let infowindow : any;
+    console.log('info', infowindow)
     // var infowindow = window.kakao.maps.InfoWindow({zIndex:1})
     
     searchPlaces();
@@ -111,7 +115,7 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
             return false;
         }
     
-        console.log('infoWindow',  window.kakao?.maps?.services)
+        // console.log('infoWindow',  window.kakao?.maps?.services)
 
         // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
         ps?.keywordSearch?.();
@@ -121,6 +125,7 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
         // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
     function placesSearchCB(data:any, status:any, pagination: any){
             console.log('check', data)
+
 
         if (status === window.kakao.maps.services.Status.OK) {
     
@@ -146,20 +151,43 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
 
          // 검색결과 목록의 자식 Element를 제거하는 함수입니다
          function removeAllChildNods(el:any) {   
-            while (el.hasChildNodes()) {
+            while (el?.hasChildNodes()) {
                 el.removeChild (el.lastChild);
             }
         }
     
         // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
     // 인포윈도우에 장소명을 표시합니다
-    // const displayInfowindow = (marker:any, title:any) => {
-    //     let content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+    const displayInfowindow = (marker:any) => {
+        let content = '<div style="padding:5px;z-index:1;">' + marker.place_name + '</div>';
+        console.log('title', content)
+        // let loc = new window.kakao.maps.LatLng(marker[i].y, marker[i].x),
+        infowindow = window.kakao?.maps.InfoWindow({
+        // map: map, // 인포윈도우가 표시될 지도
+        // position : marker, 
+        content : content,
+    });
+        // console.log('infowindow', infowindow)
+        // infowindow.setContent(content)
+        // infowindow?.open(map, marker);
     
-    //     infowindow.setContent(content);
-    //     infowindow.open(map, marker);
-    // }
+    }
     
+    // infowindow를 여는 함수
+    function makeOverListener(map:any, marker:any, infowindow:any) {
+        return function () {
+            // displayInfowindow(marker)
+
+            infowindow?.open(map, marker);
+        };
+        }
+
+        // infowindow를 닫는 클로저를 만드는 함수입니다
+        function makeOutListener(infowindow:any) {
+        return function () {
+            infowindow?.close();
+        };
+        }
 
     // 검색 결과 목록과 마커를 표출하는 함수입니다
     function displayPlaces(places:any){
@@ -191,23 +219,20 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
             // 마커와 검색결과 항목에 mouseover 했을때
             // 해당 장소에 인포윈도우에 장소명을 표시합니다
             // mouseout 했을 때는 인포윈도우를 닫습니다
-            // (function(marker, title) {
-            //     window.kakao.maps.event.addListener(marker, 'mouseover', function() {
-            //         displayInfowindow(marker);
-            //     });
+            (function(marker, title) {
+                window.kakao.maps.event.addListener(marker, 'mouseover',  makeOverListener(map, places[i], infowindow)
+                );
     
-            //     window.kakao.maps.event.addListener(marker, 'mouseout', function() {
-            //         infowindow.close();
-            //     });
+                window.kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
     
-            //     itemEl.onmouseover =  function () {
-            //         displayInfowindow(marker);
-            //     };
+                itemEl.onmouseover =  function () {
+                displayInfowindow(places[i] );
+                };
     
-            //     itemEl.onmouseout =  function () {
-            //         infowindow.close();
-            //     };
-            // })(marker, places[i].place_name);
+                itemEl.onmouseout =  function () {
+                    infowindow?.close();
+                };
+            })(marker, places[i].place_name);
     
             fragment.appendChild(itemEl);
         }
