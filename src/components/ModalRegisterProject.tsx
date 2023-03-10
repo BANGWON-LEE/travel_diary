@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import "../styles/modal.scss"
 
 import closeBtn from "../asset/close-button.png"
+import env from "../env";
 
 interface ModalType {
     modalStatus : boolean        
@@ -39,7 +40,8 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
         const mapScript = document.createElement("script");
     
         mapScript.async = true;
-        mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.PUBLIC_KAKAO_API}&libraries=services&autoload=false`;
+        mapScript.type="text/javascript"
+        mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${env.apiKey}&libraries=services&autoload=false`;
     
         document.head.appendChild(mapScript);
         
@@ -158,36 +160,19 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
     
         // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
     // 인포윈도우에 장소명을 표시합니다
-    const displayInfowindow = (marker:any) => {
-        let content = '<div style="padding:5px;z-index:1;">' + marker.place_name + '</div>';
-        console.log('title', content)
-        // let loc = new window.kakao.maps.LatLng(marker[i].y, marker[i].x),
-        infowindow = window.kakao?.maps.InfoWindow({
-        // map: map, // 인포윈도우가 표시될 지도
-        // position : marker, 
-        content : content,
-    });
-        // console.log('infowindow', infowindow)
-        // infowindow.setContent(content)
-        // infowindow?.open(map, marker);
-    
-    }
-    
-    // infowindow를 여는 함수
-    function makeOverListener(map:any, marker:any, infowindow:any) {
+    function displayInfowindow(map:any, place:any, marker:any) {
         return function () {
             // displayInfowindow(marker)
-
+            infowindow = new window.kakao.maps.InfoWindow({
+                // map: map, // 인포윈도우가 표시될 지도
+                // position : marker, 
+                content : place.place_name,
+            });
             infowindow?.open(map, marker);
         };
-        }
+    }
+    
 
-        // infowindow를 닫는 클로저를 만드는 함수입니다
-        function makeOutListener(infowindow:any) {
-        return function () {
-            infowindow?.close();
-        };
-        }
 
     // 검색 결과 목록과 마커를 표출하는 함수입니다
     function displayPlaces(places:any){
@@ -220,13 +205,13 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
             // 해당 장소에 인포윈도우에 장소명을 표시합니다
             // mouseout 했을 때는 인포윈도우를 닫습니다
             (function(marker, title) {
-                window.kakao.maps.event.addListener(marker, 'mouseover',  makeOverListener(map, places[i], infowindow)
+                window.kakao.maps.event.addListener(marker, 'mouseover',  makeOverListener(map, places[i], marker)
                 );
     
-                window.kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+                window.kakao.maps.event.addListener(marker, 'mouseout', makeOutListener());
     
                 itemEl.onmouseover =  function () {
-                displayInfowindow(places[i] );
+                displayInfowindow(map, places[i], marker );
                 };
     
                 itemEl.onmouseout =  function () {
@@ -246,6 +231,26 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
         map.setBounds(bounds);
     }
     
+        // infowindow를 여는 함수
+    function makeOverListener(map:any, place:any, marker:any) {
+        return function () {
+            // displayInfowindow(marker)
+            infowindow = new window.kakao.maps.InfoWindow({
+                // map: map, // 인포윈도우가 표시될 지도
+                // position : marker, 
+                content : place.place_name,
+            });
+            infowindow?.open(map, marker);
+        };
+        }
+
+        // infowindow를 닫는 클로저를 만드는 함수입니다
+    function makeOutListener() {
+        return function () {
+            infowindow?.close();
+        };
+        }
+
     // 검색결과 항목을 Element로 반환하는 함수입니다
     function getListItem(index: any, places:any){
     
@@ -272,6 +277,9 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
     
     // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
     function addMarker(position:any, idx:any){
+        
+        
+
         let imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
             imageSize = new window.kakao.maps.Size(36, 37),  // 마커 이미지의 크기
             imgOptions =  {
