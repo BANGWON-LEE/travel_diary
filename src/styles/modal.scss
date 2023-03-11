@@ -30,12 +30,70 @@
     }
 
     &_map_block{
-        width: 800px;
+        // width: 800px;
+        width: auto;
+        padding: 25px 35px;
 
         &_ground{
             width: 100%;
             height: 65vh;
         }
-    }
+    
+        .bg_white{
+            .option{
+                position: relative;
+                z-index: 99;
+                bottom: 70px;
+                &_block{
+                    // padding-top: 15px;
+                    float: right;
+                    // padding-right: 25px;
+                    display: flex;
+                    width: 30%;
+                    box-sizing: border-box;
 
+                    .loc_search{
+                        width: 95%;
+                        height: 30px;
+                        border: 2px solid #FF007F;
+                        border-radius: 5px;
+                        box-sizing: border-box;
+                        margin-right: -30%;
+                        outline: none;
+                        font-weight: 700;
+                        font-size: 17px;
+                        padding: 18px 0px 18px 13px;
+                    }
+
+                    .btn-loc_search{
+                        background-color: #B5B2FF;
+                        width: 30%;
+                        height: 36px;
+                        position: relative;
+                        // right: 68px;
+                        right: 1.4px;
+                        border: none;
+                        top: 1.4px;
+                        color: #FFFFFF;
+                        font-size: 12px;
+                        font-weight: bolder;
+                        border-radius: 5px;
+                        box-sizing: border-box;
+                    }
+                        
+                }
+                
+            }
+
+            .places_list{
+                // width: 30px;
+                .item{
+                    display: inline-flex;
+                }
+            }
+        }
+    }
+    
 }
+
+
