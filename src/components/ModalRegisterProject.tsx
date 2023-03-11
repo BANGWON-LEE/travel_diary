@@ -126,7 +126,7 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
     }
         // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
     function placesSearchCB(data:any, status:any, pagination: any){
-            console.log('check', data)
+            console.log('check', pagination)
 
 
         if (status === window.kakao.maps.services.Status.OK) {
@@ -195,7 +195,7 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
             let placePosition = new window.kakao.maps.LatLng(places[i].y, places[i].x),
                 // marker = addMarker(placePosition, i),
                 marker = addMarker(placePosition, i ), 
-                itemEl = getListItem(i, places); // 검색 결과 항목 Element를 생성합니다
+                itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
                 // itemEl = getListItem(i, places[i]);
             // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
             // LatLngBounds 객체에 좌표를 추가합니다
@@ -257,7 +257,7 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
         let el = document.createElement('li'),
         itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
                     '<div class="info">' +
-                    '   <h5>' + places.place_name + '</h5>';
+                    '   <h5>'+ Number(index+1) + ". " + places.place_name + '</h5>';
     
         if (places.road_address_name) {
             itemStr += '    <span>' + places.road_address_name + '</span>' +
@@ -308,7 +308,7 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
     }
     
     // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
-    function displayPagination({pagination}:any) {
+    function displayPagination(pagination:any) {
         let paginationEl = document.getElementById('pagination'),
             fragment = document.createDocumentFragment(),
             i; 
@@ -318,7 +318,7 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
             if(paginationEl.lastChild !== null){ paginationEl.removeChild(paginationEl.lastChild);
         }
     
-        for (i=1; i<=pagination.last; i++) {
+        for (i=1; i<=pagination.length; i++) {
             let el = document.createElement('a');
             el.href = "#";
             if(el !== null) el.innerHTML = String(i);
@@ -363,6 +363,7 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
                 width: 980,
                 // overflow:'auto',
                 backgroundColor: "#FFFFFF",
+                borderRadius:5
             }}>
                 <div className="modal_background">
                     <div className="modal_background_top">
@@ -378,13 +379,13 @@ const ModalRegisterProject  = ({modalStatus, setModalStatus}:ModalType) => {
 
                             <div id="menu_wrap" className="bg_white">
                                 <div className="option">
-                                    <div>
-                                            키워드 : <input type="text" onChange={(event) => {setKeyword(event.target.value)}} size={15} /> 
-                                            <button onClick={() => setSearchStatus(true)}>검색하기</button> 
+                                    <div className="option_block">
+                                            <input type="text" className="loc_search" onChange={(event) => {setKeyword(event.target.value)}} size={15} /> 
+                                            <button className="btn-loc_search" onClick={() => setSearchStatus(true)}>검색</button> 
                                     </div>
                                 </div>
-                                <hr />
-                                <ul id="placesList"></ul>
+                                {/* <hr /> */}
+                                <ul id="placesList" className="places_list"></ul>
                                 <div id="pagination"></div>
                             </div>
                         </div>
