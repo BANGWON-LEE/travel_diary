@@ -1,6 +1,7 @@
 .modal_background{
     overflow: auto;
     height: 85vh;
+    margin: 9px 0px;
     &::-webkit-scrollbar {
         width: 10px;
     }
@@ -77,7 +78,7 @@
                         color: #FFFFFF;
                         font-size: 12px;
                         font-weight: bolder;
-                        border-radius: 5px;
+                        border-radius: 2px;
                         box-sizing: border-box;
                     }
                         
