@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import "../styles/modal.scss";
 
 import closeBtn from "../asset/close-button.png";
+import locBtn from "../asset/loc.png"
 import env from "../env";
 
 interface ModalType {
@@ -24,6 +25,8 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
   const longitude = 127.037425209409;
 
   const [map, setMap] = useState<any>();
+
+
 
   useEffect(() => {
     // 팝업창을 열었을 때, 처음으로 보이는 위치
@@ -101,6 +104,7 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
       // console.log('vv',   services.keywordSearch(keyword, placesSearchCB))
     }
     // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+    
     function placesSearchCB(data: any, status: any, pagination: any) {
       console.log("check", pagination);
 
@@ -227,9 +231,19 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
       };
     }
 
+ 
+  
     // 검색결과 항목을 Element로 반환하는 함수입니다
-    function getListItem(index: any, places: any) {
+    function getListItem(index: any, places: any){
+
+   
+      const handleClickLoc = (event: any) => {
+        const example = event.currentTarget.getAttribute('loc-x')
+    console.log("콘솔", example);
+  }
       let el = document.createElement("li"),
+      
+
         itemStr =
           '<span class="markerbg marker_' +
           (index + 1) +
@@ -253,13 +267,24 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
         itemStr += "    <span>" + places.address_name + "</span>";
       }
 
-      itemStr += '  <span class="tel">' + places.phone + "</span>" + "</div>";
+      itemStr += 
+        '<span class="tel">' 
+          + places.phone + 
+        "</span>" 
+        +`<span><button onClick='${handleClickLoc}' loc-x='${places.x}'><img src=${locBtn} /></button></span>`
+      + "</div>";
 
       el.innerHTML = itemStr;
       el.className = "item";
 
+   
+
       return el;
+
+      
     }
+
+
 
     // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
     function addMarker(position: any, idx: any) {
@@ -334,6 +359,8 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
     setSearchStatus(false);
   }, [searchStatus]);
 
+
+
   return (
     <Modal open={modalStatus} onClose={setModalStatus}>
       <Box
@@ -396,8 +423,16 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
                   </div>
                 </div>
                 {/* <hr /> */}
+                {searchStatus === true ?
                 <ul id="placesList" className="places_list"></ul>
-                <div id="pagination"></div>
+                  :
+                <ul id="placesList" className="places_list">
+                  <p className="empty-list">
+                    장소를 검색해주세요.
+                  </p>
+                </ul>
+              }     
+                <div id="pagination" className="page-list"></div>
               </div>
             </div>
           </div>
