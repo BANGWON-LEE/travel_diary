@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -25,7 +25,11 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
   const longitude = 127.037425209409;
 
   const [map, setMap] = useState<any>();
-
+  let modalOpenCnt = 0;
+  const mapScript = document.createElement("script");
+  mapScript.async = true;
+  mapScript.type = "text/javascript";
+  mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${env.apiKey}&libraries=services&autoload=false`;
 
 
   useEffect(() => {
@@ -33,12 +37,9 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
 
     // if(modalStatus === true){
 
-    const mapScript = document.createElement("script");
+   
 
-    mapScript.async = true;
-    mapScript.type = "text/javascript";
-    mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${env.apiKey}&libraries=services&autoload=false`;
-
+ 
     document.head.appendChild(mapScript);
 
     console.log("kakao", window.kakao);
@@ -61,6 +62,7 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
       return mapScript.addEventListener("load", onLoadKakaoMap);
     } else if (modalStatus === false) {
       return mapScript.removeEventListener("load", onLoadKakaoMap);
+      modalOpenCnt = 0;
     }
   }, [modalStatus]);
 
@@ -69,43 +71,47 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
   // 키워드로 장소를 검색합니다
 
   const [keyword, setKeyword] = useState<String>("");
-  const [searchStatus, setSearchStatus] = useState<Boolean>(false);
+  const [searchStatus, setSearchStatus] = useState<Boolean>(true);
+  const [locData, setLocData] = useState<any>([])
+  const modalRef = useRef<HTMLDivElement>(null)
+
+  const searchLoc = () => {
+    setSearchStatus(false)
+  }
 
   useEffect(() => {
-    if (searchStatus === false) {
+    if (searchStatus === true) {
       return;
-    }
+    } 
+    
+    
+    if(searchStatus === false){
 
     let markers: any = [];
 
     // 장소 검색 객체를 생성합니다
     //  let map = window.kakao?.maps.Map(mapContainer, mapOption);
     let services = window.kakao?.maps?.services;
-    let ps = window.kakao?.maps?.services.Places();
+    let ps = window.kakao?.maps?.services?.Places();
     // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
     let infowindow: any;
-    console.log("info", infowindow);
-    // var infowindow = window.kakao.maps.InfoWindow({zIndex:1})
-
-    searchPlaces();
-
+ 
     // 키워드 검색을 요청하는 함수입니다
-    function searchPlaces() {
+    const searchPlaces = () => {
       if (!keyword.replace(/^\s+|\s+$/g, "")) {
         alert("키워드를 입력해주세요!");
         return false;
       }
 
-      // console.log('infoWindow',  window.kakao?.maps?.services)
 
       // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
       ps?.keywordSearch?.();
-      services.keywordSearch(keyword, placesSearchCB);
+      services?.keywordSearch(keyword, placesSearchCB);
       // console.log('vv',   services.keywordSearch(keyword, placesSearchCB))
     }
     // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
-    
-    function placesSearchCB(data: any, status: any, pagination: any) {
+
+    const placesSearchCB = (data: any, status: any, pagination: any) => {
       console.log("check", pagination);
 
       if (status === window.kakao.maps.services.Status.OK) {
@@ -125,7 +131,7 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
     }
 
     // 검색결과 목록의 자식 Element를 제거하는 함수입니다
-    function removeAllChildNods(el: any) {
+    const removeAllChildNods = (el: any) => {
       while (el?.hasChildNodes()) {
         el.removeChild(el.lastChild);
       }
@@ -133,7 +139,7 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
 
     // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
     // 인포윈도우에 장소명을 표시합니다
-    function displayInfowindow(map: any, place: any, marker: any) {
+    const displayInfowindow = (map: any, place: any, marker: any) => {
       return function () {
         // displayInfowindow(marker)
         infowindow = new window.kakao.maps.InfoWindow({
@@ -146,7 +152,7 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
     }
 
     // 검색 결과 목록과 마커를 표출하는 함수입니다
-    function displayPlaces(places: any) {
+    const displayPlaces = (places: any) => {
       let listEl = document.getElementById("placesList"),
         menuEl = document.getElementById("menu_wrap"),
         fragment = document.createDocumentFragment(),
@@ -210,7 +216,7 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
     }
 
     // infowindow를 여는 함수
-    function makeOverListener(map: any, place: any, marker: any) {
+    const makeOverListener = (map: any, place: any, marker: any) => {
       return function () {
         // infowindow = new window.kakao.maps.InfoWindow({
         //   // map: map, // 인포윈도우가 표시될 지도
@@ -225,7 +231,7 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
     }
 
     // infowindow를 닫는 클로저를 만드는 함수입니다
-    function makeOutListener() {
+    const makeOutListener  = () => {
       return function () {
         infowindow?.close();
       };
@@ -234,13 +240,13 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
  
   
     // 검색결과 항목을 Element로 반환하는 함수입니다
-    function getListItem(index: any, places: any){
+    const getListItem = (index: any, places: any) => {
+      setLocData(places)
 
-   
       const handleClickLoc = (event: any) => {
         const example = event.currentTarget.getAttribute('loc-x')
-    console.log("콘솔", example);
-  }
+      console.log("콘솔", example);
+      }
       let el = document.createElement("li"),
       
 
@@ -287,7 +293,7 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
 
 
     // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-    function addMarker(position: any, idx: any) {
+    const addMarker = (position: any, idx: any) => {
       let imageSrc =
           "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
         imageSize = new window.kakao.maps.Size(36, 37), // 마커 이미지의 크기
@@ -313,7 +319,7 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
     }
 
     // 지도 위에 표시되고 있는 마커를 모두 제거합니다
-    function removeMarker() {
+    const removeMarker = () => {
       for (let i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
       }
@@ -321,7 +327,7 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
     }
 
     // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
-    function displayPagination(pagination: any) {
+    const displayPagination = (pagination: any) => {
       
       let paginationEl = document.getElementById("pagination"),
       fragment = document.createDocumentFragment(),
@@ -355,10 +361,26 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
     paginationEl?.appendChild(fragment);
 }
 
+searchPlaces();
 
-    setSearchStatus(false);
+if (modalRef.current) {
+  // 모달 팝업 요소 제거
+  console.log('t3')
+  mapScript.removeEventListener("load", map);
+  setModalStatus(false)
+  // modalRef.current.remove();
+}
+
+console.log('t2')
+mapScript.addEventListener("click", map);
+setModalStatus(true)
+setSearchStatus(true);
+}
+
+    
   }, [searchStatus]);
-
+  
+ 
 
 
   return (
@@ -391,7 +413,7 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
             </div>
           </div>
           <div className="modal_background_map_block">
-            <div className="map_wrap">
+            <div className="map_wrap" ref={modalRef}>
               <div
                 id="map"
                 className="modal_background_map_block_ground"
@@ -416,7 +438,7 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
                     />
                     <button
                       className="btn-loc_search"
-                      onClick={() => setSearchStatus(true)}
+                      onClick={searchLoc}
                     >
                       검색
                     </button>
