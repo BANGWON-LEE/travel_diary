@@ -25,27 +25,25 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
   const longitude = 127.037425209409;
 
   const [map, setMap] = useState<any>();
-  let modalOpenCnt = 0;
+
   const mapScript = document.createElement("script");
   mapScript.async = true;
   mapScript.type = "text/javascript";
   mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${env.apiKey}&libraries=services&autoload=false`;
 
+  let itemStr: any
 
   useEffect(() => {
     // 팝업창을 열었을 때, 처음으로 보이는 위치
 
     // if(modalStatus === true){
 
-   
-
- 
     document.head.appendChild(mapScript);
 
     console.log("kakao", window.kakao);
 
     const onLoadKakaoMap = () => {
-      window.kakao.maps.load(() => {
+      window.kakao.maps?.load(() => {
         const container = document.getElementById("map");
         const options = {
           center: new window.kakao.maps.LatLng(latitude, longitude),
@@ -62,7 +60,7 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
       return mapScript.addEventListener("load", onLoadKakaoMap);
     } else if (modalStatus === false) {
       return mapScript.removeEventListener("load", onLoadKakaoMap);
-      modalOpenCnt = 0;
+      
     }
   }, [modalStatus]);
 
@@ -71,26 +69,28 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
   // 키워드로 장소를 검색합니다
 
   const [keyword, setKeyword] = useState<String>("");
-  const [searchStatus, setSearchStatus] = useState<Boolean>(true);
+  const [searchStatus, setSearchStatus] = useState<Boolean>(false);
   const [locData, setLocData] = useState<any>([])
   const modalRef = useRef<HTMLDivElement>(null)
 
   const searchLoc = () => {
-    setSearchStatus(false)
+    setSearchStatus(true)
   }
 
+  console.log('win',window.kakao?.maps?.services?.Status.OK)
+
   useEffect(() => {
-    if (searchStatus === true) {
+    if (searchStatus === false) {
       return;
     } 
     
     
-    if(searchStatus === false){
+    if(searchStatus === true){
 
     let markers: any = [];
 
     // 장소 검색 객체를 생성합니다
-    //  let map = window.kakao?.maps.Map(mapContainer, mapOption);
+    //  let map = window.kakao?.maps?.Map(mapContainer, mapOption);
     let services = window.kakao?.maps?.services;
     let ps = window.kakao?.maps?.services?.Places();
     // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
@@ -114,17 +114,17 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
     const placesSearchCB = (data: any, status: any, pagination: any) => {
       console.log("check", pagination);
 
-      if (status === window.kakao.maps.services.Status.OK) {
+      if (status === window.kakao.maps?.services.Status.OK) {
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출합니다
         displayPlaces(data);
 
         // 페이지 번호를 표출합니다
         displayPagination(pagination);
-      } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
+      } else if (status === window.kakao.maps?.services.Status.ZERO_RESULT) {
         alert("검색 결과가 존재하지 않습니다.");
         return;
-      } else if (status === window.kakao.maps.services.Status.ERROR) {
+      } else if (status === window.kakao.maps?.services.Status.ERROR) {
         alert("검색 결과 중 오류가 발생했습니다.");
         return;
       }
@@ -182,13 +182,13 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
         // 해당 장소에 인포윈도우에 장소명을 표시합니다
         // mouseout 했을 때는 인포윈도우를 닫습니다
         (function (marker, title) {
-          window.kakao.maps.event.addListener(
+          window.kakao.maps?.event.addListener(
             marker,
             "mouseover",
             makeOverListener(map, places[i], marker)
           );
 
-          window.kakao.maps.event.addListener(
+          window.kakao.maps?.event.addListener(
             marker,
             "mouseout",
             makeOutListener()
@@ -218,7 +218,7 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
     // infowindow를 여는 함수
     const makeOverListener = (map: any, place: any, marker: any) => {
       return function () {
-        // infowindow = new window.kakao.maps.InfoWindow({
+        // infowindow = new window.kakao.maps?.InfoWindow({
         //   // map: map, // 인포윈도우가 표시될 지도
         //   // position : marker,
         //   content: place.place_name,
@@ -247,7 +247,7 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
         const example = event.currentTarget.getAttribute('loc-x')
       console.log("콘솔", example);
       }
-      let el = document.createElement("li"),
+      let el = document.createElement("li");
       
 
         itemStr =
@@ -361,25 +361,30 @@ const ModalRegisterProject = ({ modalStatus, setModalStatus }: ModalType) => {
     paginationEl?.appendChild(fragment);
 }
 
-searchPlaces();
+  searchPlaces();
 
-if (modalRef.current) {
-  // 모달 팝업 요소 제거
-  console.log('t3')
-  mapScript.removeEventListener("load", map);
-  setModalStatus(false)
-  // modalRef.current.remove();
-}
 
-console.log('t2')
-mapScript.addEventListener("click", map);
-setModalStatus(true)
-setSearchStatus(true);
-}
+  }
 
-    
+    if (searchStatus === true) {
+    // 모달 팝업 요소 제거
+    console.log('t3')
+    mapScript.removeEventListener("load", map);
+    setModalStatus(true)
+    setSearchStatus(false);
+    // modalRef.current.remove();
+    }
+
+    if(searchStatus === false){
+    console.log('t2')
+    mapScript.addEventListener("load", map);
+    setModalStatus(false)
+    setSearchStatus(true);
+    }
+
   }, [searchStatus]);
   
+  console.log('sear', searchStatus)
  
 
 
@@ -445,15 +450,11 @@ setSearchStatus(true);
                   </div>
                 </div>
                 {/* <hr /> */}
-                {searchStatus === true ?
-                <ul id="placesList" className="places_list"></ul>
-                  :
                 <ul id="placesList" className="places_list">
                   <p className="empty-list">
                     장소를 검색해주세요.
                   </p>
-                </ul>
-              }     
+                </ul>  
                 <div id="pagination" className="page-list"></div>
               </div>
             </div>
