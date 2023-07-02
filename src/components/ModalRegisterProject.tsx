@@ -67,17 +67,18 @@ const ModalRegisterProject = (props: ModalType) => {
 
   const [keyword, setKeyword] = useState<String>('');
   const [searchStatus, setSearchStatus] = useState<Boolean>(false);
-  const [locData, setLocData] = useState<any[]>([]);
-  const modalRef = useRef<HTMLDivElement>(null);
 
   const searchLoc = () => {
     setSearchStatus(true);
   };
 
-  console.log('win', window.kakao?.maps?.services?.Status.OK);
+  const [locData, setLocData] = useState<any[]>([]);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // const itemStr: string = '';
+
+    console.log('데이터이에요', locData);
 
     if (searchStatus === false) {
       return;
@@ -139,7 +140,7 @@ const ModalRegisterProject = (props: ModalType) => {
         const markerImage = new window.kakao.maps.MarkerImage(
           imageSrc,
           imageSize,
-          imgOptions
+          imgOptions,
         );
         const marker = new window.kakao.maps.Marker({
           position, // 마커의 위치
@@ -155,32 +156,12 @@ const ModalRegisterProject = (props: ModalType) => {
       // 검색결과 항목을 Element로 반환하는 함수입니다
       const getListItem = (index: any, places: any) => {
         const el = document.createElement('li');
+        console.log('index', index);
+        console.log('places', places);
+        setLocData((prevState) =>
+          prevState.length < 16 ? [...prevState, places] : [],
+        );
 
-        setLocData((prevState) => [...prevState, places]);
-
-        // itemStr =
-        //   `<span class="markerbg marker_${index + 1}"></span>` +
-        //   `<div class="info">` +
-        //   `   <h5>${Number(index + 1)}. ${places.place_name}</h5>`;
-
-        // if (places.road_address_name) {
-        //   itemStr +=
-        //     `    <span>${places.road_address_name}</span>` +
-        //     `   <span class="jibun gray">${places.address_name}</span>`;
-        // } else {
-        //   itemStr += `    <span>${places.address_name}</span>`;
-        // }
-
-        // itemStr += `
-        //   <span class="tel">${places.phone}</span>
-        //   <span>
-        //     <button onclick="function handleClickLoc(event) {const example = event.currentTarget.getAttribute('loc-x'); console.log('콘솔', example);} handleClickLoc(event)" loc-x="${places.x}">
-        //       <img src="${locBtn}" />
-        //     </button>
-        //   </span>
-        // </div>`;
-
-        // // el.innerHTML = itemStr;
         el.className = 'item';
 
         return el;
@@ -224,7 +205,7 @@ const ModalRegisterProject = (props: ModalType) => {
           // 마커를 생성하고 지도에 표시합니다
           const placePosition = new window.kakao.maps.LatLng(
             places[i].y,
-            places[i].x
+            places[i].x,
           );
 
           // setLocData(locData.concat(places[i]));
@@ -245,13 +226,13 @@ const ModalRegisterProject = (props: ModalType) => {
             global.kakao.maps?.event.addListener(
               markerParams,
               'mouseover',
-              makeOverListener(map, title)
+              makeOverListener(map, title),
             );
 
             global.kakao.maps?.event.addListener(
               markerParams,
               'mouseout',
-              makeOutListener()
+              makeOutListener(),
             );
 
             itemEl.onmouseover = function () {
@@ -346,15 +327,13 @@ const ModalRegisterProject = (props: ModalType) => {
 
     if (searchStatus === true) {
       // 모달 팝업 요소 제거
-      console.log('t3');
+
       mapScript.removeEventListener('load', map);
       setModalStatus(true);
       setSearchStatus(false);
-      // modalRef.current.remove();
     }
 
     if (searchStatus === false) {
-      console.log('t2');
       mapScript.addEventListener('load', map);
       setModalStatus(false);
       setSearchStatus(true);
@@ -365,7 +344,6 @@ const ModalRegisterProject = (props: ModalType) => {
   //   const example = event.currentTarget.getAttribute('loc-x');
   //   console.log('콘솔', example);
   // };
-  console.log('데이터이에요', locData);
 
   return (
     <Modal open={modalStatus} onClose={setModalStatus}>
@@ -438,11 +416,13 @@ const ModalRegisterProject = (props: ModalType) => {
                   {locData.length > 0 ? (
                     locData.map((data) => (
                       <li className="item">
+                        <span>{data.address_name}</span>
                         <span>{data.place_name}</span>
                         <span className="tel" />
                         <span>
                           <button
                             type="button"
+                            className="loc-btn"
                             // onClick={(event: any) =>
                             //   handleClickLoc(event.target)
                             // }
@@ -454,9 +434,7 @@ const ModalRegisterProject = (props: ModalType) => {
                       </li>
                     ))
                   ) : (
-                    <ul id="placesList" className="places_list">
-                      <p className="empty-list">장소를 검색해주세요.</p>
-                    </ul>
+                    <p className="empty-list">장소를 검색해주세요.</p>
                   )}
                 </ul>
                 {/* </div> */}
