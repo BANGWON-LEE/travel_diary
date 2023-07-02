@@ -1,142 +1,142 @@
-.modal_background{
-    overflow: auto;
-    height: 85vh;
-    margin: 9px 0px;
-    &::-webkit-scrollbar {
-        width: 10px;
-    }
-    &::-webkit-scrollbar-thumb {
+.modal_background {
+  overflow: auto;
+  height: 85vh;
+  margin: 9px 0px;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
     border-radius: 8px;
-    background-color: #BBBBBB;
+    background-color: #bbbbbb;
+  }
+
+  &_top {
+    &_block {
+      width: 10%;
+      float: right;
+      padding: 10px 10px 0px 0px;
+
+      &_btn {
+        background-color: transparent;
+        border: none;
+        float: right;
+        cursor: pointer;
+
+        > img {
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
+  }
+
+  &_map_block {
+    width: auto;
+    padding: 25px 35px;
+
+    &_ground {
+      width: 100%;
+      height: 65vh;
     }
 
-    &_top{
-        &_block{
-            width: 10%;
-            float: right;
-            padding: 10px 10px 0px 0px;
+    .bg_white {
+      .option {
+        position: relative;
+        z-index: 99;
+        bottom: 70px;
+        &_block {
+          float: right;
+          display: flex;
+          width: 30%;
+          box-sizing: border-box;
 
-            &_btn{
-                background-color: transparent;
-                border: none;
-                float: right;
-                cursor: pointer;
-            
-                >img{
-                    width: 15px;
-                    height: 15px;
-                }
-            }
+          .loc_search {
+            width: 95%;
+            height: 30px;
+            border: 2px solid #ff007f;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-right: -30%;
+            outline: none;
+            font-weight: 700;
+            font-size: 17px;
+            padding: 18px 0px 18px 13px;
+          }
+
+          .btn-loc_search {
+            background-color: #b5b2ff;
+            width: 30%;
+            height: 36px;
+            position: relative;
+            right: 1.4px;
+            border: none;
+            top: 2.39px;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: bolder;
+            border-radius: 2px;
+            box-sizing: border-box;
+          }
         }
+      }
+
+      .places_list {
+        border: 3px solid #bbbbbb;
+        border-radius: 15px;
+        padding-right: 20px;
+        li:last-child {
+          border-bottom: none;
+        }
+
+        .empty-list {
+          text-align: center;
+          padding: 0px 210px;
+        }
+
+        .item {
+          border-bottom: 1.5px solid #bbbbbb;
+          list-style: none;
+          display: flex;
+
+          .info {
+            display: inline-flex;
+
+            > h5 {
+              width: 200px;
+              padding-left: 80px;
+            }
+
+            > span {
+              padding: 20px 15px;
+            }
+          }
+
+          .loc-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+
+            > img {
+              width: 25px;
+              height: 25px;
+            }
+          }
+        }
+      }
+
+      .page-list {
+        text-align: center;
+        > a {
+          font-size: 20px;
+          text-decoration: none;
+          color: #333333;
+          padding: 0px 10px;
+        }
+
+        .on {
+          color: #b5b2ff;
+        }
+      }
     }
-
-    &_map_block{
-        // width: 800px;
-        width: auto;
-        padding: 25px 35px;
-
-        &_ground{
-            width: 100%;
-            height: 65vh;
-        }
-    
-        .bg_white{
-            .option{
-                position: relative;
-                z-index: 99;
-                bottom: 70px;
-                &_block{
-                    // padding-top: 15px;
-                    float: right;
-                    // padding-right: 25px;
-                    display: flex;
-                    width: 30%;
-                    box-sizing: border-box;
-
-                    .loc_search{
-                        width: 95%;
-                        height: 30px;
-                        border: 2px solid #FF007F;
-                        border-radius: 5px;
-                        box-sizing: border-box;
-                        margin-right: -30%;
-                        outline: none;
-                        font-weight: 700;
-                        font-size: 17px;
-                        padding: 18px 0px 18px 13px;
-                    }
-
-                    .btn-loc_search{
-                        background-color: #B5B2FF;
-                        width: 30%;
-                        height: 36px;
-                        position: relative;
-                        // right: 68px;
-                        right: 1.4px;
-                        border: none;
-                        top: 2.39px;
-                        color: #FFFFFF;
-                        font-size: 12px;
-                        font-weight: bolder;
-                        border-radius: 2px;
-                        box-sizing: border-box;
-                    }
-                        
-                }
-                
-            }
-
-            .places_list{
-                // width: 30px;
-                // background-color: #;
-                border: 3px solid #BBBBBB;
-                border-radius: 15px;
-                padding-right: 20px;
-                li:last-child{
-                    border-bottom: none;
-                }
-
-                .empty-list{
-                    text-align: center;
-                    padding: 0px 210px;
-                }
-
-                .item{
-                    border-bottom: 1.5px solid #BBBBBB;
-                    list-style: none;
-
-                    .info{
-                        display: inline-flex;
-
-                        >h5{
-                            width: 200px;
-                            padding-left: 80px;
-                        }
-
-                        >span{
-                            padding: 20px 15px;
-                        }
-                    }
-                }
-            }
-
-            .page-list{
-                text-align: center;
-                >a{
-                    font-size: 20px;
-                    text-decoration: none;
-                    color: #333333;
-                    padding: 0px 10px;
-                    
-                }
-
-                .on{
-                    color: #B5B2FF
-                }
-            }
-        }
-    }
-    
+  }
 }
-
-
