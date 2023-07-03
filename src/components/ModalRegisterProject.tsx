@@ -78,8 +78,6 @@ const ModalRegisterProject = (props: ModalType) => {
   useEffect(() => {
     // const itemStr: string = '';
 
-    console.log('데이터이에요', locData);
-
     if (searchStatus === false) {
       return;
     }
@@ -157,9 +155,13 @@ const ModalRegisterProject = (props: ModalType) => {
       const getListItem = (index: any, places: any) => {
         const el = document.createElement('li');
         console.log('index', index);
-        console.log('places', places);
+
+        // 230703 이 부분 다시 확인하기, 페이징이 안 맞음
+        // console.log('places', places.length);
         setLocData((prevState) =>
-          prevState.length < 16 ? [...prevState, places] : [],
+          [...prevState].length > 15 && prevState.length < 31
+            ? locData.splice(0, 16)
+            : [...prevState, places],
         );
 
         el.className = 'item';
@@ -261,7 +263,7 @@ const ModalRegisterProject = (props: ModalType) => {
         const paginationEl = document.getElementById('pagination');
         const fragment = document.createDocumentFragment();
         // let i;
-
+        console.log('네이션', pagination);
         console.log('pa', paginationEl?.hasChildNodes());
         // 기존에 추가된 페이지번호를 삭제합니다
         while (paginationEl?.hasChildNodes()) {
@@ -269,20 +271,22 @@ const ModalRegisterProject = (props: ModalType) => {
             paginationEl.removeChild(paginationEl.lastChild);
           }
         }
-        for (let i = 1; i <= pagination.last; i += 1) {
+        for (let i = 1; i <= 3; i += 1) {
           const el = document.createElement('a');
           el.href = '#';
 
           el.innerHTML = String(i);
 
-          if (i === pagination.current) {
-            el.className = 'on';
-          } else {
-            el.onclick = (function (num) {
+          if (i !== pagination.current) {
+            el.onclick = (function (index) {
               return function () {
-                pagination.gotoPage(num);
+                console.log('확인', index);
+
+                pagination.gotoPage(index);
               };
             })(i);
+          } else {
+            el.className = 'on';
           }
 
           fragment.appendChild(el);
@@ -316,7 +320,7 @@ const ModalRegisterProject = (props: ModalType) => {
         // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
         ps?.keywordSearch?.();
         services?.keywordSearch(keyword, placesSearchCB);
-        // console.log('vv',   services.keywordSearch(keyword, placesSearchCB))
+        // console.log('vv', services.keywordSearch(keyword, placesSearchCB));
         return true;
       };
 
@@ -344,6 +348,8 @@ const ModalRegisterProject = (props: ModalType) => {
   //   const example = event.currentTarget.getAttribute('loc-x');
   //   console.log('콘솔', example);
   // };
+
+  console.log('데이터이에요', locData);
 
   return (
     <Modal open={modalStatus} onClose={setModalStatus}>
@@ -387,7 +393,6 @@ const ModalRegisterProject = (props: ModalType) => {
                   overflow: 'hidden',
                 }}
               />
-
               <div id="menu_wrap" className="bg_white">
                 <div className="option">
                   <div className="option_block">
@@ -408,18 +413,18 @@ const ModalRegisterProject = (props: ModalType) => {
                     </button>
                   </div>
                 </div>
-                {/* <hr /> */}
-
-                {/* <ul id="loc_list" className="loc_list" /> */}
-                {/* <div> */}
                 <ul id="loc_list" className="places_list">
                   {locData.length > 0 ? (
                     locData.map((data) => (
                       <li className="item">
-                        <span>{data.address_name}</span>
-                        <span>{data.place_name}</span>
-                        <span className="tel" />
-                        <span>
+                        <span className="item_place-name">
+                          {data.place_name}
+                        </span>
+                        <span className="item_addr-name">
+                          {data.address_name}
+                        </span>
+                        <span className="item_phone-num">{data.phone}</span>
+                        <span className="item_loc">
                           <button
                             type="button"
                             className="loc-btn"
@@ -437,7 +442,6 @@ const ModalRegisterProject = (props: ModalType) => {
                     <p className="empty-list">장소를 검색해주세요.</p>
                   )}
                 </ul>
-                {/* </div> */}
                 <div id="pagination" className="page-list" />
               </div>
             </div>
