@@ -97,6 +97,22 @@
           border-bottom: 1.5px solid #bbbbbb;
           list-style: none;
           display: flex;
+          width: 97%;
+
+          &_addr-name {
+            margin-left: 10px;
+            width: 40%;
+          }
+
+          &_place-name {
+            margin-left: 10px;
+            font-weight: bolder;
+            width: 30%;
+          }
+
+          &_phone-num {
+            width: 20%;
+          }
 
           .info {
             display: inline-flex;
@@ -111,14 +127,18 @@
             }
           }
 
-          .loc-btn {
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
+          .item_loc {
+            width: 10%;
+            .loc-btn {
+              float: right;
+              background-color: transparent;
+              border: none;
+              cursor: pointer;
 
-            > img {
-              width: 25px;
-              height: 25px;
+              > img {
+                width: 25px;
+                height: 25px;
+              }
             }
           }
         }
