@@ -1,6 +1,8 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 // import { map } from 'leaflet';
+// import { length } from 'assert';
+// import { map } from 'leaflet';
 import React, { useEffect, useRef, useState } from 'react';
 
 import closeBtn from '../asset/close-button.png';
@@ -106,14 +108,16 @@ const ModalRegisterProject = (props: ModalType) => {
       // 인포윈도우에 장소명을 표시합니다
       let infowindow: any;
       const displayInfowindow = (place: any, marker: any) => {
+        console.log('1단계');
         return function () {
           // displayInfowindow(marker)
           infowindow = new window.kakao.maps.InfoWindow({
-            map, // 인포윈도우가 표시될 지도
-            position: marker,
-            content: place.place_name,
+            // map, // 인포윈도우가 표시될 지도
+            position: place,
+            content: marker,
           });
-          infowindow?.open(map, marker);
+          console.log('로로로');
+          infowindow?.open(place, marker);
         };
       };
 
@@ -159,10 +163,11 @@ const ModalRegisterProject = (props: ModalType) => {
         // 230703 이 부분 다시 확인하기, 페이징이 안 맞음
         // console.log('places', places.length);
         setLocData((prevState) =>
-          [...prevState].length > 15 && prevState.length < 31
-            ? locData.splice(0, 16)
+          [...prevState, places].length > 15
+            ? [...prevState, places].slice(-15)
             : [...prevState, places],
         );
+        // setLocData((prevState) => [...prevState, places]);
 
         el.className = 'item';
 
@@ -211,9 +216,9 @@ const ModalRegisterProject = (props: ModalType) => {
           );
 
           // setLocData(locData.concat(places[i]));
-
           const itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-          // itemEl = getListItem(i, places[i]);
+          // itemEl = getListItem(i, places[i])
+          console.log('item', itemEl);
           // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
           // LatLngBounds 객체에 좌표를 추가합니다
           bounds.extend(placePosition);
@@ -221,14 +226,17 @@ const ModalRegisterProject = (props: ModalType) => {
           const global = window;
           // marker = addMarker(placePosition, i),
           const marker: any = addMarker(placePosition, i);
+
           // 마커와 검색결과 항목에 mouseover 했을때
           // 해당 장소에 인포윈도우에 장소명을 표시합니다
           // mouseout 했을 때는 인포윈도우를 닫습니다
           (function (markerParams, title) {
+            console.log('마커', markerParams);
             global.kakao.maps?.event.addListener(
               markerParams,
               'mouseover',
               makeOverListener(map, title),
+              // console.log('마우스오바'),
             );
 
             global.kakao.maps?.event.addListener(
@@ -238,11 +246,14 @@ const ModalRegisterProject = (props: ModalType) => {
             );
 
             itemEl.onmouseover = function () {
+              // alert('되냐?');
+              console.log('마우스오버');
               displayInfowindow(map, title);
             };
 
             itemEl.onmouseout = function () {
               // infowindow?.close();
+              makeOutListener();
             };
           })(marker, places[i].place_name);
 
@@ -423,7 +434,9 @@ const ModalRegisterProject = (props: ModalType) => {
                         <span className="item_addr-name">
                           {data.address_name}
                         </span>
-                        <span className="item_phone-num">{data.phone}</span>
+                        <span className="item_phone-num">
+                          {data.phone === '' ? '연락처 정보 없음' : data.phone}
+                        </span>
                         <span className="item_loc">
                           <button
                             type="button"
