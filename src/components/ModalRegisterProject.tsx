@@ -107,19 +107,6 @@ const ModalRegisterProject = (props: ModalType) => {
       // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
       // 인포윈도우에 장소명을 표시합니다
       let infowindow: any;
-      const displayInfowindow = (place: any, marker: any) => {
-        console.log('1단계');
-        return function () {
-          // displayInfowindow(marker)
-          infowindow = new window.kakao.maps.InfoWindow({
-            // map, // 인포윈도우가 표시될 지도
-            position: place,
-            content: marker,
-          });
-          console.log('로로로');
-          infowindow?.open(place, marker);
-        };
-      };
 
       // 지도 위에 표시되고 있는 마커를 모두 제거합니다
       const removeMarker = () => {
@@ -158,10 +145,7 @@ const ModalRegisterProject = (props: ModalType) => {
       // 검색결과 항목을 Element로 반환하는 함수입니다
       const getListItem = (index: any, places: any) => {
         const el = document.createElement('li');
-        console.log('index', index);
 
-        // 230703 이 부분 다시 확인하기, 페이징이 안 맞음
-        // console.log('places', places.length);
         setLocData((prevState) =>
           [...prevState, places].length > 15
             ? [...prevState, places].slice(-15)
@@ -174,17 +158,13 @@ const ModalRegisterProject = (props: ModalType) => {
         return el;
       };
 
-      const makeOverListener = (place: any, marker: any) => {
+      const makeOverListener = (place: any, markerParams: any, marker: any) => {
         return function () {
-          // infowindow = new window.kakao.maps?.InfoWindow({
-          //   // map: map, // 인포윈도우가 표시될 지도
-          //   // position : marker,
-          //   content: place.place_name,
-          // });
           infowindow = new window.kakao.maps.InfoWindow({
-            content: place.place_name,
+            content: marker,
           });
-          infowindow?.open(map, marker);
+
+          infowindow?.open(place, markerParams);
         };
       };
 
@@ -231,11 +211,11 @@ const ModalRegisterProject = (props: ModalType) => {
           // 해당 장소에 인포윈도우에 장소명을 표시합니다
           // mouseout 했을 때는 인포윈도우를 닫습니다
           (function (markerParams, title) {
-            console.log('마커', markerParams);
+            console.log('마커', title);
             global.kakao.maps?.event.addListener(
               markerParams,
               'mouseover',
-              makeOverListener(map, title),
+              makeOverListener(map, markerParams, title),
               // console.log('마우스오바'),
             );
 
@@ -248,7 +228,7 @@ const ModalRegisterProject = (props: ModalType) => {
             itemEl.onmouseover = function () {
               // alert('되냐?');
               console.log('마우스오버');
-              displayInfowindow(map, title);
+              makeOverListener(map, markerParams, title);
             };
 
             itemEl.onmouseout = function () {
