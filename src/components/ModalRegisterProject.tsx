@@ -38,7 +38,7 @@ const ModalRegisterProject = (props: ModalType) => {
 
   // const [placeX, setPlaceX] = useState<string>('');
   // const [placeY, setPlaceY] = useState<string>('');
-  const [choicedPlace, setChoicedPlace] = useState<any[]>();
+  const [choicePlace, setChoicePlace] = useState<any[]>();
 
   useEffect(() => {
     // 팝업창을 열었을 때, 처음으로 보이는 위치
@@ -86,10 +86,12 @@ const ModalRegisterProject = (props: ModalType) => {
   useEffect(() => {
     // const itemStr: string = '';
 
-    if (searchStatus === false && choicedPlace === undefined) {
+    if (searchStatus === false) {
+      // console.log('베리베리');
       return;
     }
-    if (searchStatus === true || choicedPlace !== undefined) {
+    if (searchStatus === true || choicePlace !== undefined) {
+      // console.log('베리베리1');
       let markers: any = [];
 
       // 장소 검색 객체를 생성합니다
@@ -298,7 +300,7 @@ const ModalRegisterProject = (props: ModalType) => {
         if (status === window.kakao.maps?.services.Status.OK) {
           // 정상적으로 검색이 완료됐으면
           // 검색 목록과 마커를 표출합니다
-          if (choicedPlace === undefined) {
+          if (choicePlace === undefined) {
             displayPlaces(data);
           }
 
@@ -326,9 +328,9 @@ const ModalRegisterProject = (props: ModalType) => {
 
       // infowindow를 여는 함수
 
-      if (choicedPlace !== undefined) {
+      if (choicePlace !== undefined) {
         console.log('ㅂㅂㅂㅂ');
-        displayPlaces(choicedPlace);
+        displayPlaces(choicePlace);
       }
 
       searchPlaces();
@@ -336,29 +338,21 @@ const ModalRegisterProject = (props: ModalType) => {
 
     if (searchStatus === true) {
       // 모달 팝업 요소 제거
-
       mapScript.removeEventListener('load', map);
-      setModalStatus(true);
-      setSearchStatus(false);
-      setChoicedPlace(undefined);
     }
 
     if (searchStatus === false) {
       mapScript.addEventListener('load', map);
-      setModalStatus(false);
-      setSearchStatus(true);
     }
-  }, [searchStatus, choicedPlace]);
+  }, [searchStatus, choicePlace]);
 
   const handleClickLoc = (place: object[]) => {
-    console.log('타입보기', typeof place);
     const placeArray: object[] = [];
     placeArray.push(place);
-    console.log('거거', placeArray);
-    setChoicedPlace(placeArray);
+    setChoicePlace(placeArray);
   };
 
-  console.log('데이터이에요', choicedPlace);
+  console.log('데이터이에요', choicePlace);
 
   return (
     <Modal open={modalStatus} onClose={setModalStatus}>
