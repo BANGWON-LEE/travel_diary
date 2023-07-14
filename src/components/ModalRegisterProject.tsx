@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 // import { bounds, map } from 'leaflet';
@@ -36,14 +37,10 @@ const ModalRegisterProject = (props: ModalType) => {
   mapScript.type = 'text/javascript';
   mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${env.apiKey}&libraries=services&autoload=false`;
 
-  // const [placeX, setPlaceX] = useState<string>('');
-  // const [placeY, setPlaceY] = useState<string>('');
   const [choicePlace, setChoicePlace] = useState<any[]>();
 
   useEffect(() => {
     // 팝업창을 열었을 때, 처음으로 보이는 위치
-
-    // if(modalStatus === true){
 
     document.head.appendChild(mapScript);
 
@@ -54,10 +51,6 @@ const ModalRegisterProject = (props: ModalType) => {
           center: new window.kakao.maps.LatLng(latitude, longitude),
         };
         setMap(new window.kakao.maps.Map(container, options));
-        // const markerPosition = new window.kakao.maps.LatLng(
-        //   latitude,
-        //   longitude
-        // );
       });
     };
 
@@ -68,10 +61,6 @@ const ModalRegisterProject = (props: ModalType) => {
       mapScript.removeEventListener('load', onLoadKakaoMap);
     }
   }, [modalStatus]);
-
-  // 지도를 생성합니다
-
-  // 키워드로 장소를 검색합니다
 
   const [keyword, setKeyword] = useState<String>('');
   const [searchStatus, setSearchStatus] = useState<Boolean>(false);
@@ -84,18 +73,14 @@ const ModalRegisterProject = (props: ModalType) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // const itemStr: string = '';
-
     if (searchStatus === false) {
-      // console.log('베리베리');
       return;
     }
     if (searchStatus === true || choicePlace !== undefined) {
-      // console.log('베리베리1');
       let markers: any = [];
+      setLocData([]);
 
       // 장소 검색 객체를 생성합니다
-      //  let map = window.kakao?.maps?.Map(mapContainer, mapOption);
       const services = window.kakao?.maps?.services;
       const ps = window.kakao?.maps?.services?.Places();
       // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
@@ -262,9 +247,7 @@ const ModalRegisterProject = (props: ModalType) => {
       const displayPagination = (pagination: any) => {
         const paginationEl = document.getElementById('pagination');
         const fragment = document.createDocumentFragment();
-        // let i;
-        console.log('네이션', pagination);
-        console.log('pa', paginationEl?.hasChildNodes());
+
         // 기존에 추가된 페이지번호를 삭제합니다
         while (paginationEl?.hasChildNodes()) {
           if (paginationEl.lastChild !== null) {
@@ -280,8 +263,6 @@ const ModalRegisterProject = (props: ModalType) => {
           if (i !== pagination.current) {
             el.onclick = (function (index) {
               return function () {
-                console.log('확인', index);
-
                 pagination.gotoPage(index);
               };
             })(i);
@@ -295,8 +276,6 @@ const ModalRegisterProject = (props: ModalType) => {
       };
 
       const placesSearchCB = (data: any, status: any, pagination: any) => {
-        console.log('check', pagination);
-
         if (status === window.kakao.maps?.services.Status.OK) {
           // 정상적으로 검색이 완료됐으면
           // 검색 목록과 마커를 표출합니다
@@ -329,7 +308,6 @@ const ModalRegisterProject = (props: ModalType) => {
       // infowindow를 여는 함수
 
       if (choicePlace !== undefined) {
-        console.log('ㅂㅂㅂㅂ');
         displayPlaces(choicePlace);
       }
 
@@ -344,6 +322,8 @@ const ModalRegisterProject = (props: ModalType) => {
     if (searchStatus === false) {
       mapScript.addEventListener('load', map);
     }
+
+    setSearchStatus(false);
   }, [searchStatus, choicePlace]);
 
   const handleClickLoc = (place: object[]) => {
@@ -352,7 +332,13 @@ const ModalRegisterProject = (props: ModalType) => {
     setChoicePlace(placeArray);
   };
 
-  console.log('데이터이에요', choicePlace);
+  const placeNameLimit = (text: string) => {
+    const maxLength = 15;
+    if (text.length <= maxLength) {
+      return text; // 글자 수가 제한을 초과하지 않으면 그대로 반환
+    }
+    return `${text.substring(0, maxLength)}...`; // 글자 수가 제한을 초과하면 "..."을 추가하여 반환
+  };
 
   return (
     <Modal open={modalStatus} onClose={setModalStatus}>
@@ -421,13 +407,13 @@ const ModalRegisterProject = (props: ModalType) => {
                     locData.map((data, index) => (
                       <li key={Number(index)} className="item">
                         <span className="item_place-name">
-                          {data.place_name}
+                          {placeNameLimit(data.place_name)}
                         </span>
                         <span className="item_addr-name">
                           {data.address_name}
                         </span>
                         <span className="item_phone-num">
-                          {data.phone === '' ? '연락처 정보 없음' : data.phone}
+                          {data.phone === '' ? '연락처 없음' : data.phone}
                         </span>
                         <span className="item_loc">
                           <button
