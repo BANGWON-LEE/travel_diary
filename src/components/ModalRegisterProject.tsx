@@ -66,6 +66,7 @@ const ModalRegisterProject = (props: ModalType) => {
   const [searchStatus, setSearchStatus] = useState<Boolean>(false);
 
   const searchLoc = () => {
+    setChoicePlace(undefined);
     setSearchStatus(true);
   };
 
@@ -76,7 +77,7 @@ const ModalRegisterProject = (props: ModalType) => {
     if (searchStatus === false) {
       return;
     }
-    if (searchStatus === true || choicePlace !== undefined) {
+    if (searchStatus === true) {
       let markers: any = [];
       setLocData([]);
 
@@ -307,19 +308,21 @@ const ModalRegisterProject = (props: ModalType) => {
 
       // infowindow를 여는 함수
 
-      if (choicePlace !== undefined) {
+      if (choicePlace !== undefined && searchStatus === true) {
         displayPlaces(choicePlace);
+        setSearchStatus(false);
       }
 
       searchPlaces();
     }
 
-    if (searchStatus === true) {
+    if (searchStatus === false) {
       // 모달 팝업 요소 제거
+      // setSearchStatus(false);
       mapScript.removeEventListener('load', map);
     }
 
-    if (searchStatus === false) {
+    if (searchStatus === true) {
       mapScript.addEventListener('load', map);
     }
 
@@ -329,6 +332,7 @@ const ModalRegisterProject = (props: ModalType) => {
   const handleClickLoc = (place: object[]) => {
     const placeArray: object[] = [];
     placeArray.push(place);
+    setSearchStatus(true);
     setChoicePlace(placeArray);
   };
 
@@ -338,6 +342,15 @@ const ModalRegisterProject = (props: ModalType) => {
       return text; // 글자 수가 제한을 초과하지 않으면 그대로 반환
     }
     return `${text.substring(0, maxLength)}...`; // 글자 수가 제한을 초과하면 "..."을 추가하여 반환
+  };
+
+  interface PlaceType {
+    place_name: string;
+  }
+
+  const getPlace = (place: PlaceType) => {
+    const myPlace: string = place.place_name;
+    console.log('dfdf', myPlace);
   };
 
   return (
@@ -396,7 +409,7 @@ const ModalRegisterProject = (props: ModalType) => {
                     <button
                       type="button"
                       className="btn-loc_search"
-                      onClick={searchLoc}
+                      onClick={() => searchLoc()}
                     >
                       검색
                     </button>
@@ -407,7 +420,9 @@ const ModalRegisterProject = (props: ModalType) => {
                     locData.map((data, index) => (
                       <li key={Number(index)} className="item">
                         <span className="item_place-name">
-                          {placeNameLimit(data.place_name)}
+                          <button type="button" onClick={() => getPlace(data)}>
+                            {placeNameLimit(data.place_name)}
+                          </button>
                         </span>
                         <span className="item_addr-name">
                           {data.address_name}
