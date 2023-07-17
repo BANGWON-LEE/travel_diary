@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import ModalRegisterProject from './ModalRegisterProject';
+import ModalRegisterProject from './popup/ModalRegisterProject';
 
 const Main: React.FC = () => {
   const [modalStatus, setModalStatus] = useState<boolean>(false);
