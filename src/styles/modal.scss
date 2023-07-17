@@ -80,10 +80,51 @@
         }
       }
 
+      .add-place {
+        // width: auto;
+        height: 80px;
+        // margin-top: 15px;
+        margin: 0 auto;
+        width: 730px;
+        // text-align: center;
+
+        &_inner {
+          margin: 0 auto 0 auto;
+          width: 100%;
+          overflow-x: hidden;
+          text-align: center;
+          position: relative;
+          top: 0;
+        }
+
+        &_list {
+          margin: 0 10px auto 0;
+          width: fit-content;
+          height: auto;
+          font-size: 20px;
+          display: inline-block;
+
+          .cancel-place-btn {
+            border: 1px solid #ffd9fa;
+            background-color: #ffb2d9;
+            font-size: 15px;
+            font-weight: bolder;
+            width: auto;
+            padding: 10px 5px;
+            color: #ffffff;
+            border-radius: 15px;
+            cursor: pointer;
+          }
+        }
+      }
+
       .places_list {
         border: 3px solid #bbbbbb;
         border-radius: 15px;
         padding-right: 20px;
+        position: relative;
+        top: 15px;
+        margin-top: 0px;
         li:last-child {
           border-bottom: none;
         }
