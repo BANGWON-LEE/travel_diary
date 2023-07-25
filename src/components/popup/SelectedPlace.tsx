@@ -9,22 +9,26 @@ interface PlaceStoreType {
 const SelectedPlace = (props: PlaceStoreType) => {
   const { placeStore, setPlaceStore } = props;
   const removePlace = (num: number) => {
-    console.log('인덱스', num);
     setPlaceStore(placeStore.filter((_, i) => i !== num));
     return placeStore;
   };
 
+  interface PlaceBtnType {
+    // [x: string]: ReactNode;
+    [el: string]: string;
+  }
+
   return (
     <div className="add-place">
       <div className="add-place_inner">
-        {placeStore.map((el: string, index: number) => (
+        {placeStore.map((el: PlaceBtnType, index: number) => (
           <p className="add-place_list" key={Number(index)}>
             <button
               className="cancel-place-btn"
               type="button"
               onClick={() => removePlace(index)}
             >
-              {el}
+              {el.place_name}
             </button>
           </p>
         ))}
