@@ -39,6 +39,7 @@ const ModalRegisterProject = (props: ModalType) => {
   mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${env.apiKey}&libraries=services&autoload=false`;
 
   const [choicePlace, setChoicePlace] = useState<any[]>();
+  const [locData, setLocData] = useState<any[]>([]);
 
   useEffect(() => {
     // 팝업창을 열었을 때, 처음으로 보이는 위치
@@ -60,6 +61,8 @@ const ModalRegisterProject = (props: ModalType) => {
     }
     if (modalStatus === false) {
       mapScript.removeEventListener('load', onLoadKakaoMap);
+      mapScript.removeEventListener('load', map);
+      setLocData([]);
     }
   }, [modalStatus]);
 
@@ -71,7 +74,6 @@ const ModalRegisterProject = (props: ModalType) => {
     setSearchStatus(true);
   };
 
-  const [locData, setLocData] = useState<any[]>([]);
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -251,7 +253,7 @@ const ModalRegisterProject = (props: ModalType) => {
             paginationEl.removeChild(paginationEl.lastChild);
           }
         }
-        for (let i = 1; i <= 3; i += 1) {
+        for (let i = 1; i <= Number(paginationEl?.lastChild); i += 1) {
           const el = document.createElement('a');
           el.href = '#';
 
@@ -314,7 +316,6 @@ const ModalRegisterProject = (props: ModalType) => {
 
     if (searchStatus === false) {
       // 모달 팝업 요소 제거
-      // setSearchStatus(false);
       mapScript.removeEventListener('load', map);
     }
 
@@ -323,7 +324,7 @@ const ModalRegisterProject = (props: ModalType) => {
     }
 
     setSearchStatus(false);
-  }, [searchStatus, choicePlace]);
+  }, [searchStatus, choicePlace, modalStatus]);
 
   const handleClickLoc = (place: object[]) => {
     const placeArray: object[] = [];
@@ -347,9 +348,8 @@ const ModalRegisterProject = (props: ModalType) => {
   const [placeStore, setPlaceStore] = useState<any[]>([]);
 
   const getPlace = (place: PlaceType) => {
-    const myPlace: string = place.place_name;
-    console.log('ㅌㅌㅌ', typeof myPlace);
-    setPlaceStore((prevState) => [...prevState, myPlace]);
+    // console.log('ㅌㅌㅌ', typeof myPlace);
+    setPlaceStore((prevState) => [...prevState, place]);
   };
 
   console.log('dfdf', typeof placeStore);
