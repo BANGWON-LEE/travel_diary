@@ -60,9 +60,9 @@ const ModalRegisterProject = (props: ModalType) => {
       mapScript.addEventListener('load', onLoadKakaoMap);
     }
     if (modalStatus === false) {
-      mapScript.removeEventListener('load', onLoadKakaoMap);
-      mapScript.removeEventListener('load', map);
       setLocData([]);
+      mapScript.removeEventListener('load', map);
+      mapScript.removeEventListener('load', onLoadKakaoMap);
     }
   }, [modalStatus]);
 
