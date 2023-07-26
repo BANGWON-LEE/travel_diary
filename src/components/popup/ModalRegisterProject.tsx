@@ -80,9 +80,12 @@ const ModalRegisterProject = (props: ModalType) => {
     if (searchStatus === false) {
       return;
     }
-    if (searchStatus === true) {
+
+    console.log('choicePlace', choicePlace);
+
+    if (searchStatus === true || choicePlace !== undefined) {
       let markers: any = [];
-      setLocData([]);
+      // setLocData([]);
 
       // 장소 검색 객체를 생성합니다
       const services = window.kakao?.maps?.services;
@@ -142,11 +145,16 @@ const ModalRegisterProject = (props: ModalType) => {
       const getListItem = (index: any, places: any) => {
         const el = document.createElement('li');
 
-        setLocData((prevState) =>
-          [...prevState, places].length > 15
-            ? [...prevState, places].slice(-15)
-            : [...prevState, places],
-        );
+        if (choicePlace === undefined) {
+          setLocData((prevState) =>
+            [...prevState, places].length > 15
+              ? [...prevState, places].slice(-15)
+              : [...prevState, places],
+          );
+        }
+
+        setChoicePlace([]);
+
         // setLocData((prevState) => [...prevState, places]);
 
         el.className = 'item';
@@ -207,7 +215,6 @@ const ModalRegisterProject = (props: ModalType) => {
           // 해당 장소에 인포윈도우에 장소명을 표시합니다
           // mouseout 했을 때는 인포윈도우를 닫습니다
           (function (markerParams, title) {
-            console.log('마커', title);
             global.kakao.maps?.event.addListener(
               markerParams,
               'mouseover',
@@ -253,7 +260,7 @@ const ModalRegisterProject = (props: ModalType) => {
             paginationEl.removeChild(paginationEl.lastChild);
           }
         }
-        for (let i = 1; i <= Number(paginationEl?.lastChild); i += 1) {
+        for (let i = 1; i <= pagination.last; i += 1) {
           const el = document.createElement('a');
           el.href = '#';
 
@@ -327,6 +334,7 @@ const ModalRegisterProject = (props: ModalType) => {
   }, [searchStatus, choicePlace, modalStatus]);
 
   const handleClickLoc = (place: object[]) => {
+    console.log('choicePlace2', choicePlace);
     const placeArray: object[] = [];
     placeArray.push(place);
     setSearchStatus(true);
