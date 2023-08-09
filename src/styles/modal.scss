@@ -213,6 +213,38 @@
           color: #b5b2ff;
         }
       }
+
+      .modal-determine-block {
+        // text-align: center;
+        justify-content: center;
+        display: flex;
+        position: relative;
+        top: 20px;
+
+        &_submit {
+          // width: 50%;
+          text-align: right;
+          margin-right: 35px;
+        }
+
+        &_cancel {
+          // width: 50%;
+          text-align: left;
+          margin-left: 0px auto;
+        }
+
+        &_btn {
+          border: 1px solid #786bce;
+          background-color: #7875c1;
+          font-size: 15px;
+          font-weight: bolder;
+          width: auto;
+          padding: 15px 27px;
+          color: #ffffff;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+      }
     }
   }
 }
