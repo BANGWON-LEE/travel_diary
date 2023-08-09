@@ -360,7 +360,7 @@ const ModalRegisterProject = (props: ModalType) => {
     setPlaceStore((prevState) => [...prevState, place]);
   };
 
-  console.log('dfdf', typeof placeStore);
+  console.log('dfdf', placeStore.length);
 
   return (
     <Modal open={modalStatus} onClose={setModalStatus}>
@@ -459,6 +459,27 @@ const ModalRegisterProject = (props: ModalType) => {
                   )}
                 </ul>
                 <div id="pagination" className="page-list" />
+                <div className="modal-determine-block">
+                  {placeStore.length > 0 ? (
+                    <div className="modal-determine-block_submit">
+                      <button
+                        className="modal-determine-block_btn"
+                        type="button"
+                      >
+                        등록
+                      </button>
+                    </div>
+                  ) : null}
+                  <div className="modal-determine-block_cancel">
+                    <button
+                      className="modal-determine-block_btn"
+                      type="button"
+                      onClick={() => setModalStatus(false)}
+                    >
+                      닫기
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
