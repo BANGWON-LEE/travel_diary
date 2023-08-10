@@ -7,6 +7,7 @@ import Modal from '@mui/material/Modal';
 // import { length } from 'assert';
 // import { map } from 'leaflet';
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import closeBtn from '../../asset/close-button.png';
 import locBtn from '../../asset/loc.png';
@@ -26,6 +27,8 @@ declare global {
 }
 
 const ModalRegisterProject = (props: ModalType) => {
+  const navigation = useNavigate();
+
   const { modalStatus, setModalStatus } = props;
 
   const latitude = '37.5233511349545';
@@ -85,7 +88,6 @@ const ModalRegisterProject = (props: ModalType) => {
 
     if (searchStatus === true || choicePlace !== undefined) {
       let markers: any = [];
-      // setLocData([]);
 
       // 장소 검색 객체를 생성합니다
       const services = window.kakao?.maps?.services;
@@ -334,7 +336,6 @@ const ModalRegisterProject = (props: ModalType) => {
   }, [searchStatus, choicePlace, modalStatus]);
 
   const handleClickLoc = (place: object[]) => {
-    console.log('choicePlace2', choicePlace);
     const placeArray: object[] = [];
     placeArray.push(place);
     setSearchStatus(true);
@@ -356,32 +357,25 @@ const ModalRegisterProject = (props: ModalType) => {
   const [placeStore, setPlaceStore] = useState<any[]>([]);
 
   const getPlace = (place: PlaceType) => {
-    // console.log('ㅌㅌㅌ', typeof myPlace);
     setPlaceStore((prevState) => [...prevState, place]);
   };
 
-  console.log('dfdf', placeStore.length);
+  const popUpStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    boxShadow: 24,
+    width: 980,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 5,
+  };
 
   return (
     <Modal open={modalStatus} onClose={setModalStatus}>
-      <Box
-        sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          // width: 400,
-          // bgcolor: "#FFFFFF",
-          // border: "2px solid",
-          boxShadow: 24,
-          width: 980,
-          // overflow:'auto',
-          backgroundColor: '#FFFFFF',
-          borderRadius: 5,
-        }}
-      >
+      <Box sx={popUpStyle}>
         <div className="modal_background">
-          <div className="modal_background_top">
+          {/* <div className="modal_background_top">
             <div className="modal_background_top_block">
               <button
                 type="button"
@@ -391,7 +385,7 @@ const ModalRegisterProject = (props: ModalType) => {
                 <img src={closeBtn} alt="close" />
               </button>
             </div>
-          </div>
+          </div> */}
           <div className="modal_background_map_block">
             <div className="map_wrap" ref={modalRef}>
               <div
@@ -474,7 +468,7 @@ const ModalRegisterProject = (props: ModalType) => {
                     <button
                       className="modal-determine-block_btn"
                       type="button"
-                      onClick={() => setModalStatus(false)}
+                      onClick={() => navigation('/')}
                     >
                       닫기
                     </button>
