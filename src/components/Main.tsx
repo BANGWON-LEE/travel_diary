@@ -1,39 +1,36 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import ModalRegisterProject from './popup/ModalRegisterProject';
 
 const Main: React.FC = () => {
-  const [modalStatus, setModalStatus] = useState<boolean>(false);
-
   return (
     <div>
       <div className="main_background">
-        <ModalRegisterProject
-          modalStatus={modalStatus}
-          setModalStatus={setModalStatus}
-        />
         <div className="main_top">
           <div className="main_top_block">
-            <h1 className="main_top_block_title">Travel Plans</h1>
+            <h1 className="main_top_block_title">Travel Diary</h1>
           </div>
         </div>
         <div className="main_bottom">
           <div className="main_bottom_top_area">
             <div className="main_bottom_top_area_block">
-              <button
-                type="button"
-                className="main_bottom_top_area_block_btn"
-                onClick={() => setModalStatus(true)}
-              >
-                프로젝트 생성
-              </button>
+              <Link to="/project">
+                <button
+                  type="button"
+                  className="main_bottom_top_area_block_btn"
+                  // onClick={() => navigate('/project')}
+                >
+                  프로젝트 생성
+                </button>
+              </Link>
             </div>
           </div>
           <div className="main_bottom_area">
             <div className="main_bottom_area_project">
               <div className="main_bottom_area_project_title_block">
                 <p className="main_bottom_area_project_title_block_text">
-                  힐링 여행 계획
+                  힐링 여행 일기
                 </p>
                 <div className="main_bottom_area_project_title_block_loc">
                   국내
