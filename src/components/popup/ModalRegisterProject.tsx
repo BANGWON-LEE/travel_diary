@@ -8,16 +8,13 @@ import Modal from '@mui/material/Modal';
 // import { map } from 'leaflet';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
 import closeBtn from '../../asset/close-button.png';
 import locBtn from '../../asset/loc.png';
 import env from '../../env';
+import { modalAtom, placeAtom } from '../../recoil/Atoms';
 import SelectedPlace from './SelectedPlace';
-
-interface ModalType {
-  modalStatus: boolean;
-  setModalStatus: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
 declare global {
   interface Window {
@@ -26,10 +23,9 @@ declare global {
   }
 }
 
-const ModalRegisterProject = (props: ModalType) => {
+const ModalRegisterProject = () => {
   const navigation = useNavigate();
-
-  const { modalStatus, setModalStatus } = props;
+  const [modalState, setModalState] = useRecoilState<boolean>(modalAtom);
 
   const latitude = '37.5233511349545';
   const longitude = '127.037425209409';
@@ -59,15 +55,15 @@ const ModalRegisterProject = (props: ModalType) => {
       });
     };
 
-    if (modalStatus === true) {
+    if (modalState === true) {
       mapScript.addEventListener('load', onLoadKakaoMap);
     }
-    if (modalStatus === false) {
+    if (modalState === false) {
       setLocData([]);
       mapScript.removeEventListener('load', map);
       mapScript.removeEventListener('load', onLoadKakaoMap);
     }
-  }, [modalStatus]);
+  }, [modalState]);
 
   const [keyword, setKeyword] = useState<String>('');
   const [searchStatus, setSearchStatus] = useState<Boolean>(false);
@@ -333,7 +329,7 @@ const ModalRegisterProject = (props: ModalType) => {
     }
 
     setSearchStatus(false);
-  }, [searchStatus, choicePlace, modalStatus]);
+  }, [searchStatus, choicePlace, modalState]);
 
   const handleClickLoc = (place: object[]) => {
     const placeArray: object[] = [];
@@ -354,7 +350,7 @@ const ModalRegisterProject = (props: ModalType) => {
     place_name: string;
   }
 
-  const [placeStore, setPlaceStore] = useState<any[]>([]);
+  const [placeStore, setPlaceStore] = useRecoilState<any[]>(placeAtom);
 
   const getPlace = (place: PlaceType) => {
     setPlaceStore((prevState) => [...prevState, place]);
@@ -372,7 +368,7 @@ const ModalRegisterProject = (props: ModalType) => {
   };
 
   return (
-    <Modal open={modalStatus} onClose={setModalStatus}>
+    <Modal open={modalState} onClose={setModalState}>
       <Box sx={popUpStyle}>
         <div className="modal_background">
           {/* <div className="modal_background_top">
@@ -418,10 +414,7 @@ const ModalRegisterProject = (props: ModalType) => {
                     </button>
                   </div>
                 </div>
-                <SelectedPlace
-                  placeStore={placeStore}
-                  setPlaceStore={setPlaceStore}
-                />
+                <SelectedPlace />
                 <ul id="loc_list" className="places_list">
                   {locData.length > 0 ? (
                     locData.map((data, index) => (
@@ -459,6 +452,7 @@ const ModalRegisterProject = (props: ModalType) => {
                       <button
                         className="modal-determine-block_btn"
                         type="button"
+                        onClick={() => setModalState(false)}
                       >
                         등록
                       </button>
