@@ -1,13 +1,16 @@
 import type { ReactNode } from 'react';
 import React from 'react';
+import { useRecoilState } from 'recoil';
 
-interface PlaceStoreType {
-  placeStore: any[];
-  setPlaceStore: React.Dispatch<React.SetStateAction<any[]>>;
-}
+import { placeAtom } from '../../recoil/Atoms';
 
-const SelectedPlace = (props: PlaceStoreType) => {
-  const { placeStore, setPlaceStore } = props;
+// interface PlaceStoreType {
+//   placeStore: any[];
+//   setPlaceStore: React.Dispatch<React.SetStateAction<any[]>>;
+// }
+
+const SelectedPlace = () => {
+  const [placeStore, setPlaceStore] = useRecoilState<any[]>(placeAtom);
   const removePlace = (num: number) => {
     setPlaceStore(placeStore.filter((_, i) => i !== num));
     return placeStore;
