@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
-import Main from '../components/Main';
-import ModalRegisterProject from '../components/popup/ModalRegisterProject';
+import Main from '../components/main/Main';
 
 const MainPage: React.FC = () => {
   return <Main />;
