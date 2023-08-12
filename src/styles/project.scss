@@ -8,6 +8,7 @@
     width: 100%;
     padding: 40px 0px;
     height: auto;
+    min-height: 300px;
     box-sizing: border-box;
     &_block {
       &_title {
@@ -71,13 +72,14 @@
           margin-left: 15px;
 
           .input-text {
-            width: 75%;
+            width: 97%;
             height: 80%;
             border: 1px solid #b5b2ff;
             border-radius: 5px;
             padding: 5px 10px;
             font-size: 15px;
             font-weight: 800;
+            text-align: center;
 
             &:hover {
               outline: #7875c1;
@@ -92,8 +94,29 @@
         }
       }
 
-      .project_block {
+      .project-block {
         display: flex;
+        margin-top: 25px;
+
+        &_title {
+          width: 25%;
+          // display: grid;
+          &_place {
+            margin-top: 0px;
+          }
+        }
+
+        &_content {
+          width: 75%;
+          display: grid;
+          margin-left: 45px;
+
+          &_time {
+            margin: 4px 0;
+            display: flex;
+            justify-content: center;
+          }
+        }
       }
     }
   }
