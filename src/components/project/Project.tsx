@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
 
-import { modalAtom, placeAtom } from '../../recoil/Atoms';
 import ModalRegisterProject from '../popup/ModalRegisterProject';
 import Content from './Content';
 
 const Project: React.FC = () => {
-  const [projectTitleState, setProjectTitleState] = useState<string>('');
+  const [projectTitleState, setProjectTitleState] =
+    useState<string>('프로젝트 명을 입력하세요');
 
   return (
     <div>
