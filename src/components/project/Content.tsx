@@ -89,79 +89,83 @@ const Content = (props: ContentPropsType) => {
         </div>
         {modalState === false &&
           placeStore.map((place, num) => (
-            <div className="project_block" key={`places${Number(num)}`}>
-              <div>
-                <p>{place.place_name}</p>
-                <p>{place.address_name}</p>
+            <div className="project-block" key={`places${Number(num)}`}>
+              <div className="project-block_title">
+                <p className="project-block_title_place">{place.place_name}</p>
+                <p className="project-block_title_address">
+                  {place.address_name}
+                </p>
               </div>
-              <div>
-                <div>
-                  <select>
-                    {choiceHour().map((hour) => (
-                      <option key={Number(hour)}>{hour}</option>
-                    ))}
-                  </select>
-                </div>
-                <span> : </span>
-                <div>
-                  <select>
-                    {choiceMin().map((min) => (
-                      <option key={Number(min)}>{min}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              <div>
-                <p>먹은 것</p>
-                <input type="text" />
-                <div>
-                  <p>먹은 것에 대한 나의 emotion</p>
+              <div className="project-block_content">
+                <div className="project-block_content_time">
                   <div>
-                    {emotionFood.map((emotion, index) => (
-                      <div key={`emotionFood${Number(index)}`}>
-                        <button type="button">{emotion}</button>
-                      </div>
-                    ))}
+                    <select>
+                      {choiceHour().map((hour) => (
+                        <option key={Number(hour)}>{hour}</option>
+                      ))}
+                    </select>
                   </div>
+                  <span> : </span>
                   <div>
-                    <p>직접 입력</p>
-                    <input type="text" />
+                    <select>
+                      {choiceMin().map((min) => (
+                        <option key={Number(min)}>{min}</option>
+                      ))}
+                    </select>
                   </div>
                 </div>
-              </div>
-              <div>
-                <p>본 것</p>
-                <input type="text" />
                 <div>
-                  <p>본 것에 대한 나의 emotion</p>
+                  <p>먹은 것을 입력하세요</p>
+                  <input type="text" />
                   <div>
-                    {emotionView.map((emotion, index) => (
-                      <div key={`emotionView${Number(index)}`}>
-                        <button type="button">{emotion}</button>
-                      </div>
-                    ))}
-                  </div>
-                  <div>
-                    <p>직접 입력</p>
-                    <input type="text" />
+                    <p>먹은 것에 대한 나의 emotion</p>
+                    <div>
+                      {emotionFood.map((emotion, index) => (
+                        <div key={`emotionFood${Number(index)}`}>
+                          <button type="button">{emotion}</button>
+                        </div>
+                      ))}
+                    </div>
+                    <div>
+                      <p>직접 입력</p>
+                      <input type="text" />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div>
-                <p>구입한 기념품</p>
-                <input type="text" />
                 <div>
-                  <p>기념품을 구입한 이유</p>
+                  <p>본 것을 입력하세요</p>
+                  <input type="text" />
                   <div>
-                    {emotionGoods.map((emotion, index) => (
-                      <div key={`emotionGoods${Number(index)}`}>
-                        <button type="button">{emotion}</button>
-                      </div>
-                    ))}
+                    <p>본 것에 대한 나의 emotion</p>
+                    <div>
+                      {emotionView.map((emotion, index) => (
+                        <div key={`emotionView${Number(index)}`}>
+                          <button type="button">{emotion}</button>
+                        </div>
+                      ))}
+                    </div>
+                    <div>
+                      <p>직접 입력</p>
+                      <input type="text" />
+                    </div>
                   </div>
+                </div>
+                <div>
+                  <p>구입한 기념품을 입력하세요</p>
+                  <input type="text" />
                   <div>
-                    <p>직접 입력</p>
-                    <input type="text" />
+                    <p>기념품을 구입한 이유</p>
+                    <div>
+                      {emotionGoods.map((emotion, index) => (
+                        <div key={`emotionGoods${Number(index)}`}>
+                          <button type="button">{emotion}</button>
+                        </div>
+                      ))}
+                    </div>
+                    <div>
+                      <p>직접 입력</p>
+                      <input type="text" />
+                    </div>
                   </div>
                 </div>
               </div>
