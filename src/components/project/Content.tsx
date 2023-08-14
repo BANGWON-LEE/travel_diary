@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import { useRecoilState } from 'recoil';
 
-import { calendarModalAtom, modalAtom, placeAtom } from '../../recoil/Atoms';
+import { modalAtom, placeAtom } from '../../recoil/Atoms';
 import CalendarPop from './CalendarPop';
 
 const emotionFood = [
