@@ -1,8 +1,12 @@
 // import { Content } from 'leaflet';
+import 'react-calendar/dist/Calendar.css'; // css import
+
 import React, { useState } from 'react';
+import Calendar from 'react-calendar';
 import { useRecoilState } from 'recoil';
 
-import { modalAtom, placeAtom } from '../../recoil/Atoms';
+import { calendarModalAtom, modalAtom, placeAtom } from '../../recoil/Atoms';
+import CalendarPop from './CalendarPop';
 
 const emotionFood = [
   '존맛',
@@ -61,8 +65,14 @@ const Content = (props: ContentPropsType) => {
     return times;
   };
 
+  const [openCalendarState, setOpenCalendarState] = useState<boolean>(false);
+
   return (
     <div className="project_bottom">
+      <CalendarPop
+        openCalendarState={openCalendarState}
+        setOpenCalendarState={setOpenCalendarState}
+      />
       <div className="project_bottom_top_area">
         <div className="project_bottom_top_area_block">
           <button
@@ -76,7 +86,7 @@ const Content = (props: ContentPropsType) => {
       </div>
       <div className="project_bottom_area">
         <div className="project-title">
-          <p className="project-title_intro">프로젝트 명 : </p>
+          <p className="project-title_intro">제목 : </p>
           <div className="project-title_text-box">
             <input
               className="input-text"
@@ -98,6 +108,14 @@ const Content = (props: ContentPropsType) => {
               </div>
               <div className="project-block_content">
                 <div className="project-block_content_time">
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => setOpenCalendarState(true)}
+                    >
+                      달력
+                    </button>
+                  </div>
                   <div>
                     <select>
                       {choiceHour().map((hour) => (
