@@ -5,7 +5,8 @@
   text-align: center;
 
   .project_top {
-    width: 100%;
+    width: 1000px;
+    margin: 0 auto;
     padding: 40px 0px;
     height: auto;
     min-height: 300px;
@@ -50,7 +51,7 @@
     &_area {
       margin: 0 auto;
       display: grid;
-      width: 800px;
+      width: 1000px;
 
       .project-title {
         margin: 0 auto;
@@ -59,7 +60,7 @@
         display: flex;
 
         &_intro {
-          width: 15%;
+          width: 5%;
           text-align: right;
           margin-right: 15px;
           font-size: 15px;
@@ -99,7 +100,7 @@
         margin-top: 25px;
 
         &_title {
-          width: 25%;
+          width: 45%;
           // display: grid;
           &_place {
             margin-top: 0px;
