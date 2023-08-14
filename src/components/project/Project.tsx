@@ -5,7 +5,7 @@ import Content from './Content';
 
 const Project: React.FC = () => {
   const [projectTitleState, setProjectTitleState] =
-    useState<string>('프로젝트 명을 입력하세요');
+    useState<string>('제목을 입력하세요');
 
   return (
     <div>
