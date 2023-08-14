@@ -2,7 +2,6 @@
 import 'react-calendar/dist/Calendar.css'; // css import
 
 import React, { useState } from 'react';
-import Calendar from 'react-calendar';
 import { useRecoilState } from 'recoil';
 
 import { modalAtom, placeAtom } from '../../recoil/Atoms';
