@@ -9,6 +9,5 @@
 <p>다녀온 장소를 찾는 팝업</p>
 <p>kakao map api 활용</p>
 <p align="center" >
-  <img src="(https://github.com/BANGWON-LEE/travel_diary/assets/74960408/6d68ff94-1c99-498f-a2b3-d4a91880f948" width="700" height="600">
+  <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/29acc32e-2b86-4242-8702-9535ca82fcb5" width="700" height="600">
 </p>
-
