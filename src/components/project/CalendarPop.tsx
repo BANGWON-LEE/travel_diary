@@ -3,6 +3,9 @@ import 'react-calendar/dist/Calendar.css'; // css import
 import { Box, Modal } from '@mui/material';
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
+import { useRecoilState } from 'recoil';
+
+import { calendarDateAtom } from '../../recoil/Atoms';
 
 interface CalendarPopType {
   openCalendarState: boolean;
@@ -12,10 +15,10 @@ interface CalendarPopType {
 const CalendarPop = (props: CalendarPopType) => {
   const { openCalendarState, setOpenCalendarState } = props;
 
-  type ValuePiece = Date | null;
+  // type ValuePiece = Date | null;
 
-  type Value = ValuePiece | [ValuePiece, ValuePiece];
-  const [choiceDate, setChoiceDate] = useState<Value>(new Date());
+  // type Value = ValuePiece | [ValuePiece, ValuePiece];
+  const [choiceDate, setChoiceDate] = useRecoilState<any>(calendarDateAtom);
 
   const popUpStyle = {
     position: 'absolute',

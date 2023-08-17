@@ -9,3 +9,8 @@ export const modalAtom = atom({
   key: 'modalOpen',
   default: true,
 });
+
+export const calendarDateAtom = atom({
+  key: 'date',
+  default: new Date(),
+});
