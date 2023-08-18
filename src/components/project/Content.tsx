@@ -1,7 +1,7 @@
 // import { Content } from 'leaflet';
 import 'react-calendar/dist/Calendar.css'; // css import
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { modalAtom, placeAtom } from '../../recoil/Atoms';
@@ -64,13 +64,18 @@ const Content = (props: ContentPropsType) => {
     return times;
   };
 
+  // 달력 팝업을 불러오기 위한 state
   const [openCalendarState, setOpenCalendarState] = useState<boolean>(false);
+
+  // 달력 팝업을 불러오는 버튼 정보를 가져오는 ref
+  const calendarBtnRef = useRef<HTMLButtonElement | null>(null);
 
   return (
     <div className="project_bottom">
       <CalendarPop
         openCalendarState={openCalendarState}
         setOpenCalendarState={setOpenCalendarState}
+        calendarBtnRef={calendarBtnRef}
       />
       <div className="project_bottom_top_area">
         <div className="project_bottom_top_area_block">
@@ -111,6 +116,7 @@ const Content = (props: ContentPropsType) => {
                     <button
                       type="button"
                       onClick={() => setOpenCalendarState(true)}
+                      ref={calendarBtnRef}
                     >
                       달력
                     </button>
