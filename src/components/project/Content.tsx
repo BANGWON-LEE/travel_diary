@@ -1,10 +1,10 @@
 // import { Content } from 'leaflet';
 import 'react-calendar/dist/Calendar.css'; // css import
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
-import { modalAtom, placeAtom } from '../../recoil/Atoms';
+import { calendarDateAtom, modalAtom, placeAtom } from '../../recoil/Atoms';
 import CalendarPop from './CalendarPop';
 
 const emotionFood = [
@@ -70,6 +70,16 @@ const Content = (props: ContentPropsType) => {
   // 달력 팝업을 불러오는 버튼 정보를 가져오는 ref
   const calendarBtnRef = useRef<HTMLButtonElement | null>(null);
 
+  const [choiceDate] = useRecoilState<any>(calendarDateAtom);
+
+  const editCalendar = (editDate: Date) => {
+    const year = editDate.getFullYear();
+    const month = editDate.getMonth() + 1;
+    const date = editDate.getDate();
+
+    return `${year}년${month}월${date}일`;
+  };
+
   return (
     <div className="project_bottom">
       <CalendarPop
@@ -121,6 +131,7 @@ const Content = (props: ContentPropsType) => {
                       달력
                     </button>
                   </div>
+                  <div>{editCalendar(choiceDate)}</div>
                   <div>
                     <select>
                       {choiceHour().map((hour) => (
