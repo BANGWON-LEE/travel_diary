@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import ModalRegisterProject from '../popup/ModalRegisterProject';
-
 const Main: React.FC = () => {
   return (
     <div>
@@ -13,6 +11,11 @@ const Main: React.FC = () => {
           </div>
         </div>
         <div className="main_bottom">
+          <div className="main_project_intro">
+            <p>
+              여행 후기 및 일기를 간편하게 작성하도록 도와주는 플랫폼 입니다.
+            </p>
+          </div>
           <div className="main_bottom_top_area">
             <div className="main_bottom_top_area_block">
               <Link to="/project">
@@ -26,7 +29,7 @@ const Main: React.FC = () => {
               </Link>
             </div>
           </div>
-          <div className="main_bottom_area">
+          {/* <div className="main_bottom_area">
             <div className="main_bottom_area_project">
               <div className="main_bottom_area_project_title_block">
                 <p className="main_bottom_area_project_title_block_text">
@@ -47,7 +50,7 @@ const Main: React.FC = () => {
             </div>
             <div className="main_bottom_area_project" />
             <div className="main_bottom_area_project" />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

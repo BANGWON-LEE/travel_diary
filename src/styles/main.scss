@@ -21,10 +21,12 @@
     padding: 20px 0px;
     height: auto;
     box-sizing: border-box;
+
     &_top_area {
       height: 100px;
-      width: 800px;
+      width: auto;
       margin: 0 auto;
+      padding: 20px 110px;
       &_block {
         width: 780px;
         margin: 0 auto;
@@ -34,7 +36,7 @@
           width: 130px;
           padding: 13px 10px;
           border-radius: 10px;
-          float: right;
+          // float: right;
           font-weight: 800;
 
           &:hover {
@@ -100,4 +102,9 @@
       }
     }
   }
+}
+
+.main_project_intro {
+  font-weight: bold;
+  font-size: 20px;
 }
