@@ -12,11 +12,11 @@ import { calendarDateAtom } from '../../recoil/Atoms';
 interface CalendarPopType {
   openCalendarState: boolean;
   setOpenCalendarState: React.Dispatch<React.SetStateAction<boolean>>;
-  calendarBtnRef: React.RefObject<HTMLButtonElement | null>;
+  // calendarBlockRef: React.RefObject<HTMLDivElement | null>;
 }
 
 const CalendarPop = (props: CalendarPopType) => {
-  const { openCalendarState, setOpenCalendarState, calendarBtnRef } = props;
+  const { openCalendarState, setOpenCalendarState } = props;
 
   // type ValuePiece = Date | null;
 
@@ -35,31 +35,29 @@ const CalendarPop = (props: CalendarPopType) => {
     borderRadius: 5,
   };
 
-  const calendarRef = useRef<HTMLDivElement | null>(null);
-
   // 달력 팝업을 불러오고 닫는 역할을 하는 useEffect
-  useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (
-        openCalendarState &&
-        calendarRef.current &&
-        !calendarRef.current!.contains(event.target as Node) &&
-        event.target !== calendarBtnRef.current
-      ) {
-        setOpenCalendarState(false);
-      }
-    };
+  // useEffect(() => {
+  //   const handleClickOutside = (event: any) => {
+  //     if (
+  //       openCalendarState &&
+  //       calendarRef.current &&
+  //       !calendarRef.current!.contains(event.target as Node) &&
+  //       event.target !== calendarBlockRef.current
+  //     ) {
+  //       setOpenCalendarState(false);
+  //     }
+  //   };
 
-    document.addEventListener('click', handleClickOutside);
+  //   document.addEventListener('click', handleClickOutside);
 
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, [openCalendarState]);
+  //   return () => {
+  //     document.removeEventListener('click', handleClickOutside);
+  //   };
+  // }, [openCalendarState]);
 
   return (
     <Modal open={openCalendarState} onClose={setOpenCalendarState}>
-      <Box sx={popUpStyle} ref={calendarRef}>
+      <Box sx={popUpStyle}>
         {/* <div className="modal_background_top_block">
           <button
             type="button"

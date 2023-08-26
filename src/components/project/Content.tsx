@@ -1,7 +1,8 @@
 // import { Content } from 'leaflet';
 import 'react-calendar/dist/Calendar.css'; // css import
 
-import React, { useRef, useState } from 'react';
+// import console from 'console';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { calendarDateAtom, modalAtom, placeAtom } from '../../recoil/Atoms';
@@ -34,6 +35,73 @@ const emotionGoods = [
   '돈이 남아서',
   '강매 당해서',
 ];
+
+interface CalendarBtnDomType {
+  place: any;
+  openCalendarState: boolean;
+  // onClick: any;
+  setOpenCalendarState: React.Dispatch<React.SetStateAction<boolean>>;
+  // calendarBlockRef: React.RefObject<HTMLDivElement | null>;
+}
+
+const CalendarBtnDom = (props: CalendarBtnDomType) => {
+  const {
+    place,
+    // onClick,
+    openCalendarState,
+    setOpenCalendarState,
+    // calendarBlockRef,
+  } = props;
+  // console.log('와우', calendarBlockRef);
+  const openPopBtnRef = useRef<HTMLButtonElement | null>(null);
+
+  const openCalendarPop = (elRef: any, placeId: string) => {
+    // const refNum = documen(number);
+    const btn = elRef?.current;
+    const popNum = btn?.getAttribute('data-index');
+    console.log('rere', popNum, placeId);
+
+    if (popNum === placeId) {
+      setOpenCalendarState(true);
+    }
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      console.log('dfdf1', event.target.className);
+      // console.log('dfdf2', calendarBlockRef.current);
+      console.log('dfdf3', openPopBtnRef.current);
+      if (
+        openCalendarState &&
+        openPopBtnRef.current &&
+        !openPopBtnRef.current!.contains(event.target as Node) &&
+        event.target.className.includes('MuiBackdrop-root') &&
+        event.target !== openPopBtnRef.current
+      ) {
+        setOpenCalendarState(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [openCalendarState]);
+
+  return (
+    <div>
+      <button
+        type="button"
+        data-index={place.id}
+        onClick={() => openCalendarPop(openPopBtnRef, place.id)}
+        ref={openPopBtnRef}
+      >
+        달력
+      </button>
+    </div>
+  );
+};
 
 interface ContentPropsType {
   setProjectTitleState: React.Dispatch<React.SetStateAction<string>>;
@@ -68,7 +136,7 @@ const Content = (props: ContentPropsType) => {
   const [openCalendarState, setOpenCalendarState] = useState<boolean>(false);
 
   // 달력 팝업을 불러오는 버튼 정보를 가져오는 ref
-  const calendarBtnRef = useRef<HTMLButtonElement | null>(null);
+  // const calendarBlockRef = useRef<HTMLDivElement | null>(null);
 
   const [choiceDate] = useRecoilState<any>(calendarDateAtom);
 
@@ -85,7 +153,7 @@ const Content = (props: ContentPropsType) => {
       <CalendarPop
         openCalendarState={openCalendarState}
         setOpenCalendarState={setOpenCalendarState}
-        calendarBtnRef={calendarBtnRef}
+        // calendarBlockRef={calendarBlockRef}
       />
       <div className="project_bottom_top_area">
         <div className="project_bottom_top_area_block">
@@ -112,8 +180,8 @@ const Content = (props: ContentPropsType) => {
           </div>
         </div>
         {modalState === false &&
-          placeStore.map((place, num) => (
-            <div className="project-block" key={`places${Number(num)}`}>
+          placeStore.map((place, index: number) => (
+            <div className="project-block" key={`places${Number(index)}`}>
               <div className="project-block_title">
                 <p className="project-block_title_place">{place.place_name}</p>
                 <p className="project-block_title_address">
@@ -122,15 +190,23 @@ const Content = (props: ContentPropsType) => {
               </div>
               <div className="project-block_content">
                 <div className="project-block_content_time">
-                  <div>
+                  {/* <div>
                     <button
                       type="button"
-                      onClick={() => setOpenCalendarState(true)}
-                      ref={calendarBtnRef}
+                      data-index={place.id}
+                      // onClick={() => setOpenCalendarState(true)}
+                      onClick={() => openCalendarPop(calendarBlockRef, place.id)}
                     >
                       달력
                     </button>
-                  </div>
+                  </div> */}
+                  <CalendarBtnDom
+                    place={place}
+                    // onClick={openCalendarPop}
+                    openCalendarState={openCalendarState}
+                    setOpenCalendarState={setOpenCalendarState}
+                    // calendarBlockRef={calendarBlockRef}
+                  />
                   <div>{editCalendar(choiceDate)}</div>
                   <div>
                     <select>
@@ -154,8 +230,8 @@ const Content = (props: ContentPropsType) => {
                   <div>
                     <p>먹은 것에 대한 나의 emotion</p>
                     <div>
-                      {emotionFood.map((emotion, index) => (
-                        <div key={`emotionFood${Number(index)}`}>
+                      {emotionFood.map((emotion, num) => (
+                        <div key={`emotionFood${Number(num)}`}>
                           <button type="button">{emotion}</button>
                         </div>
                       ))}
@@ -172,8 +248,8 @@ const Content = (props: ContentPropsType) => {
                   <div>
                     <p>본 것에 대한 나의 emotion</p>
                     <div>
-                      {emotionView.map((emotion, index) => (
-                        <div key={`emotionView${Number(index)}`}>
+                      {emotionView.map((emotion, num2) => (
+                        <div key={`emotionView${Number(num2)}`}>
                           <button type="button">{emotion}</button>
                         </div>
                       ))}
@@ -190,8 +266,8 @@ const Content = (props: ContentPropsType) => {
                   <div>
                     <p>기념품을 구입한 이유</p>
                     <div>
-                      {emotionGoods.map((emotion, index) => (
-                        <div key={`emotionGoods${Number(index)}`}>
+                      {emotionGoods.map((emotion, num2) => (
+                        <div key={`emotionGoods${Number(num2)}`}>
                           <button type="button">{emotion}</button>
                         </div>
                       ))}
