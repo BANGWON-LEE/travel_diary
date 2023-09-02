@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { calendarDateAtom, modalAtom, placeAtom } from '../../recoil/Atoms';
+import EmotionChoice from '../main/EmotionChoice';
 import CalendarPop from './CalendarPop';
 
 const emotionFood = [
@@ -222,100 +223,21 @@ const Content = (props: ContentPropsType) => {
                     </div>
                   </div>
                   <div className="content-block">
-                    <div className="cate-section">
-                      <div className="emotion-block">
-                        <p className="emotion-title">
-                          1. 먹은 것에 대한 나의 emotion
-                        </p>
-                        <div className="cate-block">
-                          <p className="cate-title">먹은 것을 입력하세요 : </p>
-                          <input type="text" className="cate-input" />
-                        </div>
-                        <div className="emotion-cate">
-                          {emotionFood.map((emotion, num) => (
-                            <div key={`emotionFood${Number(num)}`}>
-                              {emotion.map((el, eatIndex) => (
-                                <button
-                                  className="emotion-cate_btn"
-                                  type="button"
-                                  key={Number(eatIndex)}
-                                >
-                                  {el}
-                                </button>
-                              ))}
-                            </div>
-                          ))}
-                        </div>
-                        <div className="cs-block">
-                          <p className="cs-block_title">직접 입력 : </p>
-                          <input type="text" className="cs-block_input" />
-                        </div>
-                      </div>
-                    </div>
+                    <EmotionChoice
+                      emotionObject={emotionFood}
+                      text="1. 먹은 것에 대한 나의 emotion"
+                    />
+                    <EmotionChoice
+                      emotionObject={emotionView}
+                      text="2. 본 것에 대한 나의 emotion"
+                    />
+                    <EmotionChoice
+                      emotionObject={emotionGoods}
+                      text="3. 구입한 것에 대한 나의 emotion"
+                    />
                     {/* <hr className="divide-line" /> */}
-                    <div className="cate-section">
-                      <div className="emotion-block">
-                        <p className="emotion-title">
-                          2. 본 것에 대한 나의 emotion
-                        </p>
-                        <div className="cate-block">
-                          <p className="cate-title">본 것을 입력하세요 : </p>
-                          <input type="text" className="cate-input" />
-                        </div>
-                        <div className="emotion-cate">
-                          {emotionView.map((emotion, num) => (
-                            <div key={`emotionFood${Number(num)}`}>
-                              {emotion.map((el, eatIndex) => (
-                                <button
-                                  className="emotion-cate_btn"
-                                  type="button"
-                                  key={Number(eatIndex)}
-                                >
-                                  {el}
-                                </button>
-                              ))}
-                            </div>
-                          ))}
-                        </div>
-                        <div className="cs-block">
-                          <p className="cs-block_title">직접 입력 : </p>
-                          <input type="text" className="cs-block_input" />
-                        </div>
-                      </div>
-                    </div>
+
                     {/* <hr className="divide-line" /> */}
-                    <div className="cate-section">
-                      <div className="emotion-block">
-                        <p className="emotion-title">
-                          3. 구입한 것에 대한 나의 emotion
-                        </p>
-                        <div className="cate-block">
-                          <p className="cate-title">
-                            구입한 것을 입력하세요 :{' '}
-                          </p>
-                          <input type="text" className="cate-input" />
-                        </div>
-                        <div className="emotion-cate">
-                          {emotionGoods.map((emotion, num) => (
-                            <div key={`emotionFood${Number(num)}`}>
-                              {emotion.map((el, eatIndex) => (
-                                <button
-                                  className="emotion-cate_btn"
-                                  type="button"
-                                  key={Number(eatIndex)}
-                                >
-                                  {el}
-                                </button>
-                              ))}
-                            </div>
-                          ))}
-                        </div>
-                        <div className="cs-block">
-                          <p className="cs-block_title">직접 입력 : </p>
-                          <input type="text" className="cs-block_input" />
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
