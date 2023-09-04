@@ -115,14 +115,49 @@
           }
         }
 
+        .content-container {
+          display: flex;
+          // min-width: 1000px;
+        }
+
+        .project-section {
+          display: inline-block;
+          max-width: 350px;
+          min-width: 350px;
+          height: auto;
+          &_btn {
+            display: inline-block;
+            width: auto;
+            height: 30px;
+            font-size: 15px;
+            color: #ffffff;
+            margin-right: 10px;
+            background-color: #efb2f4;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-weight: bold;
+            border: none;
+          }
+
+          &_title {
+            min-height: 25px;
+          }
+        }
+
+        .project-layout {
+          display: flex;
+        }
+
         &_content {
-          width: 75%;
+          // width: 75%;
           display: grid;
           margin-left: 45px;
 
           &_time {
             // margin: 4px 0;
+            align-items: center;
             display: flex;
+            width: 100%;
             justify-content: center;
           }
 
@@ -163,6 +198,7 @@
                 border: 3px solid #d9e5ff;
                 font-size: 15px;
                 border-radius: 4px;
+                text-align: center;
               }
             }
           }
@@ -180,6 +216,7 @@
               .cate-block {
                 display: flex;
                 align-items: center;
+                justify-content: center;
               }
               .cate-title {
                 font-size: 15px;
@@ -189,11 +226,28 @@
               }
 
               .cate-input {
-                width: 200px;
+                padding: 5px 10px;
+                width: 260px;
                 height: 30px;
                 align-items: center;
-                border: 1px solid #b5b2ff;
+                border: 2px solid #b5b2ff;
                 border-radius: 4px;
+              }
+
+              .cate-btn {
+                cursor: pointer;
+                width: 60px;
+                height: 30px;
+                padding: 5px 10px;
+                margin: 10px 10px;
+                border: none;
+                background-color: #b375c1;
+                color: #ffffff;
+                font-weight: bold;
+                font-size: 12px;
+                border-radius: 4px;
+                position: relative;
+                right: 75px;
               }
 
               .emotion-block {
@@ -228,6 +282,7 @@
                 margin-top: 15px;
                 display: flex;
                 align-items: center;
+                justify-content: center;
 
                 &_title {
                   color: #666666;
@@ -248,15 +303,15 @@
                   }
 
                   &_btn {
-                    width: 50px;
+                    width: 60px;
                     height: 30px;
                     border: none;
                     background-color: #7875c1;
                     color: #ffffff;
                     border-radius: 4px;
                     position: relative;
-                    right: 55px;
-                    top: 1px;
+                    right: 65px;
+                    top: 0.5px;
                   }
                 }
               }
