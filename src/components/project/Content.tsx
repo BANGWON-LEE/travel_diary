@@ -5,7 +5,13 @@ import 'react-calendar/dist/Calendar.css'; // css import
 import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
-import { calendarDateAtom, modalAtom, placeAtom } from '../../recoil/Atoms';
+import {
+  calendarDateAtom,
+  emotionAtom,
+  modalAtom,
+  placeAtom,
+  tripAtom,
+} from '../../recoil/Atoms';
 import EmotionChoice from '../main/EmotionChoice';
 import CalendarPop from './CalendarPop';
 
@@ -137,12 +143,16 @@ const Content = (props: ContentPropsType) => {
     return `${year}년 ${month}월 ${date}일`;
   };
 
+  const [emotionArrState] = useRecoilState<any>(emotionAtom);
+  console.log('emotionAtom', emotionAtom);
+
+  const [myTripState] = useRecoilState<any>(tripAtom);
+
   return (
     <div className="project_bottom">
       <CalendarPop
         openCalendarState={openCalendarState}
         setOpenCalendarState={setOpenCalendarState}
-        // calendarBlockRef={calendarBlockRef}
       />
       <div className="project_bottom_top_area">
         <div className="project_bottom_top_area_block">
@@ -172,69 +182,123 @@ const Content = (props: ContentPropsType) => {
           placeStore.map((place, index: number) => (
             <>
               <div className="project-block" key={`places${Number(index)}`}>
-                <div className="project-block_title">
-                  <p className="project-block_title_place">
-                    {place.place_name}
-                  </p>
-                  <p className="project-block_title_address">
-                    {place.address_name}
-                  </p>
-                </div>
                 <div className="project-block_content">
-                  <div className="project-block_content_time">
-                    {/* <div>
-                    <button
-                      type="button"
-                      data-index={place.id}
-                      // onClick={() => setOpenCalendarState(true)}
-                      onClick={() => openCalendarPop(calendarBlockRef, place.id)}
-                    >
-                      달력
-                    </button>
-                  </div> */}
-                    <CalendarBtnDom
-                      place={place}
-                      // onClick={openCalendarPop}
-                      openCalendarState={openCalendarState}
-                      setOpenCalendarState={setOpenCalendarState}
-                      // calendarBlockRef={calendarBlockRef}
-                    />
-                    <div className="date-block">
-                      <div className="date-block_value">
-                        {editCalendar(choiceDate)}
-                      </div>
-                      <div className="date-block_inner">
-                        <div className="date-block_time">
-                          <select className="time-select">
-                            {choiceHour().map((hour) => (
-                              <option key={Number(hour)}>{hour}</option>
-                            ))}
-                          </select>
+                  <div className="project-layout">
+                    <div className="project-block_title">
+                      <p className="project-block_title_place">
+                        {place.place_name}
+                      </p>
+                      <p className="project-block_title_address">
+                        {place.address_name}
+                      </p>
+                    </div>
+                    <div className="project-block_content_time">
+                      <CalendarBtnDom
+                        place={place}
+                        // onClick={openCalendarPop}
+                        openCalendarState={openCalendarState}
+                        setOpenCalendarState={setOpenCalendarState}
+                        // calendarBlockRef={calendarBlockRef}
+                      />
+                      <div className="date-block">
+                        <div className="date-block_value">
+                          {editCalendar(choiceDate)}
                         </div>
-                        <span className="date-block_time"> : </span>
-                        <div className="date-block_time">
-                          <select className="time-select">
-                            {choiceMin().map((min) => (
-                              <option key={Number(min)}>{min}</option>
-                            ))}
-                          </select>
+                        <div className="date-block_inner">
+                          <div className="date-block_time">
+                            <select className="time-select">
+                              {choiceHour().map((hour) => (
+                                <option key={Number(hour)}>{hour}</option>
+                              ))}
+                            </select>
+                          </div>
+                          <span className="date-block_time"> : </span>
+                          <div className="date-block_time">
+                            <select className="time-select">
+                              {choiceMin().map((min) => (
+                                <option key={Number(min)}>{min}</option>
+                              ))}
+                            </select>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="content-block">
-                    <EmotionChoice
-                      emotionObject={emotionFood}
-                      text="1. 먹은 것에 대한 나의 emotion"
-                    />
-                    <EmotionChoice
-                      emotionObject={emotionView}
-                      text="2. 본 것에 대한 나의 emotion"
-                    />
-                    <EmotionChoice
-                      emotionObject={emotionGoods}
-                      text="3. 구입한 것에 대한 나의 emotion"
-                    />
+                    <div className="content-container">
+                      <div className="project-section">
+                        <p className="project-section_title">
+                          {myTripState.food !== undefined && myTripState.food}
+                        </p>
+                        {emotionArrState.food.map(
+                          (el: any, emoIndex: Number) => (
+                            <button
+                              key={Number(emoIndex)}
+                              className="project-section_btn"
+                              type="button"
+                            >
+                              {el}
+                            </button>
+                          ),
+                        )}
+                      </div>
+
+                      <EmotionChoice
+                        emotionObject={emotionFood}
+                        title="food"
+                        text="1. 먹은 것에 대한 나의 emotion"
+                        text2="1. 먹은 것을 입력하세요"
+                      />
+                    </div>
+                    <div className="content-container">
+                      <div className="project-section">
+                        <p className="project-section_title">
+                          {myTripState.view !== undefined && myTripState.view}
+                        </p>
+                        {emotionArrState.view.map(
+                          (el: string, emoIndex: Number) => (
+                            <button
+                              key={Number(emoIndex)}
+                              className="project-section_btn"
+                              type="button"
+                            >
+                              {el}
+                            </button>
+                          ),
+                        )}
+                      </div>
+                      <EmotionChoice
+                        emotionObject={emotionView}
+                        title="view"
+                        text="2. 본 것에 대한 나의 emotion"
+                        text2="2. 본 것을 입력하세요"
+                      />
+                    </div>
+                    <div className="content-container">
+                      <div className="project-section">
+                        <p className="project-section_title">
+                          {myTripState.goods !== undefined && myTripState.goods}
+                        </p>
+                        {emotionArrState.goods.map(
+                          (el: string, emoIndex: Number) => (
+                            <button
+                              key={Number(emoIndex)}
+                              className="project-section_btn"
+                              type="button"
+                            >
+                              {el}
+                            </button>
+                          ),
+                        )}
+                      </div>
+                      <EmotionChoice
+                        emotionObject={emotionGoods}
+                        title="goods"
+                        text="3. 구입한 것에 대한 나의 emotion"
+                        text2="3. 구입한 것을 입력하세요"
+                      />
+                    </div>
+
                     {/* <hr className="divide-line" /> */}
 
                     {/* <hr className="divide-line" /> */}
