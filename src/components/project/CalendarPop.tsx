@@ -29,10 +29,12 @@ const CalendarPop = (props: CalendarPopType) => {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     boxShadow: 24,
-    width: 400,
+    width: 350,
     height: 300,
     backgroundColor: '#FFFFFF',
     borderRadius: 5,
+    display: 'flex',
+    justifyContent: 'center',
   };
 
   // 달력 팝업을 불러오고 닫는 역할을 하는 useEffect
