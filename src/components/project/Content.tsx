@@ -1,6 +1,7 @@
 // import { Content } from 'leaflet';
 import 'react-calendar/dist/Calendar.css'; // css import
 
+import { title } from 'process';
 // import console from 'console';
 import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -143,10 +144,34 @@ const Content = (props: ContentPropsType) => {
     return `${year}년 ${month}월 ${date}일`;
   };
 
-  const [emotionArrState] = useRecoilState<any>(emotionAtom);
-  console.log('emotionAtom', emotionAtom);
+  const [emotionArrState, setEmotionArrState] =
+    useRecoilState<any>(emotionAtom);
+  // console.log('emotionAtom', emotionAtom);
 
-  const [myTripState] = useRecoilState<any>(tripAtom);
+  const [myTripState, setMyTripSate] = useRecoilState<any>(tripAtom);
+
+  const [historyList, setHistoryList] = useState<any[]>([]);
+
+  const submitList = (what: string, food: string, emotion: string) => {
+    const form = [
+      {
+        eat: food,
+        feel: emotion,
+      },
+    ];
+    setHistoryList(historyList.concat(form));
+
+    setMyTripSate((prevState: any) => {
+      if (what === 'food') {
+        return { ...prevState, food: '' };
+      }
+      if (what === 'view') {
+        return { ...prevState, view: '' };
+      }
+      return { ...prevState, goods: '' };
+    });
+    setEmotionArrState((emotionArrState.length = 0));
+  };
 
   return (
     <div className="project_bottom">
@@ -227,6 +252,14 @@ const Content = (props: ContentPropsType) => {
                   <div className="content-block">
                     <div className="content-container">
                       <div className="project-section">
+                        {historyList.map((el, recordIndex) => (
+                          <p
+                            className="project-section_title"
+                            key={`record${Number(recordIndex)}`}
+                          >
+                            {`먹은 거 : ${el.eat}, 내가 느낀 감정 : ${el.feel}`}
+                          </p>
+                        ))}
                         <p className="project-section_title">
                           {myTripState.food !== undefined && myTripState.food}
                         </p>
@@ -241,6 +274,19 @@ const Content = (props: ContentPropsType) => {
                             </button>
                           ),
                         )}
+                        <button
+                          className="submit-btn"
+                          type="button"
+                          onClick={() =>
+                            submitList(
+                              'food',
+                              myTripState.food,
+                              emotionArrState.food,
+                            )
+                          }
+                        >
+                          등록
+                        </button>
                       </div>
 
                       <EmotionChoice
@@ -298,10 +344,6 @@ const Content = (props: ContentPropsType) => {
                         text2="3. 구입한 것을 입력하세요"
                       />
                     </div>
-
-                    {/* <hr className="divide-line" /> */}
-
-                    {/* <hr className="divide-line" /> */}
                   </div>
                 </div>
               </div>
