@@ -31,11 +31,19 @@ const EmotionChoice = (props: EmotionChoiceType) => {
   const [emotionArrState, setEmotionArrState] =
     useRecoilState<any>(emotionAtom);
 
-  console.log('emotionArrState', emotionArrState);
-
   const [myTripState, setMyTripSate] = useRecoilState<any>(tripAtom);
 
   console.log('myTrip', myTripState.food);
+
+  const myTripInput = (name: string) => {
+    if (name === 'food') {
+      return myTripState.food;
+    }
+    if (name === 'view') {
+      return myTripState.view;
+    }
+    return myTripState.goods;
+  };
 
   return (
     <div className="cate-section">
@@ -46,7 +54,7 @@ const EmotionChoice = (props: EmotionChoiceType) => {
           <input
             type="text"
             className="cate-input"
-            // value={myTripState}
+            value={myTripInput(title)}
             onChange={(event) => {
               setMyTripSate((prevState: any) => {
                 if (title === 'food') {
