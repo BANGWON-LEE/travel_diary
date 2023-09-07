@@ -362,7 +362,7 @@ const ModalRegisterProject = () => {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     boxShadow: 24,
-    width: 980,
+    width: '100%',
     backgroundColor: '#FFFFFF',
     borderRadius: 5,
   };
@@ -371,28 +371,17 @@ const ModalRegisterProject = () => {
     <Modal open={modalState} onClose={setModalState}>
       <Box sx={popUpStyle}>
         <div className="modal_background">
-          {/* <div className="modal_background_top">
-            <div className="modal_background_top_block">
-              <button
-                type="button"
-                className="modal_background_top_block_btn"
-                onClick={() => setModalStatus(false)}
-              >
-                <img src={closeBtn} alt="close" />
-              </button>
-            </div>
-          </div> */}
           <div className="modal_background_map_block">
             <div className="map_wrap" ref={modalRef}>
               <div
                 id="map"
                 className="modal_background_map_block_ground"
-                style={{
-                  width: '100%',
-                  height: '43.05vh',
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}
+                // style={{
+                //   width: '100%',
+                //   height: '43.05vh',
+                //   position: 'relative',
+                //   overflow: 'hidden',
+                // }}
               />
               <div id="menu_wrap" className="bg_white">
                 <div className="option">
@@ -424,12 +413,12 @@ const ModalRegisterProject = () => {
                             {placeNameLimit(data.place_name)}
                           </button>
                         </span>
-                        <span className="item_addr-name">
+                        {/* <span className="item_addr-name">
                           {data.address_name}
-                        </span>
-                        <span className="item_phone-num">
+                        </span> */}
+                        {/* <span className="item_phone-num">
                           {data.phone === '' ? '연락처 없음' : data.phone}
-                        </span>
+                        </span> */}
                         <span className="item_loc">
                           <button
                             type="button"

@@ -12,16 +12,16 @@ const Project: React.FC = () => {
   }, [projectTitleState]);
 
   return (
-    <div>
-      <div className="project_background">
+    <div className="project_background">
+      <div className="project_background_inner">
         <ModalRegisterProject />
-        <div className="project_top">
-          <div className="project_top_block">
-            <h1 className="project_top_block_title">{titleState}</h1>
-          </div>
-        </div>
-        <Content setProjectTitleState={setProjectTitleState} />
       </div>
+      <div className="project_top">
+        <div className="project_top_block">
+          <h1 className="project_top_block_title">{titleState}</h1>
+        </div>
+      </div>
+      <Content setProjectTitleState={setProjectTitleState} />
     </div>
   );
 };

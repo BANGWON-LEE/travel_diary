@@ -1,7 +1,7 @@
 .modal_background {
   overflow: auto;
   height: 85vh;
-  margin: 9px 0px;
+  margin: 15px 0;
   &::-webkit-scrollbar {
     width: 10px;
   }
@@ -31,12 +31,15 @@
   }
 
   &_map_block {
-    width: auto;
-    padding: 25px 35px;
+    // width: 100%;
+    // padding: 25px 35px;
+    margin: 15px 35px;
 
     &_ground {
       width: 100%;
       height: 65vh;
+      position: relative;
+      overflow: hidden;
     }
 
     .bg_white {
@@ -47,7 +50,8 @@
         &_block {
           float: right;
           display: flex;
-          width: 30%;
+          justify-content: space-between;
+          width: 90%;
           box-sizing: border-box;
 
           .loc_search {
@@ -65,10 +69,10 @@
 
           .btn-loc_search {
             background-color: #b5b2ff;
-            width: 30%;
+            width: 15%;
             height: 36px;
-            position: relative;
-            right: 1.7px;
+            position: absolute;
+            right: 4.7%;
             border: none;
             top: 1.9px;
             color: #ffffff;
@@ -86,7 +90,7 @@
         height: auto;
         // margin-top: 15px;
         margin: 0 auto;
-        width: 730px;
+        width: 100%;
         // text-align: center;
 
         &_inner {
@@ -122,7 +126,8 @@
       .places_list {
         border: 3px solid #bbbbbb;
         border-radius: 15px;
-        padding-right: 20px;
+        // padding-right: 20px;
+        padding-left: 5px;
         position: relative;
         top: 15px;
         margin-top: 0px;
@@ -132,7 +137,7 @@
 
         .empty-list {
           text-align: center;
-          padding: 0px 210px;
+          // padding: 0px 210px;
         }
 
         .item {
@@ -141,6 +146,7 @@
           display: flex;
           width: 97%;
           padding: 7px 0px 4px;
+          justify-content: space-between;
 
           &_addr-name {
             margin-left: 10px;
@@ -148,9 +154,9 @@
           }
 
           &_place-name {
-            margin-left: 10px;
+            // margin-left: 10px;
             font-weight: bolder;
-            width: 35%;
+            // width: 35%;
 
             > button {
               border: none;
