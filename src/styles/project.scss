@@ -1,7 +1,7 @@
 .project_background {
   box-sizing: border-box;
   // padding: 120px 20px;
-  margin: 120px 10px;
+  margin: 120px 20px;
   height: auto;
   text-align: center;
   &_inner {
@@ -51,7 +51,7 @@
 
     &_area {
       margin: 0 auto;
-      display: grid;
+      // display: grid;
       width: 100%;
 
       .project-title {
@@ -62,7 +62,7 @@
         display: grid;
 
         &_intro {
-          width: 100%;
+          // width: 100%;
           text-align: left;
           margin-right: 15px;
           font-size: 15px;
@@ -70,7 +70,7 @@
         }
         &_text-box {
           width: 100%;
-          text-align: left;
+          // text-align: left;
           padding: 5px 0;
           // margin-left: 15px;
 
@@ -124,8 +124,8 @@
 
         .project-section {
           display: inline-block;
-          max-width: 350px;
-          min-width: 350px;
+          // max-width: 350px;
+          // min-width: 350px;
           height: auto;
           &_btn {
             display: inline-block;
@@ -171,13 +171,14 @@
           &_time {
             // margin: 4px 0;
             align-items: center;
-            display: flex;
+            display: grid;
             width: 100%;
             justify-content: center;
           }
 
           .calendar-section {
-            padding-right: 15px;
+            // padding-right: 15px;
+            margin-bottom: 20px;
             .btn-calendar {
               padding: 6px 15px;
               border: none;
@@ -224,7 +225,7 @@
 
             .cate-section {
               // margin-top: 15px;
-              margin: 20px 20px;
+              margin: 20px 0;
               border: 3px solid #b5b2ff;
               border-radius: 6px;
               display: grid;
@@ -267,6 +268,7 @@
 
               .emotion-block {
                 display: grid;
+                margin: 0 10px;
               }
 
               .emotion-title {
@@ -295,7 +297,7 @@
               .cs-block {
                 // justify-content: center;
                 margin-top: 15px;
-                display: grid;
+                // display: grid;
                 align-items: center;
                 justify-content: center;
 
@@ -307,10 +309,12 @@
                 }
 
                 .cs-section {
+                  display: flex;
+                  padding-bottom: 30px;
                   &_input {
                     // width: 100%;
-                    width: 310px;
-                    margin-left: 10px;
+                    width: 90%;
+                    // margin-left: 10px;
                     height: 25px;
                     padding: 5px 8px;
                     border: 3px solid #d9e5ff;
@@ -319,13 +323,13 @@
 
                   &_btn {
                     width: 60px;
-                    height: 30px;
+                    height: 40px;
                     border: none;
                     background-color: #7875c1;
                     color: #ffffff;
                     border-radius: 4px;
-                    position: relative;
-                    right: 65px;
+                    // position: relative;
+                    // right: 65px;
                     top: 0.5px;
                   }
                 }

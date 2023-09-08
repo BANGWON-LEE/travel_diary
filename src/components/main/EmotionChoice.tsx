@@ -117,7 +117,7 @@ const EmotionChoice = (props: EmotionChoiceType) => {
         </div>
         <div className="cs-block">
           <div className="cs-block_title">사진을 올려주세요 :</div>
-          <div>
+          <div className="cs-section">
             <input
               type="file"
               accept="image/*"
