@@ -25,7 +25,7 @@ const SelectedPlace = () => {
     <div className="add-place">
       <div className="add-place_inner">
         {placeStore.map((el: PlaceBtnType, index: number) => (
-          <p className="add-place_list" key={Number(index)}>
+          <p className="add-place_list" key={`addPlace${Number(index)}`}>
             <button
               className="cancel-place-btn"
               type="button"
