@@ -54,7 +54,7 @@ const CalendarBtnDom = (props: CalendarBtnDomType) => {
     // const refNum = documen(number);
     const btn = elRef?.current;
     const popNum = btn?.getAttribute('data-index');
-    console.log('rere', popNum, placeId);
+    // console.log('rere', popNum, placeId);
 
     if (popNum === placeId) {
       setOpenCalendarState(true);
@@ -205,8 +205,8 @@ const Content = (props: ContentPropsType) => {
         </div>
         {modalState === false &&
           placeStore.map((place, index: number) => (
-            <>
-              <div className="project-block" key={`places${Number(index)}`}>
+            <div key={`places${Number(index)}`}>
+              <div className="project-block">
                 <div className="project-block_content">
                   <div className="project-layout">
                     <div className="project-block_title">
@@ -232,16 +232,20 @@ const Content = (props: ContentPropsType) => {
                         <div className="date-block_inner">
                           <div className="date-block_time">
                             <select className="time-select">
-                              {choiceHour().map((hour) => (
-                                <option key={Number(hour)}>{hour}</option>
+                              {choiceHour().map((hour, hourIndex) => (
+                                <option key={`hour${Number(hourIndex)}`}>
+                                  {hour}
+                                </option>
                               ))}
                             </select>
                           </div>
                           <span className="date-block_time"> : </span>
                           <div className="date-block_time">
                             <select className="time-select">
-                              {choiceMin().map((min) => (
-                                <option key={Number(min)}>{min}</option>
+                              {choiceMin().map((min, minIndex) => (
+                                <option key={`min${Number(minIndex)}`}>
+                                  {min}
+                                </option>
                               ))}
                             </select>
                           </div>
@@ -254,8 +258,8 @@ const Content = (props: ContentPropsType) => {
                       <div className="project-section">
                         {historyList.map((el, recordIndex) => (
                           <p
-                            className="project-section_title"
                             key={`record${Number(recordIndex)}`}
+                            className="project-section_title"
                           >
                             {`먹은 거 : ${el.eat}, 내가 느낀 감정 : ${el.feel}`}
                           </p>
@@ -263,17 +267,19 @@ const Content = (props: ContentPropsType) => {
                         <p className="project-section_title">
                           {myTripState.food !== undefined && myTripState.food}
                         </p>
-                        {emotionArrState.food.map(
-                          (el: any, emoIndex: Number) => (
-                            <button
-                              key={Number(emoIndex)}
-                              className="project-section_btn"
-                              type="button"
-                            >
-                              {el}
-                            </button>
-                          ),
-                        )}
+                        <div>
+                          {emotionArrState.food.map(
+                            (el: any, emoIndex: Number) => (
+                              <button
+                                key={`third${Number(emoIndex)}`}
+                                className="project-section_btn"
+                                type="button"
+                              >
+                                {el}
+                              </button>
+                            ),
+                          )}
+                        </div>
                         <button
                           className="submit-btn"
                           type="button"
@@ -304,7 +310,7 @@ const Content = (props: ContentPropsType) => {
                         {emotionArrState.view.map(
                           (el: string, emoIndex: Number) => (
                             <button
-                              key={Number(emoIndex)}
+                              key={`firstEmo${Number(emoIndex)}`}
                               className="project-section_btn"
                               type="button"
                             >
@@ -328,7 +334,7 @@ const Content = (props: ContentPropsType) => {
                         {emotionArrState.goods.map(
                           (el: string, emoIndex: Number) => (
                             <button
-                              key={Number(emoIndex)}
+                              key={`secondEmo${Number(emoIndex)}`}
                               className="project-section_btn"
                               type="button"
                             >
@@ -348,7 +354,7 @@ const Content = (props: ContentPropsType) => {
                 </div>
               </div>
               <hr className="divide-line" />
-            </>
+            </div>
           ))}
       </div>
     </div>
