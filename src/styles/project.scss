@@ -1,7 +1,7 @@
 .project_background {
   box-sizing: border-box;
   // padding: 120px 20px;
-  margin: 120px 20px;
+  margin: 80px 20px;
   height: auto;
   text-align: center;
   &_inner {
@@ -192,7 +192,7 @@
 
           .date-block {
             display: flex;
-            align-items: center;
+            align-items: baseline;
 
             .date-block_inner {
               display: flex;
