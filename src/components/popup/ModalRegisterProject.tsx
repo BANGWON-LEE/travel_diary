@@ -1,16 +1,11 @@
 /* eslint-disable no-alert */
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-// import { bounds, map } from 'leaflet';
-// import { bounds } from 'leaflet';
-// import { map } from 'leaflet';
-// import { length } from 'assert';
-// import { map } from 'leaflet';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
-import closeBtn from '../../asset/close-button.png';
+// import closeBtn from '../../asset/close-button.png';
 import locBtn from '../../asset/loc.png';
 import env from '../../env';
 import { modalAtom, placeAtom } from '../../recoil/Atoms';
@@ -55,10 +50,12 @@ const ModalRegisterProject = () => {
       });
     };
 
+    mapScript.removeEventListener('load', onLoadKakaoMap);
+
     if (modalState === true) {
       mapScript.addEventListener('load', onLoadKakaoMap);
-    }
-    if (modalState === false) {
+    } else if (modalState === false) {
+      console.log('꺼졌니?');
       setLocData([]);
       mapScript.removeEventListener('load', map);
       mapScript.removeEventListener('load', onLoadKakaoMap);
@@ -407,7 +404,7 @@ const ModalRegisterProject = () => {
                 <ul id="loc_list" className="places_list">
                   {locData.length > 0 ? (
                     locData.map((data, index) => (
-                      <li key={Number(index)} className="item">
+                      <li key={`mapList${Number(index)}`} className="item">
                         <span className="item_place-name">
                           <button type="button" onClick={() => getPlace(data)}>
                             {placeNameLimit(data.place_name)}
@@ -451,7 +448,10 @@ const ModalRegisterProject = () => {
                     <button
                       className="modal-determine-block_btn"
                       type="button"
-                      onClick={() => navigation('/')}
+                      onClick={() => {
+                        setModalState(false);
+                        navigation('/');
+                      }}
                     >
                       닫기
                     </button>
