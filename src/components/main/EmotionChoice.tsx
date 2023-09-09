@@ -13,20 +13,20 @@ interface EmotionChoiceType {
 const EmotionChoice = (props: EmotionChoiceType) => {
   const { emotionObject, title, text, text2 } = props;
 
-  const [selectedFile, setSelectedFile] = useState<any>();
+  // const [selectedFile, setSelectedFile] = useState<any>();
 
-  const handleFileInputChange = (e: any) => {
-    const file = e.target?.files[0];
-    setSelectedFile(file);
-  };
+  // const handleFileInputChange = (e: any) => {
+  //   const file = e.target?.files[0];
+  //   setSelectedFile(file);
+  // };
 
-  const handleUpload = () => {
-    // 선택한 파일을 서버로 업로드하는 로직을 이곳에 추가할 수 있습니다.
-    if (selectedFile) {
-      console.log('Uploading file:', selectedFile.name);
-      // 여기에서 파일을 업로드하거나 필요한 처리를 수행합니다.
-    }
-  };
+  // const handleUpload = () => {
+  //   // 선택한 파일을 서버로 업로드하는 로직을 이곳에 추가할 수 있습니다.
+  //   if (selectedFile) {
+  //     console.log('Uploading file:', selectedFile.name);
+  //     // 여기에서 파일을 업로드하거나 필요한 처리를 수행합니다.
+  //   }
+  // };
 
   const [emotionArrState, setEmotionArrState] =
     useRecoilState<any>(emotionAtom);
@@ -78,7 +78,7 @@ const EmotionChoice = (props: EmotionChoiceType) => {
                 <button
                   className="emotion-cate_btn"
                   type="button"
-                  key={Number(eatIndex)}
+                  key={`emotionEl${Number(eatIndex)}`}
                   onClick={() =>
                     setEmotionArrState((prevState: any) => {
                       if (title === 'food') {
@@ -115,7 +115,7 @@ const EmotionChoice = (props: EmotionChoiceType) => {
             </button>
           </div>
         </div>
-        <div className="cs-block">
+        {/* <div className="cs-block">
           <div className="cs-block_title">사진을 올려주세요 :</div>
           <div className="cs-section">
             <input
@@ -133,7 +133,7 @@ const EmotionChoice = (props: EmotionChoiceType) => {
             </button>
           </div>
           {selectedFile && <p>선택한 파일: {selectedFile.name}</p>}
-        </div>
+        </div> */}
       </div>
     </div>
   );
