@@ -55,9 +55,9 @@ const ModalRegisterProject = () => {
     if (modalState === true) {
       mapScript.addEventListener('load', onLoadKakaoMap);
     } else if (modalState === false) {
-      console.log('꺼졌니?');
+      // console.log('꺼졌니?');
       setLocData([]);
-      mapScript.removeEventListener('load', map);
+      // mapScript.removeEventListener('load', map);
       mapScript.removeEventListener('load', onLoadKakaoMap);
     }
   }, [modalState]);
@@ -449,8 +449,9 @@ const ModalRegisterProject = () => {
                       className="modal-determine-block_btn"
                       type="button"
                       onClick={() => {
-                        setModalState(false);
                         navigation('/');
+                        setPlaceStore([]);
+                        setModalState(false);
                       }}
                     >
                       닫기
