@@ -150,16 +150,34 @@ const Content = (props: ContentPropsType) => {
 
   const [myTripState, setMyTripSate] = useRecoilState<any>(tripAtom);
 
-  const [historyList, setHistoryList] = useState<any[]>([]);
+  const inputObject = {
+    food: [],
+    view: [],
+    goods: [],
+  };
 
-  const submitList = (what: string, food: string, emotion: string) => {
-    const form = [
-      {
-        eat: food,
-        feel: emotion,
-      },
-    ];
-    setHistoryList(historyList.concat(form));
+  const [historyList, setHistoryList] = useState<any>(inputObject);
+
+  const submitList = (what: string, el: string, emotion: string) => {
+    const form = {
+      what: el,
+      feel: emotion[0],
+    };
+
+    // console.log('form', form);
+    setHistoryList((prevState: any) => {
+      const newState = { ...prevState }; // 이전 상태의 복사본 생성
+
+      if (what === 'food') {
+        newState.food = [...prevState.food, form]; // food 배열에 새 항목 추가
+      } else if (what === 'view') {
+        newState.view = [...prevState.view, form]; // view 배열에 새 항목 추가
+      } else {
+        newState.goods = [...prevState.goods, form]; // goods 배열에 새 항목 추가
+      }
+
+      return newState; // 업데이트된 상태 반환
+    });
 
     setMyTripSate((prevState: any) => {
       if (what === 'food') {
@@ -170,7 +188,16 @@ const Content = (props: ContentPropsType) => {
       }
       return { ...prevState, goods: '' };
     });
-    setEmotionArrState((emotionArrState.length = 0));
+
+    setEmotionArrState((prevState: any) => {
+      if (what === 'food') {
+        return { ...prevState, food: [] };
+      }
+      if (what === 'view') {
+        return { ...prevState, view: [] };
+      }
+      return { ...prevState, goods: [] };
+    });
   };
 
   return (
@@ -255,20 +282,33 @@ const Content = (props: ContentPropsType) => {
                   </div>
                   <div className="content-block">
                     <div className="content-container">
+                      <EmotionChoice
+                        emotionObject={emotionFood}
+                        title="food"
+                        text="1. 먹은 것에 대한 나의 emotion"
+                        text2="1. 먹은 것을 입력하세요"
+                      />
                       <div className="project-section">
-                        {historyList.map((el, recordIndex) => (
-                          <p
-                            key={`record${Number(recordIndex)}`}
-                            className="project-section_title"
-                          >
-                            {`먹은 거 : ${el.eat}, 내가 느낀 감정 : ${el.feel}`}
-                          </p>
-                        ))}
+                        {historyList.food?.map(
+                          (el: any, recordIndex: number) => (
+                            <div
+                              key={`record${Number(recordIndex)}`}
+                              className="project-section_title"
+                            >
+                              <p className="project-eat-text">
+                                먹은 거 : <strong>{`${el.what}`}</strong>{' '}
+                              </p>
+                              <p className="project-emotion-text">
+                                내가 느낀 감정 : <strong>{`${el.feel}`}</strong>
+                              </p>
+                            </div>
+                          ),
+                        )}
                         <p className="project-section_title">
-                          {myTripState.food !== undefined && myTripState.food}
+                          {myTripState?.food !== undefined && myTripState?.food}
                         </p>
                         <div>
-                          {emotionArrState.food.map(
+                          {emotionArrState.food?.map(
                             (el: any, emoIndex: Number) => (
                               <button
                                 key={`third${Number(emoIndex)}`}
@@ -286,7 +326,7 @@ const Content = (props: ContentPropsType) => {
                           onClick={() =>
                             submitList(
                               'food',
-                              myTripState.food,
+                              myTripState?.food,
                               emotionArrState.food,
                             )
                           }
@@ -294,20 +334,34 @@ const Content = (props: ContentPropsType) => {
                           등록
                         </button>
                       </div>
-
-                      <EmotionChoice
-                        emotionObject={emotionFood}
-                        title="food"
-                        text="1. 먹은 것에 대한 나의 emotion"
-                        text2="1. 먹은 것을 입력하세요"
-                      />
                     </div>
                     <div className="content-container">
+                      <EmotionChoice
+                        emotionObject={emotionView}
+                        title="view"
+                        text="2. 본 것에 대한 나의 emotion"
+                        text2="2. 본 것을 입력하세요"
+                      />
                       <div className="project-section">
+                        {historyList.view?.map(
+                          (el: any, recordIndex: number) => (
+                            <div
+                              key={`record${Number(recordIndex)}`}
+                              className="project-section_title"
+                            >
+                              <p className="project-eat-text">
+                                먹은 거 : <strong>{`${el.what}`}</strong>{' '}
+                              </p>
+                              <p className="project-emotion-text">
+                                내가 느낀 감정 : <strong>{`${el.feel}`}</strong>
+                              </p>
+                            </div>
+                          ),
+                        )}
                         <p className="project-section_title">
-                          {myTripState.view !== undefined && myTripState.view}
+                          {myTripState?.view !== undefined && myTripState?.view}
                         </p>
-                        {emotionArrState.view.map(
+                        {emotionArrState?.view?.map(
                           (el: string, emoIndex: Number) => (
                             <button
                               key={`firstEmo${Number(emoIndex)}`}
@@ -318,20 +372,49 @@ const Content = (props: ContentPropsType) => {
                             </button>
                           ),
                         )}
+                        <button
+                          className="submit-btn"
+                          type="button"
+                          onClick={() =>
+                            submitList(
+                              'view',
+                              myTripState?.view,
+                              emotionArrState.view,
+                            )
+                          }
+                        >
+                          등록
+                        </button>
                       </div>
-                      <EmotionChoice
-                        emotionObject={emotionView}
-                        title="view"
-                        text="2. 본 것에 대한 나의 emotion"
-                        text2="2. 본 것을 입력하세요"
-                      />
                     </div>
                     <div className="content-container">
+                      <EmotionChoice
+                        emotionObject={emotionGoods}
+                        title="goods"
+                        text="3. 구입한 것에 대한 나의 emotion"
+                        text2="3. 구입한 것을 입력하세요"
+                      />
                       <div className="project-section">
+                        {historyList.goods?.map(
+                          (el: any, recordIndex: number) => (
+                            <div
+                              key={`record${Number(recordIndex)}`}
+                              className="project-section_title"
+                            >
+                              <p className="project-eat-text">
+                                먹은 거 : <strong>{`${el.what}`}</strong>{' '}
+                              </p>
+                              <p className="project-emotion-text">
+                                내가 느낀 감정 : <strong>{`${el.feel}`}</strong>
+                              </p>
+                            </div>
+                          ),
+                        )}
                         <p className="project-section_title">
-                          {myTripState.goods !== undefined && myTripState.goods}
+                          {myTripState?.goods !== undefined &&
+                            myTripState?.goods}
                         </p>
-                        {emotionArrState.goods.map(
+                        {emotionArrState.goods?.map(
                           (el: string, emoIndex: Number) => (
                             <button
                               key={`secondEmo${Number(emoIndex)}`}
@@ -342,13 +425,20 @@ const Content = (props: ContentPropsType) => {
                             </button>
                           ),
                         )}
+                        <button
+                          className="submit-btn"
+                          type="button"
+                          onClick={() =>
+                            submitList(
+                              'goods',
+                              myTripState?.goods,
+                              emotionArrState.goods,
+                            )
+                          }
+                        >
+                          등록
+                        </button>
                       </div>
-                      <EmotionChoice
-                        emotionObject={emotionGoods}
-                        title="goods"
-                        text="3. 구입한 것에 대한 나의 emotion"
-                        text2="3. 구입한 것을 입력하세요"
-                      />
                     </div>
                   </div>
                 </div>
