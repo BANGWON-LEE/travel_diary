@@ -144,6 +144,25 @@
           &_title {
             min-height: 25px;
           }
+
+          .project-eat-text {
+            font-size: 14px;
+            color: #7875c1;
+            font-weight: bold;
+
+            > strong {
+              color: #000000;
+            }
+          }
+          .project-emotion-text {
+            font-size: 14px;
+            color: #b375c1;
+            font-weight: bold;
+
+            > strong {
+              color: #000000;
+            }
+          }
         }
 
         .submit-btn {
