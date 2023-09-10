@@ -31,9 +31,12 @@ const EmotionChoice = (props: EmotionChoiceType) => {
   const [emotionArrState, setEmotionArrState] =
     useRecoilState<any>(emotionAtom);
 
-  const [myTripState, setMyTripSate] = useRecoilState<any>(tripAtom);
+  // console.log('emotionArrState', emotionArrState);
 
-  console.log('myTrip', myTripState.food);
+  const [myTripState, setMyTripSate] = useRecoilState<any>(tripAtom);
+  const [customState, setCustomState] = useState<string>('');
+
+  // console.log('myTrip', myTripState.food);
 
   const myTripInput = (name: string) => {
     if (name === 'food') {
@@ -44,6 +47,30 @@ const EmotionChoice = (props: EmotionChoiceType) => {
     }
     return myTripState.goods;
   };
+
+  const insertCustomTextState = (custom: string) => {
+    setEmotionArrState((prevState: any) => {
+      if (title === 'food') {
+        // console.log('el', el);
+        return {
+          ...prevState,
+          food: emotionArrState.food?.concat(custom),
+        };
+      }
+      if (title === 'view') {
+        return {
+          ...prevState,
+          view: emotionArrState.view.concat(custom),
+        };
+      }
+      return {
+        ...prevState,
+        goods: emotionArrState.goods.concat(custom),
+      };
+    });
+  };
+
+  console.log('title', title);
 
   return (
     <div className="cate-section">
@@ -82,9 +109,10 @@ const EmotionChoice = (props: EmotionChoiceType) => {
                   onClick={() =>
                     setEmotionArrState((prevState: any) => {
                       if (title === 'food') {
+                        console.log('el', el);
                         return {
                           ...prevState,
-                          food: emotionArrState.food.concat(el),
+                          food: emotionArrState.food?.concat(el),
                         };
                       }
                       if (title === 'view') {
@@ -109,8 +137,16 @@ const EmotionChoice = (props: EmotionChoiceType) => {
         <div className="cs-block">
           <p className="cs-block_title">직접 입력 : </p>
           <div className="cs-section">
-            <input type="text" className="cs-section_input" />
-            <button type="button" className="cs-section_btn">
+            <input
+              type="text"
+              className="cs-section_input"
+              onChange={(event) => setCustomState(event.currentTarget.value)}
+            />
+            <button
+              type="button"
+              className="cs-section_btn"
+              onClick={() => insertCustomTextState(customState)}
+            >
               등록
             </button>
           </div>
