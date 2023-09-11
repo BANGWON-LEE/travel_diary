@@ -30,7 +30,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "cp ./.env && react-scripts build",
+    "build": "cp  ./.env && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "stylelint \"**/*.scss\" && prettier"
