@@ -350,6 +350,12 @@ const ModalRegisterProject = () => {
   const [placeStore, setPlaceStore] = useRecoilState<any[]>(placeAtom);
 
   const getPlace = (place: PlaceType) => {
+    const check: any[] = placeStore.filter((el) => el === place);
+
+    if (check.length > 0) {
+      return;
+    }
+
     setPlaceStore((prevState) => [...prevState, place]);
   };
 
