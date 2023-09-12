@@ -33,3 +33,8 @@ export const tripAtom: any = atom({
   },
 });
 // event.currentTarget.value
+
+export const resultAtom: any = atom({
+  key: 'apiResult',
+  default: null,
+});

@@ -9,6 +9,7 @@ import { RecoilRoot } from 'recoil';
 import logo from './logo.svg';
 import MainPage from './pages/MainPage';
 import ProjectPage from './pages/ProjectPage';
+import ResultPage from './pages/ResultPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/project" element={<ProjectPage />} />
+            <Route path="/result" element={<ResultPage />} />
           </Routes>
         </div>
       </BrowserRouter>

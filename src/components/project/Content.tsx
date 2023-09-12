@@ -1,9 +1,9 @@
 // import { Content } from 'leaflet';
 import 'react-calendar/dist/Calendar.css'; // css import
 
-import { title } from 'process';
 // import console from 'console';
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 import { OpenAi } from '../../lib/OpenAi';
@@ -12,6 +12,7 @@ import {
   emotionAtom,
   modalAtom,
   placeAtom,
+  resultAtom,
   tripAtom,
 } from '../../recoil/Atoms';
 import EmotionChoice from '../main/EmotionChoice';
@@ -208,6 +209,10 @@ const Content = (props: ContentPropsType) => {
       return { ...prevState, goods: [] };
     });
   };
+  const navigation = useNavigate();
+  // const [, setResponseState] = useRecoilState<any>(resultAtom);
+  const [, setResultState] = useRecoilState<any>(resultAtom);
+  const [loadingState, setLoadingState] = useState<string>('');
 
   const submitMyTrip = () => {
     console.log('result1', historyList);
@@ -220,66 +225,86 @@ const Content = (props: ContentPropsType) => {
       return;
     }
 
-    OpenAi(historyList);
+    setLoadingState('잠시만 기다려주세요');
+    const result: any = OpenAi(historyList);
+
+    result
+      .then((res: any) => {
+        setResultState(res);
+
+        navigation('/result');
+      })
+      .catch((err: any) => {
+        console.log('에러', err);
+      });
+
+    // if(result.)
+
+    // setResponseState(result);
   };
+  console.log('loa', loadingState);
 
   return (
     <div className="project_bottom">
-      <CalendarPop
-        openCalendarState={openCalendarState}
-        setOpenCalendarState={setOpenCalendarState}
-      />
-      <div className="project_bottom_top_area">
-        <div className="project_bottom_top_area_block">
-          <button
-            type="button"
-            className="project_bottom_top_area_block_btn"
-            onClick={() => setModalState(true)}
-          >
-            지도 열기
-          </button>
-        </div>
-      </div>
-      <div className="project_bottom_area">
-        <div className="project-title">
-          <p className="project-title_intro">제목 : </p>
-          <div className="project-title_text-box">
-            <input
-              className="input-text"
-              type="text"
-              onChange={(event) =>
-                setProjectTitleState(event.currentTarget.value)
-              }
-            />
+      {loadingState === '잠시만 기다려주세요' ? (
+        <div>{loadingState}</div>
+      ) : (
+        <>
+          <CalendarPop
+            openCalendarState={openCalendarState}
+            setOpenCalendarState={setOpenCalendarState}
+          />
+          <div className="project_bottom_top_area">
+            <div className="project_bottom_top_area_block">
+              <button
+                type="button"
+                className="project_bottom_top_area_block_btn"
+                onClick={() => setModalState(true)}
+              >
+                지도 열기
+              </button>
+            </div>
           </div>
-        </div>
-        {modalState === false &&
-          placeStore.map((place, index: number) => (
-            <div key={`places${Number(index)}`}>
-              <div className="project-block">
-                <div className="project-block_content">
-                  <div className="project-layout">
-                    <div className="project-block_title">
-                      <p className="project-block_title_place">
-                        {place.place_name}
-                      </p>
-                      <p className="project-block_title_address">
-                        {place.address_name}
-                      </p>
-                    </div>
-                    <div className="project-block_content_time">
-                      <CalendarBtnDom
-                        place={place}
-                        // onClick={openCalendarPop}
-                        openCalendarState={openCalendarState}
-                        setOpenCalendarState={setOpenCalendarState}
-                        // calendarBlockRef={calendarBlockRef}
-                      />
-                      <div className="date-block">
-                        <div className="date-block_value">
-                          {editCalendar(choiceDate)}
+          <div className="project_bottom_area">
+            <div className="project-title">
+              <p className="project-title_intro">제목 : </p>
+              <div className="project-title_text-box">
+                <input
+                  className="input-text"
+                  type="text"
+                  onChange={(event) =>
+                    setProjectTitleState(event.currentTarget.value)
+                  }
+                />
+              </div>
+            </div>
+            {modalState === false &&
+              placeStore.map((place, index: number) => (
+                <div key={`places${Number(index)}`}>
+                  <div className="project-block">
+                    <div className="project-block_content">
+                      <div className="project-layout">
+                        <div className="project-block_title">
+                          <p className="project-block_title_place">
+                            {place.place_name}
+                          </p>
+                          <p className="project-block_title_address">
+                            {place.address_name}
+                          </p>
                         </div>
-                        {/* <div className="date-block_inner">
+                        <div className="project-block_content_time">
+                          <CalendarBtnDom
+                            place={place}
+                            // onClick={openCalendarPop}
+                            openCalendarState={openCalendarState}
+                            setOpenCalendarState={setOpenCalendarState}
+                            // calendarBlockRef={calendarBlockRef}
+                          />
+                          <div className="date-block">
+                            <div className="date-block_value">
+                              {editCalendar(choiceDate)}
+                            </div>
+                            {/* <div className="date-block_inner">
                           <div className="date-block_time">
                             <select className="time-select">
                               {choiceHour().map((hour, hourIndex) => (
@@ -300,191 +325,198 @@ const Content = (props: ContentPropsType) => {
                             </select>
                           </div>
                         </div> */}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="content-block">
-                    <div className="content-container">
-                      <EmotionChoice
-                        emotionObject={emotionFood}
-                        title="food"
-                        text="1. 먹은 것에 대한 나의 emotion"
-                        text2="1. 먹은 것을 입력하세요"
-                      />
-                      <div className="project-section">
-                        {historyList.food?.map(
-                          (el: any, recordIndex: number) => (
-                            <div
-                              key={`record${Number(recordIndex)}`}
-                              className="project-section_title"
-                            >
-                              <p className="project-eat-text">
-                                먹은 거 : <strong>{`${el.what}`}</strong>{' '}
-                              </p>
-                              <p className="project-emotion-text">
-                                내가 느낀 감정 : <strong>{`${el.feel}`}</strong>
-                              </p>
-                            </div>
-                          ),
-                        )}
-                        <p className="project-section_title">
-                          {myTripState?.food !== undefined && myTripState?.food}
-                        </p>
-                        <div>
-                          {emotionArrState.food?.map(
-                            (el: any, emoIndex: Number) => (
-                              <button
-                                key={`third${Number(emoIndex)}`}
-                                className="project-section_btn"
-                                type="button"
-                              >
-                                {el}
-                              </button>
-                            ),
-                          )}
+                          </div>
                         </div>
-                        <button
-                          className="submit-btn"
-                          type="button"
-                          onClick={() =>
-                            submitList(
-                              editCalendar(choiceDate),
-                              place.place_name,
-                              'food',
-                              myTripState?.food,
-                              emotionArrState.food,
-                            )
-                          }
-                        >
-                          등록
-                        </button>
                       </div>
-                    </div>
-                    <div className="content-container">
-                      <EmotionChoice
-                        emotionObject={emotionView}
-                        title="view"
-                        text="2. 본 것에 대한 나의 emotion"
-                        text2="2. 본 것을 입력하세요"
-                      />
-                      <div className="project-section">
-                        {historyList.view?.map(
-                          (el: any, recordIndex: number) => (
-                            <div
-                              key={`record${Number(recordIndex)}`}
-                              className="project-section_title"
-                            >
-                              <p className="project-eat-text">
-                                먹은 거 : <strong>{`${el.what}`}</strong>{' '}
-                              </p>
-                              <p className="project-emotion-text">
-                                내가 느낀 감정 : <strong>{`${el.feel}`}</strong>
-                              </p>
+                      <div className="content-block">
+                        <div className="content-container">
+                          <EmotionChoice
+                            emotionObject={emotionFood}
+                            title="food"
+                            text="1. 먹은 것에 대한 나의 emotion"
+                            text2="1. 먹은 것을 입력하세요"
+                          />
+                          <div className="project-section">
+                            {historyList.food?.map(
+                              (el: any, recordIndex: number) => (
+                                <div
+                                  key={`record${Number(recordIndex)}`}
+                                  className="project-section_title"
+                                >
+                                  <p className="project-eat-text">
+                                    먹은 거 : <strong>{`${el.what}`}</strong>{' '}
+                                  </p>
+                                  <p className="project-emotion-text">
+                                    내가 느낀 감정 :{' '}
+                                    <strong>{`${el.feel}`}</strong>
+                                  </p>
+                                </div>
+                              ),
+                            )}
+                            <p className="project-section_title">
+                              {myTripState?.food !== undefined &&
+                                myTripState?.food}
+                            </p>
+                            <div>
+                              {emotionArrState.food?.map(
+                                (el: any, emoIndex: Number) => (
+                                  <button
+                                    key={`third${Number(emoIndex)}`}
+                                    className="project-section_btn"
+                                    type="button"
+                                  >
+                                    {el}
+                                  </button>
+                                ),
+                              )}
                             </div>
-                          ),
-                        )}
-                        <p className="project-section_title">
-                          {myTripState?.view !== undefined && myTripState?.view}
-                        </p>
-                        {emotionArrState?.view?.map(
-                          (el: string, emoIndex: Number) => (
                             <button
-                              key={`firstEmo${Number(emoIndex)}`}
-                              className="project-section_btn"
+                              className="submit-btn"
                               type="button"
+                              onClick={() =>
+                                submitList(
+                                  editCalendar(choiceDate),
+                                  place.place_name,
+                                  'food',
+                                  myTripState?.food,
+                                  emotionArrState.food,
+                                )
+                              }
                             >
-                              {el}
+                              등록
                             </button>
-                          ),
-                        )}
-                        <button
-                          className="submit-btn"
-                          type="button"
-                          onClick={() =>
-                            submitList(
-                              editCalendar(choiceDate),
-                              place.place_name,
-                              'view',
-                              myTripState?.view,
-                              emotionArrState.view,
-                            )
-                          }
-                        >
-                          등록
-                        </button>
-                      </div>
-                    </div>
-                    <div className="content-container">
-                      <EmotionChoice
-                        emotionObject={emotionGoods}
-                        title="goods"
-                        text="3. 구입한 것에 대한 나의 emotion"
-                        text2="3. 구입한 것을 입력하세요"
-                      />
-                      <div className="project-section">
-                        {historyList.goods?.map(
-                          (el: any, recordIndex: number) => (
-                            <div
-                              key={`record${Number(recordIndex)}`}
-                              className="project-section_title"
-                            >
-                              <p className="project-eat-text">
-                                먹은 거 : <strong>{`${el.what}`}</strong>{' '}
-                              </p>
-                              <p className="project-emotion-text">
-                                내가 느낀 감정 : <strong>{`${el.feel}`}</strong>
-                              </p>
-                            </div>
-                          ),
-                        )}
-                        <p className="project-section_title">
-                          {myTripState?.goods !== undefined &&
-                            myTripState?.goods}
-                        </p>
-                        {emotionArrState.goods?.map(
-                          (el: string, emoIndex: Number) => (
+                          </div>
+                        </div>
+                        <div className="content-container">
+                          <EmotionChoice
+                            emotionObject={emotionView}
+                            title="view"
+                            text="2. 본 것에 대한 나의 emotion"
+                            text2="2. 본 것을 입력하세요"
+                          />
+                          <div className="project-section">
+                            {historyList.view?.map(
+                              (el: any, recordIndex: number) => (
+                                <div
+                                  key={`record${Number(recordIndex)}`}
+                                  className="project-section_title"
+                                >
+                                  <p className="project-eat-text">
+                                    먹은 거 : <strong>{`${el.what}`}</strong>{' '}
+                                  </p>
+                                  <p className="project-emotion-text">
+                                    내가 느낀 감정 :{' '}
+                                    <strong>{`${el.feel}`}</strong>
+                                  </p>
+                                </div>
+                              ),
+                            )}
+                            <p className="project-section_title">
+                              {myTripState?.view !== undefined &&
+                                myTripState?.view}
+                            </p>
+                            {emotionArrState?.view?.map(
+                              (el: string, emoIndex: Number) => (
+                                <button
+                                  key={`firstEmo${Number(emoIndex)}`}
+                                  className="project-section_btn"
+                                  type="button"
+                                >
+                                  {el}
+                                </button>
+                              ),
+                            )}
                             <button
-                              key={`secondEmo${Number(emoIndex)}`}
-                              className="project-section_btn"
+                              className="submit-btn"
                               type="button"
+                              onClick={() =>
+                                submitList(
+                                  editCalendar(choiceDate),
+                                  place.place_name,
+                                  'view',
+                                  myTripState?.view,
+                                  emotionArrState.view,
+                                )
+                              }
                             >
-                              {el}
+                              등록
                             </button>
-                          ),
-                        )}
-                        <button
-                          className="submit-btn"
-                          type="button"
-                          onClick={() =>
-                            submitList(
-                              editCalendar(choiceDate),
-                              place.place_name,
-                              'goods',
-                              myTripState?.goods,
-                              emotionArrState.goods,
-                            )
-                          }
-                        >
-                          등록
-                        </button>
+                          </div>
+                        </div>
+                        <div className="content-container">
+                          <EmotionChoice
+                            emotionObject={emotionGoods}
+                            title="goods"
+                            text="3. 구입한 것에 대한 나의 emotion"
+                            text2="3. 구입한 것을 입력하세요"
+                          />
+                          <div className="project-section">
+                            {historyList.goods?.map(
+                              (el: any, recordIndex: number) => (
+                                <div
+                                  key={`record${Number(recordIndex)}`}
+                                  className="project-section_title"
+                                >
+                                  <p className="project-eat-text">
+                                    먹은 거 : <strong>{`${el.what}`}</strong>{' '}
+                                  </p>
+                                  <p className="project-emotion-text">
+                                    내가 느낀 감정 :{' '}
+                                    <strong>{`${el.feel}`}</strong>
+                                  </p>
+                                </div>
+                              ),
+                            )}
+                            <p className="project-section_title">
+                              {myTripState?.goods !== undefined &&
+                                myTripState?.goods}
+                            </p>
+                            {emotionArrState.goods?.map(
+                              (el: string, emoIndex: Number) => (
+                                <button
+                                  key={`secondEmo${Number(emoIndex)}`}
+                                  className="project-section_btn"
+                                  type="button"
+                                >
+                                  {el}
+                                </button>
+                              ),
+                            )}
+                            <button
+                              className="submit-btn"
+                              type="button"
+                              onClick={() =>
+                                submitList(
+                                  editCalendar(choiceDate),
+                                  place.place_name,
+                                  'goods',
+                                  myTripState?.goods,
+                                  emotionArrState.goods,
+                                )
+                              }
+                            >
+                              등록
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <hr className="divide-line" />
                 </div>
-              </div>
-              <hr className="divide-line" />
+              ))}
+            <div className="project-container">
+              <button
+                onClick={() => submitMyTrip()}
+                className="project-container_submit"
+                type="button"
+              >
+                전송하기
+              </button>
             </div>
-          ))}
-        <div className="project-container">
-          <button
-            onClick={() => submitMyTrip()}
-            className="project-container_submit"
-            type="button"
-          >
-            전송하기
-          </button>
-        </div>
-      </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
