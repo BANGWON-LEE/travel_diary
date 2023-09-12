@@ -13,7 +13,8 @@ const Main: React.FC = () => {
         <div className="main_bottom">
           <div className="main_project_intro">
             <p>
-              여행 후기 및 일기를 간편하게 작성하도록 도와주는 플랫폼 입니다.
+              당신이 여행 경험을 공유해주시면,
+              <br /> 한 편의 시와 소설을 추천해드리겠습니다.
             </p>
           </div>
           <div className="main_bottom_top_area">

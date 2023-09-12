@@ -54,6 +54,18 @@
       // display: grid;
       width: 100%;
 
+      .project-container {
+        &_submit {
+          border-radius: 4px;
+          width: 100%;
+          border: none;
+          background-color: #b375c1;
+          padding: 10px 15px;
+          color: #ffffff;
+          font-size: 18px;
+          font-weight: bold;
+        }
+      }
       .project-title {
         // margin: 0 15px;
         // width: 49rem;

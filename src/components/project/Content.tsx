@@ -6,6 +6,7 @@ import { title } from 'process';
 import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
+import { OpenAi } from '../../lib/OpenAi';
 import {
   calendarDateAtom,
   emotionAtom,
@@ -108,25 +109,25 @@ const Content = (props: ContentPropsType) => {
   const [placeStore] = useRecoilState<any[]>(placeAtom);
   const [modalState, setModalState] = useRecoilState<boolean>(modalAtom);
 
-  const choiceHour = () => {
-    const times = [];
+  // const choiceHour = () => {
+  //   const times = [];
 
-    for (let i = 0; i <= 23; i += 1) {
-      const timeForm = i < 10 ? `0${i}` : `${i}`;
-      times.push(timeForm);
-    }
-    return times;
-  };
+  //   for (let i = 0; i <= 23; i += 1) {
+  //     const timeForm = i < 10 ? `0${i}` : `${i}`;
+  //     times.push(timeForm);
+  //   }
+  //   return times;
+  // };
 
-  const choiceMin = () => {
-    const times = [];
+  // const choiceMin = () => {
+  //   const times = [];
 
-    for (let i = 0; i <= 60; i += 1) {
-      const timeForm = i < 10 ? `0${i}` : `${i}`;
-      times.push(timeForm);
-    }
-    return times;
-  };
+  //   for (let i = 0; i <= 60; i += 1) {
+  //     const timeForm = i < 10 ? `0${i}` : `${i}`;
+  //     times.push(timeForm);
+  //   }
+  //   return times;
+  // };
 
   // 달력 팝업을 불러오기 위한 state
   const [openCalendarState, setOpenCalendarState] = useState<boolean>(false);
@@ -158,8 +159,16 @@ const Content = (props: ContentPropsType) => {
 
   const [historyList, setHistoryList] = useState<any>(inputObject);
 
-  const submitList = (what: string, el: string, emotion: string) => {
+  const submitList = (
+    date: string,
+    where: string,
+    what: string,
+    el: string,
+    emotion: string,
+  ) => {
     const form = {
+      when: date,
+      place: where,
       what: el,
       feel: emotion[0],
     };
@@ -198,6 +207,20 @@ const Content = (props: ContentPropsType) => {
       }
       return { ...prevState, goods: [] };
     });
+  };
+
+  const submitMyTrip = () => {
+    console.log('result1', historyList);
+    if (
+      historyList.food.length === 0 &&
+      historyList.view.length === 0 &&
+      historyList.goods.length === 0
+    ) {
+      alert('경험을 나눠주세요');
+      return;
+    }
+
+    OpenAi(historyList);
   };
 
   return (
@@ -256,7 +279,7 @@ const Content = (props: ContentPropsType) => {
                         <div className="date-block_value">
                           {editCalendar(choiceDate)}
                         </div>
-                        <div className="date-block_inner">
+                        {/* <div className="date-block_inner">
                           <div className="date-block_time">
                             <select className="time-select">
                               {choiceHour().map((hour, hourIndex) => (
@@ -276,7 +299,7 @@ const Content = (props: ContentPropsType) => {
                               ))}
                             </select>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>
@@ -325,6 +348,8 @@ const Content = (props: ContentPropsType) => {
                           type="button"
                           onClick={() =>
                             submitList(
+                              editCalendar(choiceDate),
+                              place.place_name,
                               'food',
                               myTripState?.food,
                               emotionArrState.food,
@@ -377,6 +402,8 @@ const Content = (props: ContentPropsType) => {
                           type="button"
                           onClick={() =>
                             submitList(
+                              editCalendar(choiceDate),
+                              place.place_name,
                               'view',
                               myTripState?.view,
                               emotionArrState.view,
@@ -430,6 +457,8 @@ const Content = (props: ContentPropsType) => {
                           type="button"
                           onClick={() =>
                             submitList(
+                              editCalendar(choiceDate),
+                              place.place_name,
                               'goods',
                               myTripState?.goods,
                               emotionArrState.goods,
@@ -446,6 +475,15 @@ const Content = (props: ContentPropsType) => {
               <hr className="divide-line" />
             </div>
           ))}
+        <div className="project-container">
+          <button
+            onClick={() => submitMyTrip()}
+            className="project-container_submit"
+            type="button"
+          >
+            전송하기
+          </button>
+        </div>
       </div>
     </div>
   );
