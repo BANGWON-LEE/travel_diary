@@ -242,7 +242,7 @@ const Content = (props: ContentPropsType) => {
 
     // setResponseState(result);
   };
-  console.log('loa', loadingState);
+  // console.log('loa', loadingState);
 
   return (
     <div className="project_bottom">
