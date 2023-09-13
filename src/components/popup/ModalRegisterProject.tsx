@@ -7,7 +7,7 @@ import { useRecoilState } from 'recoil';
 
 // import closeBtn from '../../asset/close-button.png';
 import locBtn from '../../asset/loc.png';
-import env from '../../env';
+// import env from '../../env';
 import { modalAtom, placeAtom } from '../../recoil/Atoms';
 import SelectedPlace from './SelectedPlace';
 
@@ -30,7 +30,7 @@ const ModalRegisterProject = () => {
   const mapScript = document.createElement('script');
   mapScript.async = true;
   mapScript.type = 'text/javascript';
-  mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${env.apiKey}&libraries=services&autoload=false`;
+  mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY}&libraries=services&autoload=false`;
 
   const [choicePlace, setChoicePlace] = useState<any[]>();
   const [locData, setLocData] = useState<any[]>([]);

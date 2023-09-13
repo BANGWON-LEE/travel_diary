@@ -1,7 +1,9 @@
-// env.js
-const env = {
-  apiKey: process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY,
-  openApiKey: process.env.REACT_APP_OPENAI_JAVASCRIPT_KEY,
-};
+// import dotenv from 'dotenv';
 
-export default env;
+// // env.js
+// const apiKey = process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY;
+// const openApiKey = process.env.REACT_APP_OPENAI_JAVASCRIPT_KEY;
+
+// dotenv.config();
+
+// export default env;
