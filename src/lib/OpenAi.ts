@@ -3,7 +3,7 @@ import axios from 'axios';
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
 
-import env from '../env';
+// import env from '../env';
 import { resultAtom } from '../recoil/Atoms';
 
 // API 요청 설정
@@ -11,7 +11,7 @@ const config: AxiosRequestConfig = {
   baseURL: 'https://api.openai.com/v1', // API 엔드포인트
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${env.openApiKey}`,
+    Authorization: `Bearer ${process.env.REACT_APP_OPENAI_JAVASCRIPT_KEY}`,
   },
 };
 
