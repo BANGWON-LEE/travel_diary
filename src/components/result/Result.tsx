@@ -18,7 +18,9 @@ const Result = () => {
 
   return (
     <div>
-      {responseState === null ? '글을 불러온는 중입니다.' : responseState}
+      {responseState === null
+        ? '글을 불러온는 중입니다.'
+        : responseState.split('.').join('.\n')}
     </div>
   );
 };
