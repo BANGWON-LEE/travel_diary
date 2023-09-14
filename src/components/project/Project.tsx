@@ -1,13 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
-import { modalAtom } from '../../recoil/Atoms';
+import { modalAtom, projectTitleAtom } from '../../recoil/Atoms';
 import ModalRegisterProject from '../popup/ModalRegisterProject';
 import Content from './Content';
 
 const Project: React.FC = () => {
-  const [projectTitleState, setProjectTitleState] =
-    useState<string>('제목을 입력하세요');
+  const [projectTitleState] = useRecoilState<string>(projectTitleAtom);
 
   const titleState = useMemo(() => {
     return projectTitleState;
@@ -29,7 +28,7 @@ const Project: React.FC = () => {
           <h1 className="project_top_block_title">{titleState}</h1>
         </div>
       </div>
-      <Content setProjectTitleState={setProjectTitleState} />
+      <Content />
     </div>
   );
 };
