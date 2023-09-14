@@ -10,8 +10,10 @@ import { OpenAi } from '../../lib/OpenAi';
 import {
   calendarDateAtom,
   emotionAtom,
+  emotionStateAtom,
   modalAtom,
   placeAtom,
+  projectTitleAtom,
   resultAtom,
   tripAtom,
 } from '../../recoil/Atoms';
@@ -101,15 +103,11 @@ const CalendarBtnDom = (props: CalendarBtnDomType) => {
   );
 };
 
-interface ContentPropsType {
-  setProjectTitleState: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const Content = (props: ContentPropsType) => {
-  const { setProjectTitleState } = props;
+const Content = () => {
   const [placeStore] = useRecoilState<any[]>(placeAtom);
   const [modalState, setModalState] = useRecoilState<boolean>(modalAtom);
-
+  const [projectTitleState, setProjectTitleState] =
+    useRecoilState<string>(projectTitleAtom);
   // const choiceHour = () => {
   //   const times = [];
 
@@ -137,6 +135,7 @@ const Content = (props: ContentPropsType) => {
   // const calendarBlockRef = useRef<HTMLDivElement | null>(null);
 
   const [choiceDate] = useRecoilState<any>(calendarDateAtom);
+  // const [customState] = useRecoilState<string>(emotionStateAtom);
 
   const editCalendar = (editDate: Date) => {
     const year = editDate.getFullYear();
@@ -173,6 +172,11 @@ const Content = (props: ContentPropsType) => {
       what: el,
       feel: emotion[0],
     };
+
+    if (form.feel === undefined || form.what === undefined) {
+      alert('여행 정보를 작성해주세요');
+      return;
+    }
 
     // console.log('form', form);
     setHistoryList((prevState: any) => {
@@ -225,6 +229,11 @@ const Content = (props: ContentPropsType) => {
       return;
     }
 
+    if (projectTitleState === '') {
+      alert('제목을 입력해주세요');
+      return;
+    }
+
     setLoadingState('잠시만 기다려주세요');
     const result: any = OpenAi(historyList);
 
@@ -244,10 +253,51 @@ const Content = (props: ContentPropsType) => {
   };
   // console.log('loa', loadingState);
 
+  const [count, setCount] = useState<number>(60); // 시작 숫자 설정
+  const [isRunning, setIsRunning] = useState<boolean>(true); // 타이머가 실행 중인지 여부
+  const [waitMessage, setWaitMessage] =
+    useState<string>('당신의 여행을 정리 중이에요');
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null;
+
+    if (isRunning) {
+      timer = setTimeout(() => {
+        if (count > 0) {
+          setCount(count - 1);
+        } else {
+          setIsRunning(false);
+        }
+      }, 1000); // 1초마다 갱신
+    }
+
+    if (count === 30) {
+      setWaitMessage('이제 한 문단 썼어요 ');
+    } else if (count === 20) {
+      setWaitMessage('조금만 더 기다려주세요');
+    } else if (count === 10) {
+      setWaitMessage('시간이 좀... 걸리내요 뿌앵~');
+    } else if (count === 3) {
+      setWaitMessage('이제 곧 나옵니다 진짜로!!! ');
+    }
+
+    return () => {
+      // 컴포넌트 언마운트 시 타이머 정리
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [count]);
+
   return (
     <div className="project_bottom">
       {loadingState === '잠시만 기다려주세요' ? (
-        <div>{loadingState}</div>
+        <div className="result-block">
+          {/* <div>{loadingState}</div> */}
+
+          <div className="result-message">{waitMessage}</div>
+          <div className="result-count">{count}</div>
+        </div>
       ) : (
         <>
           <CalendarPop
@@ -415,17 +465,19 @@ const Content = (props: ContentPropsType) => {
                               {myTripState?.view !== undefined &&
                                 myTripState?.view}
                             </p>
-                            {emotionArrState?.view?.map(
-                              (el: string, emoIndex: Number) => (
-                                <button
-                                  key={`firstEmo${Number(emoIndex)}`}
-                                  className="project-section_btn"
-                                  type="button"
-                                >
-                                  {el}
-                                </button>
-                              ),
-                            )}
+                            <div>
+                              {emotionArrState?.view?.map(
+                                (el: string, emoIndex: Number) => (
+                                  <button
+                                    key={`firstEmo${Number(emoIndex)}`}
+                                    className="project-section_btn"
+                                    type="button"
+                                  >
+                                    {el}
+                                  </button>
+                                ),
+                              )}
+                            </div>
                             <button
                               className="submit-btn"
                               type="button"
@@ -471,17 +523,19 @@ const Content = (props: ContentPropsType) => {
                               {myTripState?.goods !== undefined &&
                                 myTripState?.goods}
                             </p>
-                            {emotionArrState.goods?.map(
-                              (el: string, emoIndex: Number) => (
-                                <button
-                                  key={`secondEmo${Number(emoIndex)}`}
-                                  className="project-section_btn"
-                                  type="button"
-                                >
-                                  {el}
-                                </button>
-                              ),
-                            )}
+                            <div>
+                              {emotionArrState.goods?.map(
+                                (el: string, emoIndex: Number) => (
+                                  <button
+                                    key={`secondEmo${Number(emoIndex)}`}
+                                    className="project-section_btn"
+                                    type="button"
+                                  >
+                                    {el}
+                                  </button>
+                                ),
+                              )}
+                            </div>
                             <button
                               className="submit-btn"
                               type="button"

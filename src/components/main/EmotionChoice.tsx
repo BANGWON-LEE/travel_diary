@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 
-import { emotionAtom, tripAtom } from '../../recoil/Atoms';
+import { emotionAtom, emotionStateAtom, tripAtom } from '../../recoil/Atoms';
 
 interface EmotionChoiceType {
   emotionObject: string[][];
@@ -34,7 +34,8 @@ const EmotionChoice = (props: EmotionChoiceType) => {
   // console.log('emotionArrState', emotionArrState);
 
   const [myTripState, setMyTripSate] = useRecoilState<any>(tripAtom);
-  const [customState, setCustomState] = useState<string>('');
+  const [customState, setCustomState] =
+    useRecoilState<string>(emotionStateAtom);
 
   // console.log('myTrip', myTripState.food);
 
@@ -49,6 +50,11 @@ const EmotionChoice = (props: EmotionChoiceType) => {
   };
 
   const insertCustomTextState = (custom: string) => {
+    if (customState === '') {
+      alert('감정을 넣어주세요');
+      return;
+    }
+
     setEmotionArrState((prevState: any) => {
       if (title === 'food') {
         // console.log('el', el);

@@ -36,5 +36,15 @@ export const tripAtom: any = atom({
 
 export const resultAtom: any = atom({
   key: 'apiResult',
-  default: null,
+  default: '',
+});
+
+export const projectTitleAtom: any = atom({
+  key: 'projectTitleState',
+  default: '',
+});
+
+export const emotionStateAtom: any = atom({
+  key: 'emotionState',
+  default: '',
 });
