@@ -67,9 +67,9 @@ const CalendarBtnDom = (props: CalendarBtnDomType) => {
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
-      console.log('dfdf1', event.target.className);
+      // console.log('dfdf1', event.target.className);
       // console.log('dfdf2', calendarBlockRef.current);
-      console.log('dfdf3', openPopBtnRef.current);
+      // console.log('dfdf3', openPopBtnRef.current);
       if (
         openCalendarState &&
         openPopBtnRef.current &&
@@ -218,43 +218,10 @@ const Content = () => {
   const [, setResultState] = useRecoilState<any>(resultAtom);
   const [loadingState, setLoadingState] = useState<string>('');
 
-  const submitMyTrip = () => {
-    console.log('result1', historyList);
-    if (
-      historyList.food.length === 0 &&
-      historyList.view.length === 0 &&
-      historyList.goods.length === 0
-    ) {
-      alert('경험을 나눠주세요');
-      return;
-    }
-
-    if (projectTitleState === '') {
-      alert('제목을 입력해주세요');
-      return;
-    }
-
-    setLoadingState('잠시만 기다려주세요');
-    const result: any = OpenAi(historyList);
-
-    result
-      .then((res: any) => {
-        setResultState(res);
-
-        navigation('/result');
-      })
-      .catch((err: any) => {
-        console.log('에러', err);
-      });
-
-    // if(result.)
-
-    // setResponseState(result);
-  };
   // console.log('loa', loadingState);
 
-  const [count, setCount] = useState<number>(60); // 시작 숫자 설정
-  const [isRunning, setIsRunning] = useState<boolean>(true); // 타이머가 실행 중인지 여부
+  const [count, setCount] = useState<number>(40); // 시작 숫자 설정
+  const [isRunning, setIsRunning] = useState<boolean>(false); // 타이머가 실행 중인지 여부
   const [waitMessage, setWaitMessage] =
     useState<string>('당신의 여행을 정리 중이에요');
 
@@ -288,6 +255,61 @@ const Content = () => {
       }
     };
   }, [count, isRunning]);
+
+  const submitMyTrip = () => {
+    // console.log('result1', historyList);
+    if (
+      historyList.food.length === 0 &&
+      historyList.view.length === 0 &&
+      historyList.goods.length === 0
+    ) {
+      alert('경험을 나눠주세요');
+      return;
+    }
+
+    if (projectTitleState === '') {
+      alert('제목을 입력해주세요');
+      return;
+    }
+    setIsRunning(true);
+
+    setLoadingState('잠시만 기다려주세요');
+    const result: any = OpenAi(historyList);
+
+    result
+      .then((res: any) => {
+        setResultState(res);
+
+        navigation('/result');
+      })
+      .catch((err: any) => {
+        console.log('에러', err);
+      });
+
+    // if(result.)
+
+    // setResponseState(result);
+  };
+
+  const removeEmotion = (category: string, emo: string) => {
+    setEmotionArrState((prevState: any) => {
+      const newState = { ...prevState };
+
+      const categoryArr = newState[category];
+
+      if (categoryArr) {
+        const updatedCategoryArr = categoryArr.filter(
+          (el: string) => el !== emo,
+        );
+
+        newState[category] = updatedCategoryArr;
+      }
+
+      return newState; // Return the updated state
+    });
+  };
+
+  // console.log('emoARr', emotionArrState);
 
   return (
     <div className="project_bottom">
@@ -414,6 +436,7 @@ const Content = () => {
                                     key={`third${Number(emoIndex)}`}
                                     className="project-section_btn"
                                     type="button"
+                                    onClick={() => removeEmotion('food', el)}
                                   >
                                     {el}
                                   </button>
@@ -452,7 +475,7 @@ const Content = () => {
                                   className="project-section_title"
                                 >
                                   <p className="project-eat-text">
-                                    먹은 거 : <strong>{`${el.what}`}</strong>{' '}
+                                    본 거 : <strong>{`${el.what}`}</strong>{' '}
                                   </p>
                                   <p className="project-emotion-text">
                                     내가 느낀 감정 :{' '}
@@ -472,6 +495,7 @@ const Content = () => {
                                     key={`firstEmo${Number(emoIndex)}`}
                                     className="project-section_btn"
                                     type="button"
+                                    onClick={() => removeEmotion('view', el)}
                                   >
                                     {el}
                                   </button>
@@ -510,7 +534,7 @@ const Content = () => {
                                   className="project-section_title"
                                 >
                                   <p className="project-eat-text">
-                                    먹은 거 : <strong>{`${el.what}`}</strong>{' '}
+                                    구입한 거 : <strong>{`${el.what}`}</strong>{' '}
                                   </p>
                                   <p className="project-emotion-text">
                                     내가 느낀 감정 :{' '}
@@ -530,6 +554,7 @@ const Content = () => {
                                     key={`secondEmo${Number(emoIndex)}`}
                                     className="project-section_btn"
                                     type="button"
+                                    onClick={() => removeEmotion('goods', el)}
                                   >
                                     {el}
                                   </button>
