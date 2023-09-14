@@ -34,8 +34,7 @@ const EmotionChoice = (props: EmotionChoiceType) => {
   // console.log('emotionArrState', emotionArrState);
 
   const [myTripState, setMyTripSate] = useRecoilState<any>(tripAtom);
-  const [customState, setCustomState] =
-    useRecoilState<string>(emotionStateAtom);
+  const [customState, setCustomState] = useState<string>('');
 
   // console.log('myTrip', myTripState.food);
 
@@ -50,6 +49,8 @@ const EmotionChoice = (props: EmotionChoiceType) => {
   };
 
   const insertCustomTextState = (custom: string) => {
+    console.log('커스텀', custom);
+
     if (customState === '') {
       alert('감정을 넣어주세요');
       return;
@@ -76,7 +77,7 @@ const EmotionChoice = (props: EmotionChoiceType) => {
     });
   };
 
-  console.log('title', title);
+  // console.log('title', title);
 
   return (
     <div className="cate-section">
@@ -115,7 +116,7 @@ const EmotionChoice = (props: EmotionChoiceType) => {
                   onClick={() =>
                     setEmotionArrState((prevState: any) => {
                       if (title === 'food') {
-                        console.log('el', el);
+                        // console.log('el', el);
                         return {
                           ...prevState,
                           food: emotionArrState.food?.concat(el),
