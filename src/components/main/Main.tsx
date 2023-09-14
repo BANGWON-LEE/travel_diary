@@ -14,7 +14,7 @@ const Main: React.FC = () => {
           <div className="main_project_intro">
             <p>
               당신이 여행 경험을 공유해주시면,
-              <br /> 한 편의 시와 소설을 추천해드리겠습니다.
+              <br /> 한 편의 시를 지어 드립니다.
             </p>
           </div>
           <div className="main_bottom_top_area">
