@@ -287,7 +287,7 @@ const Content = () => {
         clearTimeout(timer);
       }
     };
-  }, [count]);
+  }, [count, isRunning]);
 
   return (
     <div className="project_bottom">
