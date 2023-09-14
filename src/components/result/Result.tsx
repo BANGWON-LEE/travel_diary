@@ -7,15 +7,15 @@ const Result = () => {
   const [responseState] = useRecoilState<any>(resultAtom);
   const [projectTitleState] = useRecoilState<string>(projectTitleAtom);
 
-  console.log(
-    'responseState',
-    JSON.stringify({ key: 'apiResult' }),
-    responseState,
-  );
+  // console.log(
+  //   'responseState',
+  //   JSON.stringify({ key: 'apiResult' }),
+  //   responseState,
+  // );
 
-  useEffect(() => {
-    console.log('responseState2', responseState);
-  }, [responseState]);
+  // useEffect(() => {
+  //   console.log('responseState2', responseState);
+  // }, [responseState]);
 
   const paragraphs = responseState ? responseState.split('\n') : [];
 
