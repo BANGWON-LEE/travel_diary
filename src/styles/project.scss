@@ -142,7 +142,7 @@
           &_btn {
             display: inline-block;
             width: auto;
-            height: 30px;
+            // height: 30px;
             font-size: 15px;
             color: #ffffff;
             margin-right: 10px;
@@ -151,6 +151,7 @@
             margin: 20px 0px;
             font-weight: bold;
             border: none;
+            padding: 5px 10px;
           }
 
           &_title {
