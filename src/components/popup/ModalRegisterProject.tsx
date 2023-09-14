@@ -77,7 +77,7 @@ const ModalRegisterProject = () => {
       return;
     }
 
-    console.log('choicePlace', choicePlace);
+    // console.log('choicePlace', choicePlace);
 
     if (searchStatus === true || choicePlace !== undefined) {
       let markers: any = [];
@@ -197,7 +197,7 @@ const ModalRegisterProject = () => {
           // setLocData(locData.concat(places[i]));
           const itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
           // itemEl = getListItem(i, places[i])
-          console.log('item', itemEl);
+          // console.log('item', itemEl);
           // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
           // LatLngBounds 객체에 좌표를 추가합니다
           bounds.extend(placePosition);
