@@ -29,7 +29,7 @@ export async function OpenAi(message: string) {
       role: 'user',
       content: `${JSON.stringify(
         message,
-      )}위의 객체 데이터를 참조해서 여행기를 작성해줘 따로 소제목을 달지말고 한 글로 이어서 일기 작성하듯 작성해주고 이에 어울리는 시 한 편을 제목과 함께 작성해줘 `,
+      )}위의 객체 데이터를 참조해서 여행기를 작성해줘 따로 소제목을 달지말고 한 글로 이어서 일기 작성하듯 작성해주고 이에 어울리는 음악을 k-pop 또는 pop 또는 클래식 또는 뉴에이지 곡 중, 한 곡을 알려줘  함께 작성해줘 `,
     };
 
     const data = {
