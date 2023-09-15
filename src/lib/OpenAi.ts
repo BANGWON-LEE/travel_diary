@@ -35,7 +35,7 @@ export async function OpenAi(message: string) {
     const data = {
       model: 'gpt-3.5-turbo',
       messages: [systemMessage, myMessage],
-      temperature: 0.6,
+      temperature: 0.8,
     };
 
     const response = await axios.post('/chat/completions', data, config);
