@@ -2,6 +2,8 @@
 <p> 여행을 다녀와서 일기를 작성하기 위해 만드는 프로젝트</p>
 <p> react, recoil 사용하여 프로젝트 진행 예정</p>
 
+<a href="https://web-travel-diary-2u73n2llmecsmlv.sel5.cloudtype.app/">trave_diary 접속</a>
+
 <br/>
 <p>초기 화면</p>
 <p align="center" >
