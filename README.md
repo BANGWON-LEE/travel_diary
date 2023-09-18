@@ -5,7 +5,7 @@
 <br/>
 <p>초기 화면</p>
 <p align="center" >
-  <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/1756ba20-6541-4945-b0a8-5a9284ffa3bc" width="500" height="400">
+  <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/1756ba20-6541-4945-b0a8-5a9284ffa3bc" width="300" height="200">
 </p>
 
 <h3>kakao map api 활용</h3>
