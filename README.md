@@ -17,9 +17,6 @@
   <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/e4a74b92-8cfd-4e4a-b49c-89f94a442c81" width="300" height="500">
 
 </div>
-<div align="center" display="inline-block" >
-  <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/e4a74b92-8cfd-4e4a-b49c-89f94a442c81" width="300" height="500">
-</div>
 </div>
 
 <h3>여행정보 입력 페이지</h3>
@@ -28,14 +25,13 @@
 <p align="center" >
   <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/b06f995b-aa52-44bb-a168-70e89cd9a61e" width="300" height="500">
 </p>
+
 <p>2. 본 것에 관해 입력 및 입력 완료</p>
-<div display="flex">
-<p align="center" >
+
+<div align="center" >
   <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/166edb3d-9a05-4546-a29b-8f1d9d8d966d" width="300" height="500">
-</p>
-<p align="center" >
-  <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/df33771e-5187-4bc7-8866-ef38175e55f3" width="300" height="500">
-</p>
+  
+   <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/df33771e-5187-4bc7-8866-ef38175e55f3" width="300" height="500">
 </div>
 
 <h3>chat gpt api에 연결</h3>
