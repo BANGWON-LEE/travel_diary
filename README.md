@@ -6,9 +6,9 @@
 <a href="https://web-travel-diary-2u73n2llmecsmlv.sel5.cloudtype.app/">trave_diary 접속</a>
 
 <h3>trave-diary 구현 관련 기록</h3>
-<a href="https://velog.io/@qkddnjs31/UI-퍼블리싱에-대하여-모바일-반응형웹"> -모바일 웹으로 구현하는 방식</a>
-<a href="https://velog.io/@qkddnjs31/kakao-map-api-구현-중-이슈"> - kakao map 관련 기록</a>
-<a href="https://velog.io/@qkddnjs31/Travel-diary에-관하여"> - trave-diary 기획 관련 기록</a>
+<p><a href="https://velog.io/@qkddnjs31/UI-퍼블리싱에-대하여-모바일-반응형웹"> -모바일 웹으로 구현하는 방식</a></p>
+<p><a href="https://velog.io/@qkddnjs31/kakao-map-api-구현-중-이슈"> - kakao map 관련 기록</a></p>
+<p><a href="https://velog.io/@qkddnjs31/Travel-diary에-관하여"> - trave-diary 기획 관련 기록</a></p>
 
 
 <br/>
