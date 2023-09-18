@@ -5,14 +5,14 @@
 <br/>
 <p>초기 화면</p>
 <p align="center" >
-  <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/1756ba20-6541-4945-b0a8-5a9284ffa3bc" width="700" height="600">
+  <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/1756ba20-6541-4945-b0a8-5a9284ffa3bc" width="500" height="400">
 </p>
 
 <h3>kakao map api 활용</h3>
 <h4>초기 map 화면</h4>
 <div display="flex">
 <p align="center" >
-  <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/6eff85bb-40e1-4bf0-88f4-38b52ab865cd" width="700" height="600">
+  <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/6eff85bb-40e1-4bf0-88f4-38b52ab865cd" width="500" height="400">
 </p>
 <p align="center" >
   <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/e4a74b92-8cfd-4e4a-b49c-89f94a442c81" width="700" height="600">
