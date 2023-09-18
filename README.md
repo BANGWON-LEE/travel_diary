@@ -1,6 +1,7 @@
 <h1>여행 Diary</h1>
 <p> 여행을 다녀와서 일기를 작성하기 위해 만드는 프로젝트</p>
 <p> react, recoil 사용하여 프로젝트 진행 예정</p>
+<p> 모바일 웹으로 ui 구현</p>
 
 <a href="https://web-travel-diary-2u73n2llmecsmlv.sel5.cloudtype.app/">trave_diary 접속</a>
 
