@@ -13,6 +13,8 @@
 <div>
 <div align="center" display="inline-block" >
   <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/6eff85bb-40e1-4bf0-88f4-38b52ab865cd" width="300" height="500">
+  <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/e4a74b92-8cfd-4e4a-b49c-89f94a442c81" width="300" height="500">
+
 </div>
 <div align="center" display="inline-block" >
   <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/e4a74b92-8cfd-4e4a-b49c-89f94a442c81" width="300" height="500">
