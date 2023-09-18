@@ -10,7 +10,7 @@
 
 <h3>kakao map api 활용</h3>
 <h4>초기 map 화면</h4>
-<div display="flex">
+<div display="flexbox">
 <p align="center" >
   <img src="https://github.com/BANGWON-LEE/travel_diary/assets/74960408/6eff85bb-40e1-4bf0-88f4-38b52ab865cd" width="300" height="500">
 </p>
