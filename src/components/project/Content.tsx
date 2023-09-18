@@ -21,13 +21,13 @@ import EmotionChoice from '../main/EmotionChoice';
 import CalendarPop from './CalendarPop';
 
 const emotionFood = [
-  ['존맛', '별로', '황홀'],
+  ['존맛', '별로', '황홀', '축복이 끝이없다'],
   ['최악', '그저 그런', '돈이 아까운'],
 ];
 
 const emotionView = [
-  ['존멋', '별로', '황홀'],
-  ['최악', '그저 그런', '생각보다 별로'],
+  ['존멋', '별로', '천국인 듯', '미쳤다', '끝장난다'],
+  ['최악', '그저 그런', '생각보다 별로', '헬이다'],
 ];
 
 const emotionGoods = [
