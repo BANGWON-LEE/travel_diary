@@ -10,7 +10,6 @@ import { OpenAi } from '../../lib/OpenAi';
 import {
   calendarDateAtom,
   emotionAtom,
-  emotionStateAtom,
   modalAtom,
   placeAtom,
   projectTitleAtom,
@@ -149,7 +148,15 @@ const Content = () => {
     useRecoilState<any>(emotionAtom);
   // console.log('emotionAtom', emotionAtom);
 
-  const [myTripState, setMyTripSate] = useRecoilState<any>(tripAtom);
+  interface MyTripType {
+    food: '';
+    view: '';
+    goods: '';
+  }
+
+  const [myTripState, setMyTripSate] = useRecoilState<MyTripType>(tripAtom);
+
+  console.log('트립확인', myTripState);
 
   const inputObject = {
     food: [],
@@ -157,7 +164,13 @@ const Content = () => {
     goods: [],
   };
 
-  const [historyList, setHistoryList] = useState<any>(inputObject);
+  interface HistoryListType {
+    food: string[];
+    view: string[];
+    goods: string[];
+  }
+
+  const [historyList, setHistoryList] = useState<HistoryListType>(inputObject);
 
   const submitList = (
     date: string,
@@ -274,7 +287,7 @@ const Content = () => {
     setIsRunning(true);
 
     setLoadingState('잠시만 기다려주세요');
-    const result: any = OpenAi(historyList);
+    const result: any = OpenAi(JSON.stringify(historyList));
 
     result
       .then((res: any) => {
@@ -285,10 +298,6 @@ const Content = () => {
       .catch((err: any) => {
         console.log('에러', err);
       });
-
-    // if(result.)
-
-    // setResponseState(result);
   };
 
   const removeEmotion = (category: string, emo: string) => {
@@ -308,8 +317,6 @@ const Content = () => {
       return newState; // Return the updated state
     });
   };
-
-  // console.log('emoARr', emotionArrState);
 
   return (
     <div className="project_bottom">
