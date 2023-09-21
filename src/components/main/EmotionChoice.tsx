@@ -13,21 +13,6 @@ interface EmotionChoiceType {
 const EmotionChoice = (props: EmotionChoiceType) => {
   const { emotionObject, title, text, text2 } = props;
 
-  // const [selectedFile, setSelectedFile] = useState<any>();
-
-  // const handleFileInputChange = (e: any) => {
-  //   const file = e.target?.files[0];
-  //   setSelectedFile(file);
-  // };
-
-  // const handleUpload = () => {
-  //   // 선택한 파일을 서버로 업로드하는 로직을 이곳에 추가할 수 있습니다.
-  //   if (selectedFile) {
-  //     console.log('Uploading file:', selectedFile.name);
-  //     // 여기에서 파일을 업로드하거나 필요한 처리를 수행합니다.
-  //   }
-  // };
-
   const [emotionArrState, setEmotionArrState] =
     useRecoilState<any>(emotionAtom);
 
@@ -116,7 +101,6 @@ const EmotionChoice = (props: EmotionChoiceType) => {
                   onClick={() =>
                     setEmotionArrState((prevState: any) => {
                       if (title === 'food') {
-                        // console.log('el', el);
                         return {
                           ...prevState,
                           food: emotionArrState.food?.concat(el),
