@@ -10,15 +10,24 @@ interface EmotionChoiceType {
   text2: string;
 }
 
+interface SetMyTripState {
+  (prevState: typeof tripAtom): void;
+}
+
 const EmotionChoice = (props: EmotionChoiceType) => {
   const { emotionObject, title, text, text2 } = props;
 
+  interface EmotionArrStateType {
+    food: string[];
+    view: string[];
+    goods: string[];
+  }
+
   const [emotionArrState, setEmotionArrState] =
-    useRecoilState<any>(emotionAtom);
+    useRecoilState<EmotionArrStateType>(emotionAtom);
 
-  // console.log('emotionArrState', emotionArrState);
-
-  const [myTripState, setMyTripSate] = useRecoilState<any>(tripAtom);
+  const [myTripState, setMyTripState]: [typeof tripAtom, SetMyTripState] =
+    useRecoilState(tripAtom);
   const [customState, setCustomState] = useState<string>('');
 
   // console.log('myTrip', myTripState.food);
@@ -41,7 +50,7 @@ const EmotionChoice = (props: EmotionChoiceType) => {
       return;
     }
 
-    setEmotionArrState((prevState: any) => {
+    setEmotionArrState((prevState: EmotionArrStateType) => {
       if (title === 'food') {
         // console.log('el', el);
         return {
@@ -63,6 +72,11 @@ const EmotionChoice = (props: EmotionChoiceType) => {
   };
 
   // console.log('title', title);
+  interface MyTripOnType {
+    food: string;
+    view: string;
+    goods: string;
+  }
 
   return (
     <div className="cate-section">
@@ -75,7 +89,7 @@ const EmotionChoice = (props: EmotionChoiceType) => {
             className="cate-input"
             value={myTripInput(title)}
             onChange={(event) => {
-              setMyTripSate((prevState: any) => {
+              setMyTripState((prevState: MyTripOnType) => {
                 if (title === 'food') {
                   return { ...prevState, food: event.currentTarget.value };
                 }
@@ -91,7 +105,7 @@ const EmotionChoice = (props: EmotionChoiceType) => {
           </button> */}
         </div>
         <div className="emotion-cate">
-          {emotionObject.map((emotion: any, num) => (
+          {emotionObject.map((emotion: string[], num) => (
             <div key={`emotionFood${Number(num)}`}>
               {emotion.map((el: string, eatIndex: Number) => (
                 <button
