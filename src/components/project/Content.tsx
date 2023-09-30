@@ -156,7 +156,7 @@ const Content = () => {
 
   const [myTripState, setMyTripSate] = useRecoilState<MyTripType>(tripAtom);
 
-  console.log('트립확인', myTripState);
+  // console.log('트립확인', myTripState);
 
   const inputObject = {
     food: [],
