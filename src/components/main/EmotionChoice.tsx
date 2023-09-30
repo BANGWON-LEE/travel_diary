@@ -13,6 +13,9 @@ interface EmotionChoiceType {
 interface SetMyTripState {
   (prevState: typeof tripAtom): void;
 }
+interface SetEmotionArrState {
+  (prevState: typeof emotionAtom): void;
+}
 
 const EmotionChoice = (props: EmotionChoiceType) => {
   const { emotionObject, title, text, text2 } = props;
@@ -23,8 +26,10 @@ const EmotionChoice = (props: EmotionChoiceType) => {
     goods: string[];
   }
 
-  const [emotionArrState, setEmotionArrState] =
-    useRecoilState<EmotionArrStateType>(emotionAtom);
+  const [emotionArrState, setEmotionArrState]: [
+    typeof emotionAtom,
+    SetEmotionArrState,
+  ] = useRecoilState<EmotionArrStateType>(emotionAtom);
 
   const [myTripState, setMyTripState]: [typeof tripAtom, SetMyTripState] =
     useRecoilState(tripAtom);
@@ -113,7 +118,7 @@ const EmotionChoice = (props: EmotionChoiceType) => {
                   type="button"
                   key={`emotionEl${Number(eatIndex)}`}
                   onClick={() =>
-                    setEmotionArrState((prevState: any) => {
+                    setEmotionArrState((prevState: EmotionArrStateType) => {
                       if (title === 'food') {
                         return {
                           ...prevState,

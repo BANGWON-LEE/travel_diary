@@ -9,10 +9,21 @@ import { placeAtom } from '../../recoil/Atoms';
 //   setPlaceStore: React.Dispatch<React.SetStateAction<any[]>>;
 // }
 
+interface PlaceStoreType {
+  place_name: string[];
+}
+
+interface SetPlaceStore {
+  (prevState: typeof placeAtom): void;
+}
+
 const SelectedPlace = () => {
-  const [placeStore, setPlaceStore] = useRecoilState<any[]>(placeAtom);
+  const [placeStore, setPlaceStore]: [typeof placeAtom, SetPlaceStore] =
+    useRecoilState<PlaceStoreType>(placeAtom);
   const removePlace = (num: number) => {
-    setPlaceStore(placeStore.filter((_, i) => i !== num));
+    setPlaceStore(
+      placeStore.filter((el: PlaceBtnType, i: number) => i !== num),
+    );
     return placeStore;
   };
 
