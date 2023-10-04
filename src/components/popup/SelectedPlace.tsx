@@ -4,11 +4,6 @@ import { useRecoilState } from 'recoil';
 
 import { placeAtom } from '../../recoil/Atoms';
 
-// interface PlaceStoreType {
-//   placeStore: any[];
-//   setPlaceStore: React.Dispatch<React.SetStateAction<any[]>>;
-// }
-
 interface PlaceStoreType {
   place_name: string[];
 }
@@ -28,7 +23,6 @@ const SelectedPlace = () => {
   };
 
   interface PlaceBtnType {
-    // [x: string]: ReactNode;
     [el: string]: string;
   }
 
