@@ -1,7 +1,6 @@
-// import { Content } from 'leaflet';
 import 'react-calendar/dist/Calendar.css'; // css import
 
-// import console from 'console';
+import { EventType } from '@testing-library/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -35,11 +34,11 @@ const emotionGoods = [
 ];
 
 interface CalendarBtnDomType {
-  place: any;
+  place: {
+    id: string;
+  };
   openCalendarState: boolean;
-  // onClick: any;
   setOpenCalendarState: React.Dispatch<React.SetStateAction<boolean>>;
-  // calendarBlockRef: React.RefObject<HTMLDivElement | null>;
 }
 
 const CalendarBtnDom = (props: CalendarBtnDomType) => {
@@ -53,28 +52,32 @@ const CalendarBtnDom = (props: CalendarBtnDomType) => {
   // console.log('와우', calendarBlockRef);
   const openPopBtnRef = useRef<HTMLButtonElement | null>(null);
 
-  const openCalendarPop = (elRef: any, placeId: string) => {
-    // const refNum = documen(number);
+  interface ElRefType {
+    current: HTMLButtonElement | null;
+  }
+
+  const openCalendarPop = (elRef: ElRefType, placeId: string) => {
     const btn = elRef?.current;
     const popNum = btn?.getAttribute('data-index');
-    // console.log('rere', popNum, placeId);
 
     if (popNum === placeId) {
       setOpenCalendarState(true);
     }
   };
 
+  interface EventType {
+    target: HTMLElement | null;
+  }
+
   useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      // console.log('dfdf1', event.target.className);
-      // console.log('dfdf2', calendarBlockRef.current);
-      // console.log('dfdf3', openPopBtnRef.current);
+    const handleClickOutside = (event: Event) => {
+      const typedEvent = event as EventType;
       if (
         openCalendarState &&
         openPopBtnRef.current &&
-        !openPopBtnRef.current!.contains(event.target as Node) &&
-        event.target.className.includes('MuiBackdrop-root') &&
-        event.target !== openPopBtnRef.current
+        !openPopBtnRef.current!.contains(typedEvent.target as Node) &&
+        typedEvent.target!.className.includes('MuiBackdrop-root') &&
+        typedEvent.target !== openPopBtnRef.current
       ) {
         setOpenCalendarState(false);
       }
