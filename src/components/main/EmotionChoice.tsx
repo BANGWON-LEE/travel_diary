@@ -35,8 +35,6 @@ const EmotionChoice = (props: EmotionChoiceType) => {
     useRecoilState(tripAtom);
   const [customState, setCustomState] = useState<string>('');
 
-  // console.log('myTrip', myTripState.food);
-
   const myTripInput = (name: string) => {
     if (name === 'food') {
       return myTripState.food;
@@ -161,25 +159,6 @@ const EmotionChoice = (props: EmotionChoiceType) => {
             </button>
           </div>
         </div>
-        {/* <div className="cs-block">
-          <div className="cs-block_title">사진을 올려주세요 :</div>
-          <div className="cs-section">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleFileInputChange(e.target.value)}
-              className="cs-section_input"
-            />
-            <button
-              className="cs-section_btn"
-              type="button"
-              onClick={() => handleUpload()}
-            >
-              업로드
-            </button>
-          </div>
-          {selectedFile && <p>선택한 파일: {selectedFile.name}</p>}
-        </div> */}
       </div>
     </div>
   );
