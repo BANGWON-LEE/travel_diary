@@ -10,7 +10,7 @@ export const modalAtom = atom({
   default: true,
 });
 
-export const calendarDateAtom = atom({
+export const calendarDateAtom = atom<Date>({
   key: 'date',
   default: new Date(),
 });
