@@ -32,7 +32,7 @@
   "scss.validate": false,
   "stylelint.validate": ["css", "scss", ".module.scss"],
   "stylelint.enable": false,
-  "javascript.format.enable": false,
+  "javascript.format.enable": true,
   "eslint.alwaysShowStatus": true,
   "files.autoSave": "onFocusChange",
   "jest.autoRun": {
