@@ -21,7 +21,7 @@ const CalendarPop = (props: CalendarPopType) => {
   // type ValuePiece = Date | null;
 
   // type Value = ValuePiece | [ValuePiece, ValuePiece];
-  const [choiceDate, setChoiceDate] = useRecoilState<any>(calendarDateAtom);
+  const [choiceDate, setChoiceDate] = useRecoilState<Date>(calendarDateAtom);
 
   const popUpStyle = {
     position: 'absolute',
@@ -69,7 +69,10 @@ const CalendarPop = (props: CalendarPopType) => {
             <img src={closeBtn} alt="close" />
           </button>
         </div> */}
-        <Calendar onChange={setChoiceDate} value={choiceDate} />
+        <Calendar
+          onChange={(value) => setChoiceDate(value as Date)}
+          value={choiceDate}
+        />
       </Box>
     </Modal>
   );
