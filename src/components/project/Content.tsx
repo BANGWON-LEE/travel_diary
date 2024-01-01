@@ -1,6 +1,5 @@
 import 'react-calendar/dist/Calendar.css'; // css import
 
-import { EventType } from '@testing-library/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -42,14 +41,8 @@ interface CalendarBtnDomType {
 }
 
 const CalendarBtnDom = (props: CalendarBtnDomType) => {
-  const {
-    place,
-    // onClick,
-    openCalendarState,
-    setOpenCalendarState,
-    // calendarBlockRef,
-  } = props;
-  // console.log('와우', calendarBlockRef);
+  const { place, openCalendarState, setOpenCalendarState } = props;
+
   const openPopBtnRef = useRef<HTMLButtonElement | null>(null);
 
   interface ElRefType {
@@ -69,6 +62,7 @@ const CalendarBtnDom = (props: CalendarBtnDomType) => {
     target: HTMLElement | null;
   }
 
+  // 팝업 닫는 코드
   useEffect(() => {
     const handleClickOutside = (event: Event) => {
       const typedEvent = event as EventType;
@@ -110,25 +104,6 @@ const Content = () => {
   const [modalState, setModalState] = useRecoilState<boolean>(modalAtom);
   const [projectTitleState, setProjectTitleState] =
     useRecoilState<string>(projectTitleAtom);
-  // const choiceHour = () => {
-  //   const times = [];
-
-  //   for (let i = 0; i <= 23; i += 1) {
-  //     const timeForm = i < 10 ? `0${i}` : `${i}`;
-  //     times.push(timeForm);
-  //   }
-  //   return times;
-  // };
-
-  // const choiceMin = () => {
-  //   const times = [];
-
-  //   for (let i = 0; i <= 60; i += 1) {
-  //     const timeForm = i < 10 ? `0${i}` : `${i}`;
-  //     times.push(timeForm);
-  //   }
-  //   return times;
-  // };
 
   // 달력 팝업을 불러오기 위한 state
   const [openCalendarState, setOpenCalendarState] = useState<boolean>(false);
@@ -158,8 +133,6 @@ const Content = () => {
   }
 
   const [myTripState, setMyTripSate] = useRecoilState<MyTripType>(tripAtom);
-
-  // console.log('트립확인', myTripState);
 
   const inputObject = {
     food: [],
@@ -194,7 +167,6 @@ const Content = () => {
       return;
     }
 
-    // console.log('form', form);
     setHistoryList((prevState: any) => {
       const newState = { ...prevState }; // 이전 상태의 복사본 생성
 
@@ -230,12 +202,9 @@ const Content = () => {
     });
   };
   const navigation = useNavigate();
-  // const [, setResponseState] = useRecoilState<any>(resultAtom);
+
   const [, setResultState] = useRecoilState<any>(resultAtom);
   const [loadingState, setLoadingState] = useState<string>('');
-
-  // console.log('loa', loadingState);
-
   const [count, setCount] = useState<number>(40); // 시작 숫자 설정
   const [isRunning, setIsRunning] = useState<boolean>(false); // 타이머가 실행 중인지 여부
   const [waitMessage, setWaitMessage] =
@@ -262,6 +231,8 @@ const Content = () => {
       setWaitMessage('시간이 좀... 걸리내요 뿌앵~');
     } else if (count === 3) {
       setWaitMessage('이제 곧 나옵니다 진짜로!!! ');
+    } else if (count === 0) {
+      setWaitMessage('조금만 더!!! 기다려주세요 ㅠㅠ');
     }
 
     return () => {
@@ -272,8 +243,8 @@ const Content = () => {
     };
   }, [count, isRunning]);
 
+  // 여행 경험 data를 api로 요청하기 위한 함수
   const submitMyTrip = () => {
-    // console.log('result1', historyList);
     if (
       historyList.food.length === 0 &&
       historyList.view.length === 0 &&
@@ -303,20 +274,18 @@ const Content = () => {
       });
   };
 
+  // 선택한 감정을 제거하는 함수
   const removeEmotion = (category: string, emo: string) => {
     setEmotionArrState((prevState: any) => {
       const newState = { ...prevState };
-
       const categoryArr = newState[category];
 
       if (categoryArr) {
         const updatedCategoryArr = categoryArr.filter(
           (el: string) => el !== emo,
         );
-
         newState[category] = updatedCategoryArr;
       }
-
       return newState; // Return the updated state
     });
   };
@@ -325,8 +294,6 @@ const Content = () => {
     <div className="project_bottom">
       {loadingState === '잠시만 기다려주세요' ? (
         <div className="result-block">
-          {/* <div>{loadingState}</div> */}
-
           <div className="result-message">{waitMessage}</div>
           <div className="result-count">{count}</div>
         </div>
@@ -377,36 +344,13 @@ const Content = () => {
                         <div className="project-block_content_time">
                           <CalendarBtnDom
                             place={place}
-                            // onClick={openCalendarPop}
                             openCalendarState={openCalendarState}
                             setOpenCalendarState={setOpenCalendarState}
-                            // calendarBlockRef={calendarBlockRef}
                           />
                           <div className="date-block">
                             <div className="date-block_value">
                               {editCalendar(choiceDate)}
                             </div>
-                            {/* <div className="date-block_inner">
-                          <div className="date-block_time">
-                            <select className="time-select">
-                              {choiceHour().map((hour, hourIndex) => (
-                                <option key={`hour${Number(hourIndex)}`}>
-                                  {hour}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <span className="date-block_time"> : </span>
-                          <div className="date-block_time">
-                            <select className="time-select">
-                              {choiceMin().map((min, minIndex) => (
-                                <option key={`min${Number(minIndex)}`}>
-                                  {min}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div> */}
                           </div>
                         </div>
                       </div>

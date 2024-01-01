@@ -1,10 +1,5 @@
 import type { AxiosRequestConfig } from 'axios';
 import axios from 'axios';
-import React from 'react';
-import { useSetRecoilState } from 'recoil';
-
-// import env from '../env';
-import { resultAtom } from '../recoil/Atoms';
 
 // API 요청 설정
 const config: AxiosRequestConfig = {

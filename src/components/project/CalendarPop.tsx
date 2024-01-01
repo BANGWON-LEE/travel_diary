@@ -12,7 +12,6 @@ import { calendarDateAtom } from '../../recoil/Atoms';
 interface CalendarPopType {
   openCalendarState: boolean;
   setOpenCalendarState: React.Dispatch<React.SetStateAction<boolean>>;
-  // calendarBlockRef: React.RefObject<HTMLDivElement | null>;
 }
 
 const CalendarPop = (props: CalendarPopType) => {
@@ -37,38 +36,9 @@ const CalendarPop = (props: CalendarPopType) => {
     justifyContent: 'center',
   };
 
-  // 달력 팝업을 불러오고 닫는 역할을 하는 useEffect
-  // useEffect(() => {
-  //   const handleClickOutside = (event: any) => {
-  //     if (
-  //       openCalendarState &&
-  //       calendarRef.current &&
-  //       !calendarRef.current!.contains(event.target as Node) &&
-  //       event.target !== calendarBlockRef.current
-  //     ) {
-  //       setOpenCalendarState(false);
-  //     }
-  //   };
-
-  //   document.addEventListener('click', handleClickOutside);
-
-  //   return () => {
-  //     document.removeEventListener('click', handleClickOutside);
-  //   };
-  // }, [openCalendarState]);
-
   return (
     <Modal open={openCalendarState} onClose={setOpenCalendarState}>
       <Box sx={popUpStyle}>
-        {/* <div className="modal_background_top_block">
-          <button
-            type="button"
-            className="modal_background_top_block_btn"
-            onClick={() => setOpenCalendarState(false)}
-          >
-            <img src={closeBtn} alt="close" />
-          </button>
-        </div> */}
         <Calendar
           onChange={(value) => setChoiceDate(value as Date)}
           value={choiceDate}

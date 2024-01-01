@@ -77,8 +77,6 @@ const ModalRegisterProject = () => {
       return;
     }
 
-    // console.log('choicePlace', choicePlace);
-
     if (searchStatus === true || choicePlace !== undefined) {
       let markers: any = [];
 
@@ -376,16 +374,7 @@ const ModalRegisterProject = () => {
         <div className="modal_background">
           <div className="modal_background_map_block">
             <div className="map_wrap" ref={modalRef}>
-              <div
-                id="map"
-                className="modal_background_map_block_ground"
-                // style={{
-                //   width: '100%',
-                //   height: '43.05vh',
-                //   position: 'relative',
-                //   overflow: 'hidden',
-                // }}
-              />
+              <div id="map" className="modal_background_map_block_ground" />
               <div id="menu_wrap" className="bg_white">
                 <div className="option">
                   <div className="option_block">
@@ -416,12 +405,6 @@ const ModalRegisterProject = () => {
                             {placeNameLimit(data.place_name)}
                           </button>
                         </span>
-                        {/* <span className="item_addr-name">
-                          {data.address_name}
-                        </span> */}
-                        {/* <span className="item_phone-num">
-                          {data.phone === '' ? '연락처 없음' : data.phone}
-                        </span> */}
                         <span className="item_loc">
                           <button
                             type="button"
