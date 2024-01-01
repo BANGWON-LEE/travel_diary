@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 
-import { emotionAtom, emotionStateAtom, tripAtom } from '../../recoil/Atoms';
+import { emotionAtom, tripAtom } from '../../recoil/Atoms';
 
 interface EmotionChoiceType {
   emotionObject: string[][];
@@ -46,8 +46,6 @@ const EmotionChoice = (props: EmotionChoiceType) => {
   };
 
   const insertCustomTextState = (custom: string) => {
-    console.log('커스텀', custom);
-
     if (customState === '') {
       alert('감정을 넣어주세요');
       return;
@@ -103,9 +101,6 @@ const EmotionChoice = (props: EmotionChoiceType) => {
               });
             }}
           />
-          {/* <button type="button" className="cate-btn">
-            등록
-          </button> */}
         </div>
         <div className="emotion-cate">
           {emotionObject.map((emotion: string[], num) => (
