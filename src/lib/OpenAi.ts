@@ -12,8 +12,6 @@ const config: AxiosRequestConfig = {
 
 // ChatGPT에 메시지 보내기
 export async function OpenAi(message: string) {
-  // const [, setResponseState] = useRecoilState<any>(resultAtom);
-
   try {
     const systemMessage = {
       role: 'system',
@@ -36,7 +34,7 @@ export async function OpenAi(message: string) {
     const response = await axios.post('/chat/completions', data, config);
 
     // API 응답 처리
-    // console.log('결과를 알려줘', response.data.choices[0].message.content);
+
     return response.data.choices[0].message.content;
   } catch (error) {
     console.error('API 요청 중 오류 발생:', error);
