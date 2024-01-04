@@ -18,7 +18,7 @@ import EmotionChoice from '../main/EmotionChoice';
 import CalendarPop from './CalendarPop';
 
 const emotionFood = [
-  ['존맛', '별로', '황홀', '축복이 끝이없다'],
+  ['존맛', '별로', '황홀', '축복이다'],
   ['최악', '그저 그런', '돈이 아까운'],
 ];
 
