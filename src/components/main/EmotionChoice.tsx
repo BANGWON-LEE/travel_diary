@@ -110,6 +110,11 @@ const EmotionChoice = (props: EmotionChoiceType) => {
                   className="emotion-cate_btn"
                   type="button"
                   key={`emotionEl${Number(eatIndex)}`}
+                  disabled={
+                    emotionArrState.food.length === 1 ||
+                    emotionArrState.view.length === 1 ||
+                    emotionArrState.goods.length === 1
+                  }
                   onClick={() =>
                     setEmotionArrState((prevState: EmotionArrStateType) => {
                       if (title === 'food') {
