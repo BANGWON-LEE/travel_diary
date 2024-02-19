@@ -9,6 +9,7 @@ import { useRecoilState } from 'recoil';
 import locBtn from '../../asset/loc.png';
 // import env from '../../env';
 import { modalAtom, placeAtom } from '../../recoil/Atoms';
+import type { PlaceType } from '../../type/common';
 import SelectedPlace from './SelectedPlace';
 
 declare global {
@@ -340,10 +341,6 @@ const ModalRegisterProject = () => {
     }
     return `${text.substring(0, maxLength)}...`; // 글자 수가 제한을 초과하면 "..."을 추가하여 반환
   };
-
-  interface PlaceType {
-    place_name: string;
-  }
 
   const [placeStore, setPlaceStore] = useRecoilState<any[]>(placeAtom);
 

@@ -8,11 +8,7 @@ import { useRecoilState } from 'recoil';
 
 import closeBtn from '../../asset/close-button.png';
 import { calendarDateAtom } from '../../recoil/Atoms';
-
-interface CalendarPopType {
-  openCalendarState: boolean;
-  setOpenCalendarState: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import type { CalendarPopType } from '../../type/common';
 
 const CalendarPop = (props: CalendarPopType) => {
   const { openCalendarState, setOpenCalendarState } = props;

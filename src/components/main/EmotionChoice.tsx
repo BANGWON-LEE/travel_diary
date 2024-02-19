@@ -2,29 +2,16 @@ import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { emotionAtom, tripAtom } from '../../recoil/Atoms';
-
-interface EmotionChoiceType {
-  emotionObject: string[][];
-  title: string;
-  text: string;
-  text2: string;
-}
-
-interface SetMyTripState {
-  (prevState: typeof tripAtom): void;
-}
-interface SetEmotionArrState {
-  (prevState: typeof emotionAtom): void;
-}
+import type {
+  EmotionArrStateType,
+  EmotionChoiceType,
+  MyTripOnType,
+  SetEmotionArrState,
+  SetMyTripState,
+} from '../../type/common';
 
 const EmotionChoice = (props: EmotionChoiceType) => {
   const { emotionObject, title, text, text2 } = props;
-
-  interface EmotionArrStateType {
-    food: string[];
-    view: string[];
-    goods: string[];
-  }
 
   const [emotionArrState, setEmotionArrState]: [
     typeof emotionAtom,
@@ -71,13 +58,6 @@ const EmotionChoice = (props: EmotionChoiceType) => {
       };
     });
   };
-
-  // console.log('title', title);
-  interface MyTripOnType {
-    food: string;
-    view: string;
-    goods: string;
-  }
 
   return (
     <div className="cate-section">

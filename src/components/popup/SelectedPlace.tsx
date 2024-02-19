@@ -3,10 +3,7 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 
 import { placeAtom } from '../../recoil/Atoms';
-
-interface PlaceStoreType {
-  place_name: string[];
-}
+import type { PlaceBtnType, PlaceStoreType } from '../../type/common';
 
 interface SetPlaceStore {
   (prevState: typeof placeAtom): void;
@@ -21,10 +18,6 @@ const SelectedPlace = () => {
     );
     return placeStore;
   };
-
-  interface PlaceBtnType {
-    [el: string]: string;
-  }
 
   return (
     <div className="add-place">

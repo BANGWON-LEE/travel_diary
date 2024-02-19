@@ -14,6 +14,13 @@ import {
   resultAtom,
   tripAtom,
 } from '../../recoil/Atoms';
+import type {
+  CalendarBtnDomType,
+  ElRefType,
+  EventType,
+  HistoryListType,
+  MyTripType,
+} from '../../type/common';
 import EmotionChoice from '../main/EmotionChoice';
 import CalendarPop from './CalendarPop';
 
@@ -32,22 +39,10 @@ const emotionGoods = [
   ['어쩔 수 없이', '선물하려고', '돈이 남아서', '강매 당해서'],
 ];
 
-interface CalendarBtnDomType {
-  place: {
-    id: string;
-  };
-  openCalendarState: boolean;
-  setOpenCalendarState: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 const CalendarBtnDom = (props: CalendarBtnDomType) => {
   const { place, openCalendarState, setOpenCalendarState } = props;
 
   const openPopBtnRef = useRef<HTMLButtonElement | null>(null);
-
-  interface ElRefType {
-    current: HTMLButtonElement | null;
-  }
 
   const openCalendarPop = (elRef: ElRefType, placeId: string) => {
     const btn = elRef?.current;
@@ -57,10 +52,6 @@ const CalendarBtnDom = (props: CalendarBtnDomType) => {
       setOpenCalendarState(true);
     }
   };
-
-  interface EventType {
-    target: HTMLElement | null;
-  }
 
   // 팝업 닫는 코드
   useEffect(() => {
@@ -126,12 +117,6 @@ const Content = () => {
     useRecoilState<any>(emotionAtom);
   // console.log('emotionAtom', emotionAtom);
 
-  interface MyTripType {
-    food: '';
-    view: '';
-    goods: '';
-  }
-
   const [myTripState, setMyTripSate] = useRecoilState<MyTripType>(tripAtom);
 
   const inputObject = {
@@ -139,12 +124,6 @@ const Content = () => {
     view: [],
     goods: [],
   };
-
-  interface HistoryListType {
-    food: string[];
-    view: string[];
-    goods: string[];
-  }
 
   const [historyList, setHistoryList] = useState<HistoryListType>(inputObject);
 
