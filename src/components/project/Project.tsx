@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { modalAtom, projectTitleAtom } from '../../recoil/Atoms';
